@@ -1,10 +1,10 @@
-import React from 'react';
+import React from 'react'
 
 export interface ITableFieldProps {
-    tableId?: boolean;
+  tableId?: boolean
 }
 
 const Table: React.FC<ITableFieldProps> = () => {
-    return <div>Hello</div>;
+  return <div>Hello</div>
 }
-export default Table;
+export default Table
