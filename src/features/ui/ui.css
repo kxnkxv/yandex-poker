@@ -1,0 +1,24 @@
+.button {
+  width: 320px;
+  height: 40px;
+  background: #be2e2e;
+  border-radius: 8px;
+  flex: none;
+  order: 4;
+  flex-grow: 0;
+  color: white;
+  border: transparent;
+  cursor: pointer;
+}
+.input {
+  width: 320px;
+  height: 40px;
+  background: #ffffff;
+  border-radius: 8px;
+  flex: none;
+  padding: 7px;
+  flex-grow: 0;
+  border: transparent;
+}
+
+

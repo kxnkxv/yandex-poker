@@ -1,0 +1,9 @@
+@font-face {
+	font-family: 'Gilroy-Black';
+	src: url('../fonts/gilroy-black.eot'); /* IE 9 Compatibility Mode */
+	src: url('../fonts/gilroy-black.eot?#iefix') format('embedded-opentype'), /* IE < 9 */
+		url('../fonts/gilroy-black.woff2') format('woff2'), /* Super Modern Browsers */
+		url('../fonts/gilroy-black.woff') format('woff'), /* Firefox >= 3.6, any other modern browser */
+		url('../fonts/gilroy-black.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('../fonts/gilroy-black.svg#gilroy-black') format('svg'); /* Chrome < 4, Legacy iOS */
+}
