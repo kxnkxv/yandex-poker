@@ -1,8 +1,8 @@
-export interface ITableFieldProps {
-  tableId?: boolean
+export interface ITableProps {
+  tableId?: number
 }
 
-const Table = () => {
+const Table = (props: ITableProps) => {
   return (
     <div>
       <p>Table component</p>
