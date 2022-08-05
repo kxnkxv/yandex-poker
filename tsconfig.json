@@ -7,7 +7,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "target": "es5",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "importHelpers": true,
     "noUnusedLocals": true,
     "esModuleInterop": true,
@@ -18,6 +18,7 @@
     "declaration": false,
     "sourceMap": false,
     "baseUrl": ".",
+    "tsx": "react-tsx",
     "outDir": "./dist",
     "paths": {
       "*": ["./src/*"]

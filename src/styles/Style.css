@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.product {
+    &-image {
+        font-size: 24px;
+     }
+}
