@@ -9,11 +9,15 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
+  devServer: {
+    port: 3000,
+    historyApiFallback: true
+  },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        loader: 'babel-loader',
+        loader: 'ts-loader',
       },
       {
         test: /\.js$/,
