@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* roboto-condensed-regular - latin_cyrillic */
 @font-face {
   font-family: "Roboto Condensed";

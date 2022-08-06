@@ -1,10 +1,13 @@
-import React from 'react'
-
-export interface ITableFieldProps {
-  tableId?: boolean
+export interface ITableProps {
+  tableId?: number
 }
 
-const Table: React.FC<ITableFieldProps> = () => {
-  return <div>Hello</div>
+const Table = (props: ITableProps) => {
+  return (
+    <div>
+      <p>Table component</p>
+    </div>
+  )
 }
+
 export default Table
