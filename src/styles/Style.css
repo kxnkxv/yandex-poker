@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  color: #fff;
+}
 /* roboto-condensed-regular - latin_cyrillic */
 @font-face {
   font-family: "Roboto Condensed";
