@@ -44,20 +44,23 @@ const Table = () => {
       const canvas = canvasRef.current as HTMLCanvasElement
       const ctx = canvas.getContext('2d')
       if (ctx) {
+        //Сброс canvas при каждой перерисовке
         ctx.clearRect(0, 0, canvas.width, canvas.height)
-
         createPlayers(table, name as string, ctx)
       }
     }
   }, [table])
 
+  //Выполняем регистрацию пользователя на бэке и вход на стол при создании компонента
   useEffect(() => {
     register(name as string)
     enterRoom(1)
   }, [])
 
+  //Массив id посадочных мест за столом
   const seats = [0, 1, 2, 3]
 
+  //Проверяем сидит ли текущий user за столом
   const isOnTheTable = table.seats.some((seat: any) => {
     if (seat) {
       return seat.name === name
