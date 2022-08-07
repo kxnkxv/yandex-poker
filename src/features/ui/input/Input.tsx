@@ -1,5 +1,4 @@
 import React from 'react'
-import './Input.css'
 
 type InputProps = React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -8,7 +7,7 @@ type InputProps = React.DetailedHTMLProps<
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => (
   <div>
-    <input className='input' ref={ref} {...props} />
+    <input className='shadow appearance-none border rounded py-2 px-3 m-4 leading-tight focus:outline-none focus:shadow-outline' ref={ref} {...props} />
     <span></span>
   </div>
 ))

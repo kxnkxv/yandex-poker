@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import Button from '../../features/ui/button/Button'
 import Input from '../../features/ui/input/Input'
-import '../../styles/Style.css'
+import '../../styles/style.css'
 
 type FormValues = {
   username: string
@@ -22,8 +22,8 @@ const Login: React.FunctionComponent<ILoginPageProps> = (props) => {
   const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data)
   return (
     <div>
-      <form className='form' onSubmit={handleSubmit(onSubmit)}>
-        <h1 className='form-title'>Login</h1>
+      <form className='flex flex-col items-center bg-transperant' onSubmit={handleSubmit(onSubmit)}>
+        <h1>Login</h1>
         <Input
           {...register('username', { required: true, maxLength: 20 })}
           placeholder='User name'
@@ -34,7 +34,7 @@ const Login: React.FunctionComponent<ILoginPageProps> = (props) => {
           placeholder='Password'
         />
         <Button clicked={onSubmitHandler}>LOGIN</Button>
-        <Link to='/register' className='form-link'>
+        <Link to='/register' className='form-link mb-4'>
           SIGN UP
         </Link>
       </form>

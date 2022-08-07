@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import Button from '../../features/ui/button/Button'
 import Input from '../../features/ui/input/Input'
-import '../../styles/Style.css'
+import '../../styles/style.css'
 
 type RegValues = {
   username: string
@@ -19,8 +19,8 @@ const Registration: React.FunctionComponent<IRegistrationPageProps> = (props) =>
   const onSubmit: SubmitHandler<RegValues> = (data) => console.log(data)
   return (
     <div>
-      <form className='form' onSubmit={handleSubmit(onSubmit)}>
-        <h1 className='form-title'>Registration</h1>
+      <form className='flex flex-col items-center bg-transperant z-10' onSubmit={handleSubmit(onSubmit)}>
+        <h1>Registration</h1>
         <Input
           {...register('username', { required: true, maxLength: 20 })}
           placeholder='User name'
