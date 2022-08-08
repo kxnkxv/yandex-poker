@@ -21,8 +21,9 @@ const Login: React.FunctionComponent<ILoginPageProps> = (props) => {
   const { register, handleSubmit } = useForm<FormValues>()
   const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data)
   return (
-    <div>
-      <form className='flex flex-col items-center bg-transperant' onSubmit={handleSubmit(onSubmit)}>
+    <div className='flex justify-center items-center h-screen'>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className='flex justify-center items-center flex-col'>
         <h1>Login</h1>
         <Input
           {...register('username', { required: true, maxLength: 20 })}
@@ -36,7 +37,8 @@ const Login: React.FunctionComponent<ILoginPageProps> = (props) => {
         <Button clicked={onSubmitHandler}>LOGIN</Button>
         <Link to='/register' className='form-link mb-4'>
           SIGN UP
-        </Link>
+          </Link>
+          </div>
       </form>
       <div className='gradient-div'></div>
     </div>
