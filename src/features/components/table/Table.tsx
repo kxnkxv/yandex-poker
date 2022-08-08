@@ -5,6 +5,7 @@ import { updateTable } from './TableSlice'
 import { io } from 'socket.io-client'
 import { createPlayers } from './canvas/Methods'
 import './table.css'
+import React from 'react'
 //Подключаемся
 const socket = io('https://poker-back.herokuapp.com/', { transports: ['websocket'] })
 
@@ -29,7 +30,7 @@ const Table = () => {
   const dispatch = useDispatch()
 
   //ПОЛУЧАЕМ TABLE DATA
-  socket.on('table-data', (data) => {
+  socket.on('table-data', (data: any) => {
     console.log(data)
     dispatch(updateTable(data))
   })
