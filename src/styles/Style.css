@@ -33,7 +33,7 @@
   --color-white: #ffffff;
   --color-red: #be2e2e;
   --color-crimson: #7d2121;
-  --color-purple: #49499E;
+  --color-purple: #49499e;
 }
 body {
   margin: 0;
@@ -63,6 +63,7 @@ h1 {
   font-size: 32px;
   line-height: 39px;
   color: #ffffff;
+  margin-bottom: 20px;
 }
 .form-link {
   height: 16px;
