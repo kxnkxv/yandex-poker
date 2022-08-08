@@ -14,16 +14,14 @@ export interface IAppPageProps {}
 const App: React.FunctionComponent<IAppPageProps> = (props) => {
   return (
     <Provider store={store}>
-    <BrowserRouter>
-      <Routes>
+      <BrowserRouter>
+        <Routes>
           <Route path='*' element={<PageNotFound />} />
-          <Route path='register' element={<Registration />} />
-        <Route path='/' element={<Login />} />
-        <Route path='tables/:id/:name' element={<Table />} />
-        <Route path='tables' element={<Tables />} />
-      </Routes>
-    </BrowserRouter>
-  </Provider>
+          <Route path='/' element={<Login />} />
+          <Route path='tables/:id/:name' element={<Table />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   )
 }
 
