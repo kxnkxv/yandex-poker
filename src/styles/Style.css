@@ -5,19 +5,6 @@
 body {
   color: #fff;
 }
-/* roboto-condensed-regular - latin_cyrillic */
-@font-face {
-  font-family: "Roboto Condensed";
-  font-style: normal;
-  font-weight: 400;
-  src: url("./fonts/roboto-condensed-v25-latin_cyrillic-regular.eot"); /* IE9 Compat Modes */
-  src: local(""), url("./fonts/roboto-condensed-v25-latin_cyrillic-regular.eot?#iefix") format("embedded-opentype"),
-    /* IE6-IE8 */ url("./fonts/roboto-condensed-v25-latin_cyrillic-regular.woff2") format("woff2"),
-    /* Super Modern Browsers */ url("./fonts/roboto-condensed-v25-latin_cyrillic-regular.woff") format("woff"),
-    /* Modern Browsers */ url("./fonts/roboto-condensed-v25-latin_cyrillic-regular.ttf") format("truetype"),
-    /* Safari, Android, iOS */ url("./fonts/roboto-condensed-v25-latin_cyrillic-regular.svg#RobotoCondensed")
-      format("svg"); /* Legacy iOS */
-}
 
 @font-face {
   font-family: "Gilroy-Black";
@@ -44,20 +31,6 @@ body {
   font-size: 16px;
   overflow: hidden;
 }
-.gradient-div {
-  position: absolute;
-  left: 0%;
-  right: 0%;
-  top: 56.12%;
-  bottom: 0%;
-  background: radial-gradient(
-    78.18% 69.71% at 50% 100%,
-    rgba(77, 77, 218, 0.62) 5.46%,
-    rgba(75, 75, 192, 0.24) 45.83%,
-    rgba(73, 73, 158, 0) 100%
-  );
-  z-index: -1;
-}
 h1 {
   height: 39px;
   font-family: "Gilroy-Black";
@@ -66,7 +39,6 @@ h1 {
   font-size: 32px;
   line-height: 39px;
   color: #ffffff;
-  margin-bottom: 20px;
 }
 .form-link {
   height: 16px;
@@ -82,4 +54,23 @@ h1 {
   text-transform: uppercase;
   color: #ffffff;
   cursor: pointer;
+}
+.main-wrapper {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+.gradient-bottom {
+background: radial-gradient(85.74% 37.17% at 50% 100%, rgba(77, 77, 218, 0.496) 5.46%, rgba(75, 75, 192, 0.192) 45.83%, rgba(73, 73, 158, 0) 100%);
+}
+@layer components {
+.form-control {
+  @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+}
+.form-label {
+  @apply block mb-2 text-sm font-medium text-white
+}
+.btn-red {
+  @apply focus:outline-none text-white bg-red hover:bg-crimson focus:ring-4 focus:ring-crimson font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 w-full
+}
 }

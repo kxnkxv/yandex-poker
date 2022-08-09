@@ -12,7 +12,7 @@ const Button = (props: {
     | null
     | undefined
 }) => (
-  <button className='bg-red hover:bg-crimson text-white font-roboto w-full py-2 px-4 m-4 rounded focus:outline-none focus:shadow-outline' onClick={props.clicked}>
+  <button className='btn-red' onClick={props.clicked}>
     {props.children}
   </button>
 )

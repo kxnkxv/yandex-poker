@@ -10,14 +10,18 @@ const HearderMenu: React.FC<IPopupPageProps> = (props) => {
   return (
     <div>
       <nav className='bg-transparent p-2'>
-        <div className='container flex flex-wrap justify-between items-center mx-4'>
-          <a href='https://github.com/AIG-GAMING' className='flex items-center'>
-            <img src={Logo} className='mr-3 h-6 sm:h-9' alt='AIG Logo' />
-            <h4 className='self-center text-xl font-semibold text-white font-futura'>AIG POKER</h4>
-          </a>
-          <div className='flex items-center mx-6'>
-            <div className='flex items-center mx-2 text-white'>
-              <div className='inline-block items-center justify-end font-roboto text-sm md:order-2'>
+        <div className='container flex flex-wrap justify-between items-center mb-5'>
+          <div className='flex items-center mb-5'>
+            <img src={Logo} className='h-6 sm:h-9' alt='AIG Logo' />
+            <a href='https://github.com/AIG-GAMING' className='flex items-center'>
+              <h4 className='self-center text-xl font-semibold text-white font-futura'>
+                AIG POKER
+              </h4>
+            </a>
+          </div>
+          <div className='flex items-center mb-5'>
+            <div className='flex items-center text-white'>
+              <div className='inline-block items-center justify-end text-sm md:order-2'>
                 <h5>Ivan Tekunov</h5>
                 <h5 className='opacity-70 font-roboto'>player</h5>
               </div>
