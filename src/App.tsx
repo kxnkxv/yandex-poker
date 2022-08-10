@@ -1,7 +1,9 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Login from './pages/login/Login'
-import './styles/Style.css'
+import Registration from './pages/registration/Registration'
+import Tables from './pages/tables/Tables'
+import './styles/style.css'
 import Table from './features/components/table/Table'
 import PageNotFound from './pages/pageNotFound/PageNotFound'
 import { Provider } from 'react-redux'
@@ -15,8 +17,10 @@ const App: React.FunctionComponent<IAppPageProps> = (props) => {
       <BrowserRouter>
         <Routes>
           <Route path='*' element={<PageNotFound />} />
+          <Route path='register' element={<Registration />} />
           <Route path='/' element={<Login />} />
-          <Route path='tables/:id/:name' element={<Table />} />
+          <Route path='table/:id/:name' element={<Table />} />
+          <Route path='tables' element={<Tables />} />
         </Routes>
       </BrowserRouter>
     </Provider>

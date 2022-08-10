@@ -1,5 +1,4 @@
 import React from 'react'
-import './Button.css'
 
 const Button = (props: {
   clicked: React.MouseEventHandler<HTMLButtonElement> | undefined
@@ -13,7 +12,7 @@ const Button = (props: {
     | null
     | undefined
 }) => (
-  <button className='button' onClick={props.clicked}>
+  <button className='btn-red' onClick={props.clicked}>
     {props.children}
   </button>
 )

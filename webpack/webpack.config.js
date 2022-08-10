@@ -7,7 +7,14 @@ module.exports = {
     filename: 'bundle.js',
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    extensions: [ '.ts', '.tsx', '.js', '.jsx' ],
+    alias: {
+      components: path.resolve(__dirname, 'src/features'),
+      core: path.resolve(__dirname, 'src/core'),
+      pages: path.resolve(__dirname, 'src/pages'),
+      types: path.resolve(__dirname, 'src/images'),
+      api: path.resolve(__dirname, 'src/api'),
+    },
   },
   devServer: {
     port: 3000,

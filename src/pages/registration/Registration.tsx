@@ -1,52 +1,154 @@
-import React from 'react'
-import { useForm, SubmitHandler } from 'react-hook-form'
+import { FC } from 'react'
+import { useForm, SubmitHandler, Controller, useFormState } from 'react-hook-form'
+import { emailValidation, loginValidation, nameValidation, passwordValidation, phoneValidation } from '../../utils/validation/validation'
 import { Link } from 'react-router-dom'
-import Button from '../../features/ui/button/Button'
 import Input from '../../features/ui/input/Input'
-import '../../styles/Style.css'
+import React from 'react'
+import Button from '../../features/ui/button/Button'
 
-type RegValues = {
-  username: string
+interface ISignUpForm{
+  first_name: string
+  second_name: string
   email: string
+  login: string
+  phone: string
   password: string
-  clicked: () => { void: any }
 }
 
-export interface IRegistrationPageProps {}
+const Registration: FC = () => {
+  const { handleSubmit, control } = useForm<ISignUpForm>({
+    defaultValues: {
+      first_name: '',
+      second_name: '',
+      email: '',
+      login: '',
+      phone: '',
+      password: '',
+    },
+    mode: 'onBlur',
+  })
 
-const Registration: React.FunctionComponent<IRegistrationPageProps> = (props) => {
-  const { register, handleSubmit } = useForm<RegValues>()
-  const onSubmit: SubmitHandler<RegValues> = (data) => console.log(data)
+  const { errors } = useFormState({
+    control,
+  })
+
+  const onSubmit: SubmitHandler<ISignInForm> = (data) => console.log(data)
+
   return (
-    <div>
-      <form className='form' onSubmit={handleSubmit(onSubmit)}>
-        <h1 className='form-title'>Registration</h1>
-        <Input
-          {...register('username', { required: true, maxLength: 20 })}
-          placeholder='User name'
-        />
-        <Input
-          {...register('email', {
-            required: 'required',
-            pattern: {
-              value: /\S+@\S+\.\S+/,
-              message: 'Entered value does not match email format',
-            },
-          })}
-          placeholder='Email'
-          type='email'
-        />
-        <Input
-          {...register('password', { required: true, minLength: 8 })}
-          type='password'
-          placeholder='Password'
-        />
-        <Button clicked={undefined}>REGISTER</Button>
-        <Link to='/' className='form-link'>
-          I HAVE AN ACCOUNT
-        </Link>
-      </form>
-      <div className='gradient-div'></div>
+    <div className='main-wrapper items-center gradient-bottom'>
+      <div className='container mx-auto max-w-md'>
+        <h1 className='mb-5 text-center'>Registration</h1>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className='grid gap-5 mb-5 md:grid-cols-2'>
+            {/* Firstname*/}
+            <div>
+              <Controller
+                control={control}
+                name='first_name'
+                rules={nameValidation}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    className='form-control'
+                    label='First name'
+                    error={errors.first_name}
+                  />
+                )}
+              />
+            </div>
+
+            {/* Second name */}
+            <div>
+              <Controller
+                control={control}
+                name='second_name'
+                rules={nameValidation}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    className='form-control'
+                    label='Second name'
+                    error={errors.second_name}
+                  />
+                )}
+              />
+            </div>
+          </div>
+
+          {/* E-mail*/}
+          <div className='mb-5'>
+            <Controller
+              control={control}
+              name='email'
+              rules={emailValidation}
+              render={({ field }) => (
+                <Input {...field} className='form-control' label='Email' error={errors.email} />
+              )}
+            />
+          </div>
+
+          {/* Login */}
+          <div className='grid gap-6 mb-6 md:grid-cols-2'>
+            <div>
+              <Controller
+                control={control}
+                name='login'
+                rules={loginValidation}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    className='form-control'
+                    label='Login'
+                    error={errors.login}
+                  />
+                )}
+              />
+            </div>
+
+            {/* Phone */}
+            <div>
+              <Controller
+                control={control}
+                name='phone'
+                rules={phoneValidation}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    className='form-control'
+                    label='Phone'
+                    error={errors.phone}
+                  />
+                )}
+              />
+            </div>
+          </div>
+
+          {/* Password */}
+          <div className='mb-5'>
+            <Controller
+              control={control}
+              name='password'
+              rules={passwordValidation}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  className='form-control'
+                  label='Password'
+                  error={errors.password}
+                />
+              )}
+            />
+          </div>
+            <Button clicked={undefined}>
+              Register
+            </Button>
+          <div className='text-center mb-5'>
+            <Link to='/' className='text-white underline'>
+              I HAVE AN ACCOUNT
+            </Link>
+          </div>
+        </form>
+      </div>
     </div>
   )
 }

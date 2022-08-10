@@ -7,7 +7,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "target": "es5",
-    "jsx": "react-jsx",
+    "jsx": "react",
     "importHelpers": true,
     "noUnusedLocals": true,
     "esModuleInterop": true,
@@ -22,7 +22,7 @@
     "paths": {
       "*": ["./src/*"]
     },
-    "typeRoots": ["typings/**/*.d.ts", "node_modules/@types"],
+    "typeRoots": ["typings/**/*.d.ts", "node_modules/@types", "src/types"],
   },
   "include": [
     "src",
