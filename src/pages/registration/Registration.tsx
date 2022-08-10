@@ -32,7 +32,7 @@ const Registration: FC = () => {
     control,
   })
 
-  const onSubmit: SubmitHandler<ISignInForm> = (data) => console.log(data)
+  const onSubmit: SubmitHandler<ISignUpForm> = (data) => console.log(data)
 
   return (
     <div className='main-wrapper items-center gradient-bottom'>
