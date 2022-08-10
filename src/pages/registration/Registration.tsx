@@ -6,7 +6,7 @@ import Input from '../../features/ui/input/Input'
 import React from 'react'
 import Button from '../../features/ui/button/Button'
 
-interface ISignInForm {
+interface ISignUpForm{
   first_name: string
   second_name: string
   email: string
@@ -16,7 +16,7 @@ interface ISignInForm {
 }
 
 const Registration: FC = () => {
-  const { handleSubmit, control } = useForm<ISignInForm>({
+  const { handleSubmit, control } = useForm<ISignUpForm>({
     defaultValues: {
       first_name: '',
       second_name: '',
