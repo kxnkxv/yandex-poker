@@ -4,9 +4,9 @@ import Ivan from '../../../images/Ivan.png'
 import Settings from '../../../images/settings.png'
 import FullScreen from '../../../images/fullscreen.png'
 
-export interface IPopupPageProps {}
+export interface IHeaderPageProps {}
 
-const HearderMenu: React.FC<IPopupPageProps> = (props) => {
+const HearderMenu: React.FC<IHeaderPageProps> = (props) => {
   return (
     <div>
       <nav className='bg-transparent p-2'>

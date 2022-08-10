@@ -10,9 +10,6 @@ module.exports = {
         "red": "var(--color-red)",
         "crimson": "var(--color-crimson)",
       },
-      fontFamily: {
-        'roboto': ['Roboto Condensed'],
-      },
     },
   },
   plugins: [],

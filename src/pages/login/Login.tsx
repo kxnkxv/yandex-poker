@@ -66,7 +66,7 @@ const Login: FC = () => {
             </div>
             </div>
             <Button clicked={undefined}>
-              LOGIN
+              Login
             </Button>
           <div className='text-center mb-5'>
             <Link to='/register' className='text-white underline'>

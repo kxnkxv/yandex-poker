@@ -140,7 +140,7 @@ const Registration: FC = () => {
             />
           </div>
             <Button clicked={undefined}>
-              REGISTER
+              Register
             </Button>
           <div className='text-center mb-5'>
             <Link to='/' className='text-white underline'>

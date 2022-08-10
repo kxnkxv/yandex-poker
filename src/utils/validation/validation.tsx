@@ -4,10 +4,10 @@ export const nameValidation = {
   required: REQUIRED_FIELD,
   validate: (value: string) => {
     if (!value.match(/^[A-Z, А-Я]/)) {
-      return "Capitalize your name"
+      return 'Capitalize your name'
     }
     if (value.match(/[^\-,A-Z,a-z,А-Я,а-я]/)) {
-      return "Don\'t use special characters, numbers and spaces"
+      return "Don't use special characters, numbers and spaces"
     }
     return true
   },
@@ -24,14 +24,8 @@ export const emailValidation = {
 export const loginValidation = {
   required: REQUIRED_FIELD,
   validate: (value: string) => {
-    if (value.match(/[^\-\w]/)) {
-      return "Don't use Cyrillic, special characters or spaces"
-    }
-    if (!value.match(/[\D]/)) {
-      return "Don't use just numbers"
-    }
-    if (!(value.length >= 3 && value.length <= 20)) {
-      return "Use 3 to 20 characters"
+    if (!value.match('^(?=.*[A-Za-z])[A-Za-z0-9_\\-]{3,20}$')) {
+      return 'Only letters, numbers and _'
     }
     return true
   },
@@ -39,11 +33,8 @@ export const loginValidation = {
 export const phoneValidation = {
   required: REQUIRED_FIELD,
   validate: (value: string) => {
-    if (!(value.length >= 10 && value.length <= 15)) {
-      return "Use 10 to 15 symbols"
-    }
-    if (!value.match(/^[+]?\d+$/)) {
-      return "Don\'t use invalid characters"
+    if (!value.match('^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{10,15}$')) {
+      return 'Invalid phone'
     }
     return true
   },
@@ -51,11 +42,8 @@ export const phoneValidation = {
 export const passwordValidation = {
   required: REQUIRED_FIELD,
   validate: (value: string) => {
-    if (value.length < 6) {
-      return 'Use 6 to 40 characters'
-    }
-    if (!value.match(/[A-Z,А-Я]/)) {
-      return "Use one capital letter"
+    if (!value.match('^(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,40}$')) {
+      return 'Min 8 characters. Required to have a capital letter and a number'
     }
     return true
   },
