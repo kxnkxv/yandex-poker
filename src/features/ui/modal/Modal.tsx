@@ -12,6 +12,7 @@ const Modal: React.FunctionComponent<IPopupPageProps> = (props) => {
         <h4>Game</h4>
         <h4>Stakes</h4>
         <h4>Plrs</h4>
+        <span></span>
       </nav>
       <div className='flex justify-between items-center h-10 bg-blue p-auto'>
         <span className='bg-cyan w-1 h-10 rounded-l-sm'></span>

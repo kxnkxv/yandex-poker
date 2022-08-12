@@ -11,10 +11,10 @@ export interface ITableProps {
 
 const Tables = (props: ITableProps) => {
   return (
-    <div>
+    <div className='p-5 w-full'>
       <HearderMenu />
-      <div className='container flex justify-between w-full p-4'>
-        <section className='flex justify-between w-2/3 mb-5 md:px-0'>
+      <div className='grid grid-cols-2 gap-5 w-full'>
+        <section className='flex justify-between mb-5 md:px-0'>
           <div className='inline-block w-full'>
             <div className='flex justify-between'>
               <div>
@@ -27,9 +27,9 @@ const Tables = (props: ITableProps) => {
             <TablesList tables={undefined}></TablesList>
           </div>
         </section>
-        <section className='inline-block justify-end mb-5 md:order-2'>
-          <img className='h-20 mb-5' src={Banner} alt='user photo' />
-          <div className='flex justify-between items-center h-11 bg-magenta opacity-70 pl-4 mb-1 uppercase'>
+        <section className='inline-block justify-end mb-5'>
+          <img className='h-20 w-80 mb-5' src={Banner} alt='user photo' />
+          <div className='flex justify-between items-center h-11 bg-magenta  mb-5 uppercase'>
             <h4>Top results</h4>
             <img className='w-14 h-14 mb-5' src={Cup} alt='cup' />
           </div>

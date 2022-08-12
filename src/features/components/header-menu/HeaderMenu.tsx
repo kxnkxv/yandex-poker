@@ -8,8 +8,8 @@ export interface IHeaderPageProps {}
 
 const HearderMenu: React.FC<IHeaderPageProps> = (props) => {
   return (
-      <nav className='bg-transparent p-2'>
-        <div className='container flex flex-wrap justify-between items-center'>
+      <nav className='bg-transparent'>
+        <div className='flex flex-wrap justify-between items-center'>
           <div className='flex items-center mb-5'>
             <img src={Logo} className='h-6 sm:h-9' alt='AIG Logo' />
             <a href='https://github.com/AIG-GAMING' className='flex items-center'>
