@@ -20,7 +20,7 @@ const Modal: React.FC<IPopupPageProps> = ({
       <div className='modal'>
         <div className='modal-header p-5'>
           <div className='modal-title h2'>{title}</div>
-          <div className='modal-close' onClick={closeHandle}>
+          <div className='modal-close cursor-pointer' onClick={closeHandle}>
             <img src={CloseIcon} alt='Close' />
           </div>
         </div>

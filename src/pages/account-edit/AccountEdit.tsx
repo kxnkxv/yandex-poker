@@ -77,7 +77,7 @@ const AccountEdit: FC = () => {
           <Modal title='Change avatar' open={isModalOpened} closeHandle={closeModal}>
             <div className='grid gap-5 mb-5 grid-cols-5'>
               {Avatars.map((avatar) => (
-                <div>
+                <div key={avatar.id}>
                   <input
                     type='radio'
                     name='avatar'
