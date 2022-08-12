@@ -13,6 +13,7 @@ import Avatars from './Avatars'
 import './AccountEdit.css'
 
 interface IAccountEditForm {
+  avatar: string
   first_name: string
   second_name: string
   email: string
@@ -21,8 +22,11 @@ interface IAccountEditForm {
 }
 
 const AccountEdit: FC = () => {
-  const { handleSubmit, control } = useForm<IAccountEditForm>({
+  const [currentAvatar, setCurrentAvatar] = useState(Avatars[0].image)
+
+  const { handleSubmit, control, register, setValue } = useForm<IAccountEditForm>({
     defaultValues: {
+      avatar: currentAvatar,
       first_name: '',
       second_name: '',
       email: '',
@@ -31,8 +35,6 @@ const AccountEdit: FC = () => {
     },
     mode: 'onBlur',
   })
-
-  const [currentAvatar, setCurrentAvatar] = useState(Avatars[0].image)
 
   const [isModalOpened, setIsModalOpened] = useState(false)
 
@@ -46,6 +48,7 @@ const AccountEdit: FC = () => {
 
   const changeAvatar = (image: string) => {
     setCurrentAvatar(image)
+    setValue('avatar', image)
     closeModal()
   }
 
@@ -79,15 +82,18 @@ const AccountEdit: FC = () => {
               {Avatars.map((avatar) => (
                 <div key={avatar.id}>
                   <input
+                    {...register('avatar')}
                     type='radio'
-                    name='avatar'
                     value={avatar.id}
                     className='hidden'
+                    onChange={() => changeAvatar(avatar.image)}
                     checked={currentAvatar === avatar.image}
+                    id={'avatar' + avatar.id}
                   />
+
                   <label
                     className='profile-avatar mx-auto inline-block cursor-pointer'
-                    onClick={() => changeAvatar(avatar.image)}
+                    htmlFor={'avatar' + avatar.id}
                   >
                     <a>
                       <img src={avatar.image} alt='Username' />
