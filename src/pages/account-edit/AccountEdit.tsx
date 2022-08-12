@@ -176,7 +176,7 @@ const AccountEdit: FC = () => {
             </div>
           </div>
           <div className='text-center'>
-            <button className='btn-red'>Confirm</button>
+            <button className='btn-red inline-block'>Confirm</button>
           </div>
         </form>
       </div>
