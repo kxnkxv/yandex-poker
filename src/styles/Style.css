@@ -20,10 +20,14 @@ body {
 }
 :root {
   --color-dark-blue: #232333;
+  --color-magenta: #363651;
+  --color-cyan: #3F6CE0;
+  --color-blue: #2B2B48;
   --color-white: #ffffff;
   --color-red: #be2e2e;
   --color-crimson: #7d2121;
   --color-purple: #49499e;
+  --color-light-blue: #55556D;
 }
 body {
   margin: 0;
@@ -65,7 +69,7 @@ background: radial-gradient(85.74% 37.17% at 50% 100%, rgba(77, 77, 218, 0.496) 
 }
 @layer components {
 .form-control {
-  @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+  @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5
 }
 .form-label {
   @apply block mb-2 text-sm font-medium text-white
