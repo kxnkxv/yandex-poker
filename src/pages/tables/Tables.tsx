@@ -13,9 +13,9 @@ const Tables = (props: ITableProps) => {
   return (
     <div>
       <HearderMenu />
-      <div className='container flex justify-between max-w-full p-4'>
-        <section className='grid justify-between mb-5 md:px-0'>
-          <div className='inline-block'>
+      <div className='container flex justify-between w-full p-4'>
+        <section className='flex justify-between w-2/3 mb-5 md:px-0'>
+          <div className='inline-block w-full'>
             <div className='flex justify-between'>
               <div>
                 <h1>Available tables</h1>
