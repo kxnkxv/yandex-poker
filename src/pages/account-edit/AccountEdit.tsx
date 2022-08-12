@@ -90,7 +90,6 @@ const AccountEdit: FC = () => {
                     checked={currentAvatar === avatar.image}
                     id={'avatar' + avatar.id}
                   />
-
                   <label
                     className='profile-avatar mx-auto inline-block cursor-pointer'
                     htmlFor={'avatar' + avatar.id}
