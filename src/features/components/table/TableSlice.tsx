@@ -1,15 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { TGameTable } from './types'
 
-const initialState = {
+const initialState: { data: TGameTable } = {
   data: {
-    id: null,
+    id: 0,
     name: '',
-    seatsCount: null,
-    playersSeatedCount: null,
+    seatsCount: 0,
+    playersSeatedCount: 0,
     bigBlind: null,
     smallBlind: null,
-    minBuyIn: null,
-    maxBuyIn: null,
+    minBuyIn: 0,
+    maxBuyIn: 0,
     pot: [
       {
         amount: 0,
