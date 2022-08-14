@@ -6,6 +6,7 @@ import Tables from './pages/tables/Tables'
 import './styles/style.css'
 import Table from './features/components/table/Table'
 import PageNotFound from './pages/pageNotFound/PageNotFound'
+import AccountEdit from './pages/account-edit/AccountEdit'
 import { Provider } from 'react-redux'
 import { store } from './core/store'
 
@@ -19,6 +20,7 @@ const App: FC = (): JSX.Element => {
           <Route path='/' element={<Login />} />
           <Route path='table/:id/:name' element={<Table />} />
           <Route path='tables' element={<Tables />} />
+          <Route path='account/edit' element={<AccountEdit />} />
         </Routes>
       </BrowserRouter>
     </Provider>

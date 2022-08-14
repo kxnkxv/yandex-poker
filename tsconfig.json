@@ -14,12 +14,20 @@
     "skipLibCheck": true,
     "declaration": false,
     "sourceMap": false,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "outDir": "./dist",
     "paths": {
-      "*": ["./src/*"]
+      "Core": [ "./src/core"],
+      "Features": [ "./src/features"],
+      "Images": [ "./src/images"],
+      "Pages": [ "./src/pages"],
+      "Styles": [ "./src/styles"],
+      "Utils": [ "./src/utils"],
+      "*": ["./src/*"],
+
     },
-    "typeRoots": ["node_modules/@types", "src/types/app.d.ts"]
+    "typeRoots": ["typings/**/*.d.ts", "node_modules/@types", "src/types"],
+
   },
   // "include": ["src", "typings/**/*.d.ts", "./node_modules/@types"],
   "exclude": ["**/*.js"]
