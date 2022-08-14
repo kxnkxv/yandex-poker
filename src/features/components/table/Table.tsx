@@ -16,12 +16,6 @@ const Table = (): JSX.Element => {
 
   const dispatch = useDispatch()
 
-  // // ПОЛУЧАЕМ TABLE DATA
-  // socket.on('table-data', (data: TGameTable) => {
-  //   console.log(data)
-  //   dispatch(updateTable(data))
-  // })
-
   const table = useSelector((state: RootState) => state.table.data)
 
   const canvasRef = useRef(null)
