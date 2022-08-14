@@ -1,4 +1,4 @@
-const REQUIRED_FIELD = 'Field can\'t be empty'
+const REQUIRED_FIELD = "Field can't be empty"
 
 export const nameValidation = {
   required: REQUIRED_FIELD,
@@ -7,7 +7,7 @@ export const nameValidation = {
       return 'Capitalize your name'
     }
     if (value.match(/[^\-,A-Z,a-z,А-Я,а-я]/)) {
-      return 'Don\'t use special characters, numbers and spaces'
+      return "Don't use special characters, numbers and spaces"
     }
     return true
   },

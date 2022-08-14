@@ -12,7 +12,7 @@ const Table = (): JSX.Element => {
   // Получение id стола и имени пользователя
   const { name, seatId } = useParams()
 
-  const [seatIdParams, setSeatIdParams] = useState(Number(seatId))
+  const [seatIdParams, setSeatIdParams] = useState<number>(Number(seatId))
 
   const dispatch = useDispatch()
 
@@ -71,19 +71,19 @@ const Table = (): JSX.Element => {
     <div>
       <div className='table-wrapper'>
         <canvas ref={canvasRef} width='2560' height='1320' id='table' />
-        {seats.map((seatId) =>
-          table.seats[seatId] || isOnTheTable ? (
-            ''
-          ) : (
-            <div
-              key={seatId}
-              className={`seat seat-${seatId}`}
-              onClick={() => setSeatIdParams(seatId)}
-            >
-              Seat
-              <br /> open
-            </div>
-          ),
+        {seats.map(
+          (seatId) =>
+            !table.seats[seatId] ||
+            (!isOnTheTable && (
+              <div
+                key={seatId}
+                className={`seat seat-${seatId}`}
+                onClick={() => setSeatIdParams(seatId)}
+              >
+                Seat
+                <br /> open
+              </div>
+            )),
         )}
       </div>
       <h2 className='text-white'>{name}</h2>

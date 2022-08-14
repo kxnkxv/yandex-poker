@@ -137,7 +137,7 @@ const Registration: FC = () => {
           <Button clicked={undefined}>Register</Button>
           <div className='text-center mb-5'>
             <Link to='/' className='text-white underline'>
-              I HAVE AN ACCOUNT
+              I have an account
             </Link>
           </div>
         </form>
