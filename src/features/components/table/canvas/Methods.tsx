@@ -1,14 +1,14 @@
 import { playerPositions } from './parameters'
-
-//Метод, перемещающий игроков так, чтобы мы были внизу посередине
+// Todo:Нужен рефактор
+// Метод, перемещающий игроков так, чтобы мы были внизу посередине
 export const shiftSeats = (table: any, currentUserName: string) => {
   let allSeats: any = []
-  //Место нашего игрока
+  // Место нашего игрока
   let ourSeat = null
   for (let i = 0; i < table.seatsCount; i++) {
     if (table.seats[i]) {
       allSeats.push(table.seats[i])
-      //Определяем наше место
+      // Определяем наше место
       if (table.seats[i].name === currentUserName) {
         ourSeat = i
       }
@@ -16,7 +16,7 @@ export const shiftSeats = (table: any, currentUserName: string) => {
       allSeats.push(null)
     }
   }
-  //Если мы сидим за столом, то перемещаем массив игроков так, чтобы мы были в 0 позиции
+  // Если мы сидим за столом, то перемещаем массив игроков так, чтобы мы были в 0 позиции
   if (ourSeat) {
     allSeats = [].concat(allSeats.slice(ourSeat), allSeats.slice(0, ourSeat))
   }
@@ -24,11 +24,11 @@ export const shiftSeats = (table: any, currentUserName: string) => {
   return allSeats
 }
 
-//Метод для отрисовки игроков на своих местах
+// Метод для отрисовки игроков на своих местах
 export const createPlayers = (table: any, currentUserName: string, ctx: any) => {
   if (table.seats) {
-    //Смещаем сидения так, чтобы наше было внизу посередине
-    let seats = shiftSeats(table, currentUserName)
+    // Смещаем сидения так, чтобы наше было внизу посередине
+    const seats = shiftSeats(table, currentUserName)
 
     seats.forEach((seat: any, id: number) => {
       if (seat !== null) {
@@ -44,7 +44,7 @@ export const createPlayers = (table: any, currentUserName: string, ctx: any) => 
 
         ctx.stroke()
 
-        //Text
+        // Text
         ctx.font = '32px Arial'
         ctx.fillStyle = '#FFE4AF'
         ctx.textAlign = 'center'

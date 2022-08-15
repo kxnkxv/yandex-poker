@@ -4,13 +4,14 @@ type InputProps = React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
 > & {
-  //Дополнительные поля
+  // Дополнительные поля
   label?: string
   error?: {
     message?: string
   }
 }
 
+// eslint-disable-next-line react/display-name
 const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   return (
     <>
