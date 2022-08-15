@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import Logo from 'Images/logo.svg'
 import User from 'Images/avatar.svg'
 import Settings from 'Images/normal.svg'
