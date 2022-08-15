@@ -1,14 +1,14 @@
 import HearderMenu from 'Features/components/header-menu/HeaderMenu'
 import React from 'react'
 
-export interface ITableProps {
+export type ITableProps = {
   tableId?: number
 }
 
 const Tables = (props: ITableProps) => {
   return (
     <div className=''>
-      <HearderMenu/>
+      <HeaderMenu />
       <p>Table component</p>
     </div>
   )

@@ -1,12 +1,10 @@
-import React from 'react'
+import React, { FC } from 'react'
 import Logo from '../../../images/logo.png'
 import Ivan from '../../../images/Ivan.png'
 import Settings from '../../../images/settings.png'
 import FullScreen from '../../../images/fullscreen.png'
 
-export interface IHeaderPageProps {}
-
-const HearderMenu: React.FC<IHeaderPageProps> = (props) => {
+const HeaderMenu: FC = (): JSX.Element => {
   return (
     <div>
       <nav className='bg-transparent p-2'>
@@ -50,4 +48,4 @@ const HearderMenu: React.FC<IHeaderPageProps> = (props) => {
   )
 }
 
-export default HearderMenu
+export default HeaderMenu

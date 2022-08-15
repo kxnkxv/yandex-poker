@@ -1,9 +1,6 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "es2017"
-    ],
+    "lib": ["dom", "es2017"],
     "module": "esnext",
     "moduleResolution": "node",
     "target": "es5",
@@ -20,24 +17,14 @@
     "baseUrl": "./",
     "outDir": "./dist",
     "paths": {
-      "Core": [ "./src/core"],
-      "Features": [ "./src/features"],
-      "Images": [ "./src/images"],
-      "Pages": [ "./src/pages"],
-      "Styles": [ "./src/styles"],
-      "Utils": [ "./src/utils"],
-      "*": ["./src/*"],
-
-    },
-    "typeRoots": ["typings/**/*.d.ts", "node_modules/@types", "src/types"],
-
+      "Core": ["./src/core"],
+      "Features": ["./src/features"],
+      "Images": ["./src/images"],
+      "Pages": ["./src/pages"],
+      "Styles": ["./src/styles"],
+      "Utils": ["./src/utils"],
+      "*": ["./src/*"]
+    }
   },
-  "include": [
-    "src",
-    "typings/**/*.d.ts",
-    "./node_modules/@types"
-  ],
-  "exclude": [
-    "**/*.js"
-  ]
+  "include": ["src"],
 }

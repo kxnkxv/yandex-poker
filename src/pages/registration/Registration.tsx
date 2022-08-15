@@ -1,12 +1,17 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { useForm, SubmitHandler, Controller, useFormState } from 'react-hook-form'
-import { emailValidation, loginValidation, nameValidation, passwordValidation, phoneValidation } from '../../utils/validation/validation'
+import {
+  emailValidation,
+  loginValidation,
+  nameValidation,
+  passwordValidation,
+  phoneValidation,
+} from '../../utils/validation/validation'
 import { Link } from 'react-router-dom'
 import Input from '../../features/ui/input/Input'
-import React from 'react'
 import Button from '../../features/ui/button/Button'
 
-interface ISignUpForm{
+interface ISignUpForm {
   first_name: string
   second_name: string
   email: string
@@ -95,12 +100,7 @@ const Registration: FC = () => {
                 name='login'
                 rules={loginValidation}
                 render={({ field }) => (
-                  <Input
-                    {...field}
-                    className='form-control'
-                    label='Login'
-                    error={errors.login}
-                  />
+                  <Input {...field} className='form-control' label='Login' error={errors.login} />
                 )}
               />
             </div>
@@ -112,12 +112,7 @@ const Registration: FC = () => {
                 name='phone'
                 rules={phoneValidation}
                 render={({ field }) => (
-                  <Input
-                    {...field}
-                    className='form-control'
-                    label='Phone'
-                    error={errors.phone}
-                  />
+                  <Input {...field} className='form-control' label='Phone' error={errors.phone} />
                 )}
               />
             </div>
@@ -139,12 +134,10 @@ const Registration: FC = () => {
               )}
             />
           </div>
-            <Button clicked={undefined}>
-              Register
-            </Button>
+          <Button clicked={undefined}>Register</Button>
           <div className='text-center mb-5'>
             <Link to='/' className='text-white underline'>
-              I HAVE AN ACCOUNT
+              I have an account
             </Link>
           </div>
         </form>

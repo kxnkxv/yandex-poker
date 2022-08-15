@@ -7,16 +7,14 @@ body {
 }
 
 @font-face {
-  font-family: "Gilroy-Black";
-  src: url("./fonts/gilroy-black.eot"); /* IE 9 Compatibility Mode */
-  src: url("./fonts/gilroy-black.eot?#iefix") format("embedded-opentype"),
-    /* IE < 9 */ url("./fonts/gilroy-black.woff2") format("woff2"),
-    /* Super Modern Browsers */ url("./fonts/gilroy-black.woff") format("woff"),
-    /* Firefox >= 3.6, any other modern browser */ url("./fonts/gilroy-black.ttf") format("truetype"),
-    /* Safari, Android, iOS */ url("./fonts/gilroy-black.svg") format("svg"); /* Chrome < 4, Legacy iOS */
-}
-* {
-  box-sizing: border-box;
+  font-family: 'Gilroy-Black';
+  src: url('./fonts/gilroy-black.eot'); /* IE 9 Compatibility Mode */
+  src: url('./fonts/gilroy-black.eot?#iefix') format('embedded-opentype'),
+    /* IE < 9 */ url('./fonts/gilroy-black.woff2') format('woff2'),
+    /* Super Modern Browsers */ url('./fonts/gilroy-black.woff') format('woff'),
+    /* Firefox >= 3.6, any other modern browser */ url('./fonts/gilroy-black.ttf')
+      format('truetype'),
+    /* Safari, Android, iOS */ url('./fonts/gilroy-black.svg') format('svg'); /* Chrome < 4, Legacy iOS */
 }
 :root {
   --color-dark-blue: #232333;
@@ -27,6 +25,11 @@ body {
   --color-magenta: #363651;
   --color-grey: #bfbfc8;
 }
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   background: #232333;
@@ -36,7 +39,7 @@ body {
 h1,
 .h1 {
   height: 39px;
-  font-family: "Gilroy-Black";
+  font-family: 'Gilroy-Black';
   font-style: normal;
   font-weight: 800;
   font-size: 32px;
@@ -54,7 +57,7 @@ h2,
 }
 .form-link {
   height: 16px;
-  font-family: "Roboto Condensed";
+  font-family: 'Roboto Condensed';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;

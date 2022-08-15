@@ -1,12 +1,11 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { useForm, SubmitHandler, Controller, useFormState } from 'react-hook-form'
 import { loginValidation, passwordValidation } from '../../utils/validation/validation'
 import { Link } from 'react-router-dom'
 import Input from '../../features/ui/input/Input'
-import React from 'react'
 import Button from '../../features/ui/button/Button'
 
-interface ISignInForm {
+type ISignInForm = {
   login: string
   password: string
 }
@@ -39,35 +38,28 @@ const Login: FC = () => {
                 name='login'
                 rules={loginValidation}
                 render={({ field }) => (
+                  <Input {...field} className='form-control' label='Login' error={errors.login} />
+                )}
+              />
+            </div>
+            {/* Password */}
+            <div className='mb-5'>
+              <Controller
+                control={control}
+                name='password'
+                rules={passwordValidation}
+                render={({ field }) => (
                   <Input
                     {...field}
                     className='form-control'
-                    label='Login'
-                    error={errors.login}
+                    label='Password'
+                    error={errors.password}
                   />
                 )}
               />
             </div>
-          {/* Password */}
-          <div className='mb-5'>
-            <Controller
-              control={control}
-              name='password'
-              rules={passwordValidation}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  className='form-control'
-                  label='Password'
-                  error={errors.password}
-                />
-              )}
-            />
-            </div>
-            </div>
-            <Button clicked={undefined}>
-              Login
-            </Button>
+          </div>
+          <Button clicked={undefined}>Login</Button>
           <div className='text-center mb-5'>
             <Link to='/register' className='text-white underline'>
               SIGN UP
