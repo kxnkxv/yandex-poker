@@ -1,10 +1,10 @@
 import HearderMenu from 'Features/components/header-menu/HeaderMenu'
 import React from 'react'
 import Button from 'Features/ui/button/Button'
-import Banner from 'Images/banner.png'
-import Cup from 'Images/cup.png'
+import Banner from 'Images/banner.svg'
+import Cup from 'Images/cup.svg'
 import TablesList from './tablesList/TablesList'
-import Arrow from 'Images/arrow.png'
+import Arrow from 'Images/arrow.svg'
 
 export interface ITableProps {
   tableId?: number
@@ -35,15 +35,15 @@ const Tables = (props: ITableProps) => {
             <img className='w-14 h-14 mb-5' src={Cup} alt='cup' />
           </div>
           <table className='w-full table-auto'>
-            <tr className='bg-blue uppercase h-10 border-2 border-dark-blue text-left'>
+            <tr className='bg-blue h-10 border-2 border-dark-blue text-left'>
               <th></th>
               <th>
-                player
-                <img className='h-4 inline' src={Arrow} alt='user photo' />
+                Player
+                <img className='h-4 pl-1 inline' src={Arrow} alt='user photo' />
               </th>
               <th>
-                win
-                <img className='h-4 inline' src={Arrow} alt='user photo' />
+                Win
+                <img className='h-4 pl-1 inline' src={Arrow} alt='user photo' />
               </th>
             </tr>
             <tr className='bg-blue h-10 border-2 border-dark-blue hover:bg-magenta'>

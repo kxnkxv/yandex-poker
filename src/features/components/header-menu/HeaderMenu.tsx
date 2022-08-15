@@ -1,14 +1,14 @@
 import React from 'react'
-import Logo from 'Images/logo.png'
-import Ivan from 'Images/Ivan.png'
-import Settings from 'Images/settings.png'
-import FullScreen from 'Images/fullscreen.png'
+import Logo from 'Images/logo.svg'
+import User from 'Images/avatar.svg'
+import Settings from 'Images/normal.svg'
+import FullScreen from 'Images/pressed.svg'
 
 export interface IHeaderPageProps {}
 
 const HearderMenu: React.FC<IHeaderPageProps> = (props) => {
   return (
-      <nav className='bg-transparent'>
+      <nav>
         <div className='flex flex-wrap justify-between items-center'>
           <div className='flex items-center mb-5'>
             <img src={Logo} className='h-6 sm:h-9' alt='AIG Logo' />
@@ -25,7 +25,7 @@ const HearderMenu: React.FC<IHeaderPageProps> = (props) => {
                 <h5 className='opacity-70 font-roboto'>player</h5>
               </div>
               <div className='flex items-center md:order-3'>
-                <img className='w-16 h-16' src={Ivan} alt='user photo' />
+                <img className='w-16 h-16' src={User} alt='user photo' />
               </div>
             </div>
             <div className='flex items-center flex-col border-2 rounded border-white font-roboto text-white text-sm p-1'>

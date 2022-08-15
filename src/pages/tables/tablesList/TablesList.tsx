@@ -1,8 +1,8 @@
 import React from 'react'
-import Arrow from 'Images/arrow.png'
+import Arrow from 'Images/arrow.svg'
 
 export interface ITablesListProps {
-  id?: number
+  id: number
   name: string
   game: string
   stakes: string
@@ -16,20 +16,20 @@ const TablesList = (props: { tables: any }) => {
         <tr className='bg-blue uppercase h-10 border-2 border-dark-blue text-left'>
           <th></th>
           <th>
-            table name
-            <img className='h-4 inline' src={Arrow} alt='user photo' />
+            Table name
+            <img className='h-4 pl-1 inline' src={Arrow} alt='user photo' />
           </th>
           <th>
-            game
-            <img className='h-4 inline' src={Arrow} alt='user photo' />
+            Game
+            <img className='h-4 pl-1 inline' src={Arrow} alt='user photo' />
           </th>
           <th>
-            stakes
-            <img className='h-4 inline' src={Arrow} alt='user photo' />
+            Stakes
+            <img className='h-4 pl-1 inline' src={Arrow} alt='user photo' />
           </th>
           <th>
-            plrs
-            <img className='h-4 inline' src={Arrow} alt='user photo' />
+            Plrs
+            <img className='h-4 pl-1 inline' src={Arrow} alt='user photo' />
           </th>
           <th className='w-28'></th>
         </tr>
@@ -43,7 +43,7 @@ const TablesList = (props: { tables: any }) => {
           <td>6/6</td>
           <td>
             <button className='bg-light-blue rounded uppercase w-28 h-8 float-center'>
-              join game
+              Join game
             </button>
           </td>
         </tr>
@@ -57,7 +57,7 @@ const TablesList = (props: { tables: any }) => {
           <td>6/9</td>
           <td>
             <button className='bg-light-blue rounded uppercase w-28 h-8 float-center'>
-              join game
+              Join game
             </button>
           </td>
         </tr>
@@ -71,7 +71,7 @@ const TablesList = (props: { tables: any }) => {
           <td>10/10</td>
           <td>
             <button className='bg-light-blue rounded uppercase w-28 h-8 float-center'>
-              join game
+              Join game
             </button>
           </td>
         </tr>

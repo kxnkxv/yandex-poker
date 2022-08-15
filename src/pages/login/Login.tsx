@@ -69,8 +69,8 @@ const Login: FC = () => {
               Login
             </Button>
           <div className='text-center mb-5'>
-            <Link to='/register' className='text-white underline uppercase'>
-              sign in
+            <Link to='/register' className='text-white underline'>
+              Sign in
             </Link>
           </div>
         </form>
