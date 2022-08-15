@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import { useForm, SubmitHandler, Controller, useFormState } from 'react-hook-form'
 import {
   emailValidation,
@@ -21,6 +21,11 @@ interface ISignUpForm {
 }
 
 const Registration: FC = () => {
+  //Set page title
+  useEffect(() => {
+    document.title = 'Registration'
+  }, [])
+
   const { handleSubmit, control } = useForm<ISignUpForm>({
     defaultValues: {
       first_name: '',
@@ -134,7 +139,7 @@ const Registration: FC = () => {
               )}
             />
           </div>
-          <Button clicked={undefined}>Register</Button>
+          <Button>Register</Button>
           <div className='text-center mb-5'>
             <Link to='/' className='text-white underline'>
               I have an account

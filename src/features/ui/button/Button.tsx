@@ -1,19 +1,10 @@
 import React from 'react'
 
-const Button = (props: {
-  clicked: React.MouseEventHandler<HTMLButtonElement> | undefined
-  children:
-    | string
-    | number
-    | boolean
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-    | React.ReactFragment
-    | React.ReactPortal
-    | null
-    | undefined
-}) => (
-  <button className='btn-red' onClick={props.clicked}>
-    {props.children}
-  </button>
-)
+type IButtonProps = React.HTMLProps<HTMLButtonElement> & {
+  // Дополнительные поля
+  children: React.ReactNode
+}
+
+const Button = (props: IButtonProps) => <button className='btn-red'>{props.children}</button>
+
 export default Button
