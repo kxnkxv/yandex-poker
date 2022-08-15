@@ -2,6 +2,15 @@
 module.exports = {
   content: ['./src/**/*.{html,tsx}'],
   theme: {
+    screens: {
+      'sm': '500px',
+      'md': [
+        {'min': '668px', 'max': '767px'},
+        {'min': '868px'}
+      ],
+      'lg': '1100px',
+      'xl': '1400px',
+    },
     extend: {
       colors: {
         "purple": "var(--color-purple)",

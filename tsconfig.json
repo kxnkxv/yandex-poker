@@ -20,7 +20,13 @@
     "baseUrl": ".",
     "outDir": "./dist",
     "paths": {
-      "*": ["./src/*"]
+      "Core": [ "./src/core"],
+      "Features": [ "./src/features"],
+      "Images": [ "./src/images"],
+      "Pages": [ "./src/pages"],
+      "Styles": [ "./src/styles"],
+      "Utils": [ "./src/utils"],
+      "*": ["./src/*"],
     },
     "typeRoots": ["typings/**/*.d.ts", "node_modules/@types", "src/types"],
   },

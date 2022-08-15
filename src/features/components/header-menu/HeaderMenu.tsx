@@ -1,8 +1,8 @@
 import React from 'react'
-import Logo from '../../../images/logo.png'
-import Ivan from '../../../images/Ivan.png'
-import Settings from '../../../images/settings.png'
-import FullScreen from '../../../images/fullscreen.png'
+import Logo from 'Images/logo.png'
+import Ivan from 'Images/Ivan.png'
+import Settings from 'Images/settings.png'
+import FullScreen from 'Images/fullscreen.png'
 
 export interface IHeaderPageProps {}
 
@@ -34,12 +34,12 @@ const HearderMenu: React.FC<IHeaderPageProps> = (props) => {
                 <h5 className='p-0.5'>$100.00</h5>
               </div>
             </div>
-            <div className='m-2'>
-              <button>
-                <img src={Settings} className='mr-3 h-6 sm:h-9' alt='Settings' />
+            <div>
+              <button className='p-5'>
+                <img src={Settings} className='h-6 sm:h-9' alt='Settings' />
               </button>
               <button>
-                <img src={FullScreen} className='mr-3 h-6 sm:h-9' alt='FullScreen' />
+                <img src={FullScreen} className='h-6 sm:h-9' alt='FullScreen' />
               </button>
             </div>
           </div>

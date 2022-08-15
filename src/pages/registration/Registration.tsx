@@ -143,8 +143,8 @@ const Registration: FC = () => {
               Register
             </Button>
           <div className='text-center mb-5'>
-            <Link to='/' className='text-white underline'>
-              I HAVE AN ACCOUNT
+            <Link to='/' className='text-white underline uppercase'>
+              i have an account
             </Link>
           </div>
         </form>

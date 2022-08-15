@@ -1,6 +1,5 @@
 import React from 'react'
-import Modal from '../../../features/ui/modal/Modal'
-import { Link } from 'react-router-dom'
+import Arrow from 'Images/arrow.png'
 
 export interface ITablesListProps {
   id?: number
@@ -11,22 +10,72 @@ export interface ITablesListProps {
 }
 
 const TablesList = (props: { tables: any }) => {
-  const { tables } = props
-
-  if (!tables || tables.length === 0) return <Modal><p>No tables, sorry</p></Modal>
   return (
-    <div className='flex justify-between'>
-      {tables.map((table: { id: React.Key | null | undefined; name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; game: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; stakes: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; plrs: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined }) => {
-        return (
-          <Modal key={table.id}>
-            <h4>{table.name}</h4>
-            <h4>{table.game}</h4>
-            <h4>{table.stakes}</h4>
-            <h4>{table.plrs}</h4>
-            <Link to={`/tables/${table.id}`}>Profile</Link>
-          </Modal>
-        )
-      })}
+    <div>
+      <table className='w-full table-auto'>
+        <tr className='bg-blue uppercase h-10 border-2 border-dark-blue text-left'>
+          <th></th>
+          <th>
+            table name
+            <img className='h-4 inline' src={Arrow} alt='user photo' />
+          </th>
+          <th>
+            game
+            <img className='h-4 inline' src={Arrow} alt='user photo' />
+          </th>
+          <th>
+            stakes
+            <img className='h-4 inline' src={Arrow} alt='user photo' />
+          </th>
+          <th>
+            plrs
+            <img className='h-4 inline' src={Arrow} alt='user photo' />
+          </th>
+          <th className='w-28'></th>
+        </tr>
+        <tr className='bg-blue h-10 border-2 border-dark-blue hover:bg-magenta'>
+          <td>
+            <div className='bg-cyan w-1 h-10 rounded-r-sm'></div>
+          </td>
+          <td>Run it Twice Table</td>
+          <td>NL Holdem</td>
+          <td>1/2</td>
+          <td>6/6</td>
+          <td>
+            <button className='bg-light-blue rounded uppercase w-28 h-8 float-center'>
+              join game
+            </button>
+          </td>
+        </tr>
+        <tr className='bg-blue h-10 border-2 border-dark-blue hover:bg-magenta'>
+          <td>
+            <div className='bg-cyan w-1 h-10 rounded-r-sm'></div>
+          </td>
+          <td>Razz 1/2</td>
+          <td>NL Holdem</td>
+          <td>1/2</td>
+          <td>6/9</td>
+          <td>
+            <button className='bg-light-blue rounded uppercase w-28 h-8 float-center'>
+              join game
+            </button>
+          </td>
+        </tr>
+        <tr className='bg-blue h-10 border-2 border-dark-blue hover:bg-magenta'>
+          <td>
+            <div className='bg-cyan w-1 h-10 rounded-r-sm'></div>
+          </td>
+          <td>Rake Free Table</td>
+          <td>NL Holdem</td>
+          <td>5/10</td>
+          <td>10/10</td>
+          <td>
+            <button className='bg-light-blue rounded uppercase w-28 h-8 float-center'>
+              join game
+            </button>
+          </td>
+        </tr>
+      </table>
     </div>
   )
 }

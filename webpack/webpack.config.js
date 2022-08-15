@@ -9,11 +9,12 @@ module.exports = {
   resolve: {
     extensions: [ '.ts', '.tsx', '.js', '.jsx' ],
     alias: {
-      components: path.resolve(__dirname, 'src/features'),
-      core: path.resolve(__dirname, 'src/core'),
-      pages: path.resolve(__dirname, 'src/pages'),
-      types: path.resolve(__dirname, 'src/images'),
-      api: path.resolve(__dirname, 'src/api'),
+      Core: path.resolve(__dirname, '../src/core'),
+      Features: path.resolve(__dirname, '../src/features'),
+      Images: path.resolve(__dirname, '../src/images'),
+      Pages: path.resolve(__dirname, '../src/pages'),
+      Styles: path.resolve(__dirname, '../src/styles'),
+      Utils: path.resolve(__dirname, '../src/utils'),
     },
   },
   devServer: {
