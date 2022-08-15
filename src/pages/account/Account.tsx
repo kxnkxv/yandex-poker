@@ -41,7 +41,9 @@ const Account = () => {
         </div>
         <div className='inline-grid'>
           <button className='mb-5'>Change password</button>
-          <Link className='text-red' to={'/'}>Sign out</Link>
+          <Link className='text-red' to={'/'}>
+            Sign out
+          </Link>
         </div>
       </div>
     </div>

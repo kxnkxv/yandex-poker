@@ -24,7 +24,7 @@ const App: React.FunctionComponent<IAppPageProps> = (props) => {
           <Route path='table/:id/:name' element={<Table />} />
           <Route path='tables' element={<Tables />} />
           <Route path='account/edit' element={<AccountEdit />} />
-          <Route path='account' element={<Account/>} />
+          <Route path='account' element={<Account />} />
         </Routes>
       </BrowserRouter>
     </Provider>
