@@ -23,7 +23,7 @@ const Account = () => {
             <img className='h-28 w-28' src={userAvatar} alt='Username' />
           </div>
           <div className='mb-5'>
-            <h2>UserName</h2>
+            <h2>Username</h2>
             <h4>@Login</h4>
           </div>
           <div className='h-px bg-magenta w-full mb-5'></div>
