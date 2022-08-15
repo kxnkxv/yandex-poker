@@ -24,6 +24,7 @@
       "Styles": ["./src/styles"],
       "Utils": ["./src/utils"],
       "*": ["./src/*"]
+      
     },
     "typeRoots": ["typings/**/*.d.ts", "node_modules/@types", "src/types"]
   },
