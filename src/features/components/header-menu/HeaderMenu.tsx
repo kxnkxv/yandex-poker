@@ -4,9 +4,7 @@ import User from 'Images/avatar.svg'
 import Settings from 'Images/normal.svg'
 import FullScreen from 'Images/pressed.svg'
 
-export interface IHeaderPageProps {}
-
-const HearderMenu: React.FC<IHeaderPageProps> = (props) => {
+const HeaderMenu: FC = (): JSX.Element => {
   return (
       <nav>
         <div className='flex flex-wrap justify-between items-center'>
@@ -48,4 +46,4 @@ const HearderMenu: React.FC<IHeaderPageProps> = (props) => {
   )
 }
 
-export default HearderMenu
+export default HeaderMenu

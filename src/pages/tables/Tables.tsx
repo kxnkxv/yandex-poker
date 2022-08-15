@@ -6,7 +6,7 @@ import Cup from 'Images/cup.svg'
 import TablesList from './tablesList/TablesList'
 import Arrow from 'Images/arrow.svg'
 
-export interface ITableProps {
+export type ITableProps = {
   tableId?: number
 }
 

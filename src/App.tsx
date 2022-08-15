@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Login from './pages/login/Login'
 import Registration from './pages/registration/Registration'
@@ -10,9 +10,7 @@ import AccountEdit from './pages/account-edit/AccountEdit'
 import { Provider } from 'react-redux'
 import { store } from './core/store'
 
-export interface IAppPageProps {}
-
-const App: React.FunctionComponent<IAppPageProps> = (props) => {
+const App: FC = (): JSX.Element => {
   return (
     <Provider store={store}>
       <BrowserRouter>
