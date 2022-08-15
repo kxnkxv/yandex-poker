@@ -7,7 +7,7 @@ module.exports = {
     filename: 'bundle.js',
   },
   resolve: {
-    extensions: [ '.ts', '.tsx', '.js', '.jsx' ],
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
     alias: {
       Core: path.resolve(__dirname, '../src/core'),
       Features: path.resolve(__dirname, '../src/features'),
@@ -19,7 +19,7 @@ module.exports = {
   },
   devServer: {
     port: 3000,
-    historyApiFallback: true
+    historyApiFallback: true,
   },
   module: {
     rules: [
@@ -33,11 +33,11 @@ module.exports = {
         enforce: 'pre',
       },
       {
-        test: /\.(png|jpg|jpeg|gif)$/i,
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: 'asset/resource',
       },
       {
-        test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
+        test: /\.(woff(2)?|eot|ttf|otf)$/,
         type: 'asset/inline',
       },
       {
