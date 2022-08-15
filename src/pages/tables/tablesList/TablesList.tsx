@@ -14,7 +14,7 @@ const TablesList = (props: { tables: any }) => {
     <div>
       <table className='w-full table-auto'>
         <tr className='bg-blue uppercase h-10 border-2 border-dark-blue text-left'>
-          <th></th>
+          <th/>
           <th>
             Table name
             <img className='h-4 pl-1 inline' src={Arrow} alt='user photo' />

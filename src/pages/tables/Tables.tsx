@@ -9,6 +9,9 @@ import Arrow from 'Images/arrow.svg'
 export type ITableProps = {
   tableId?: number
 }
+const createTable = (_props: any) => {
+  console.log("created")
+}
 
 const Tables = (props: ITableProps) => {
   return (
@@ -22,10 +25,10 @@ const Tables = (props: ITableProps) => {
                 <h1>Available tables</h1>
               </div>
               <div>
-                <Button clicked={undefined}>Create a table</Button>
+                <Button clicked={createTable}>Create a table</Button>
               </div>
             </div>
-            <TablesList tables={undefined}></TablesList>
+            <TablesList tables={null}></TablesList>
           </div>
         </div>
         <div className='inline-block w-72'>
@@ -36,7 +39,7 @@ const Tables = (props: ITableProps) => {
           </div>
           <table className='w-full table-auto'>
             <tr className='bg-blue h-10 border-2 border-dark-blue text-left'>
-              <th></th>
+              <th/>
               <th>
                 Player
                 <img className='h-4 pl-1 inline' src={Arrow} alt='user photo' />
@@ -47,12 +50,12 @@ const Tables = (props: ITableProps) => {
               </th>
             </tr>
             <tr className='bg-blue h-10 border-2 border-dark-blue hover:bg-magenta'>
-              <td></td>
+              <td/>
               <td>User name</td>
               <td>$1000</td>
             </tr>
             <tr className='bg-blue h-10 border-2 border-dark-blue hover:bg-magenta'>
-              <td></td>
+              <td/>
               <td>User name</td>
               <td>$50000</td>
             </tr>
