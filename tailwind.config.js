@@ -9,6 +9,8 @@ module.exports = {
         "dark-blue": "var(--color-dark-blue)",
         "red": "var(--color-red)",
         "crimson": "var(--color-crimson)",
+        "magenta": "var(--color-magenta)",
+        "grey": "var(--color-grey)"
       },
     },
   },

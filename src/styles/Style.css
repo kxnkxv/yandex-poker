@@ -24,6 +24,8 @@ body {
   --color-red: #be2e2e;
   --color-crimson: #7d2121;
   --color-purple: #49499e;
+  --color-magenta: #363651;
+  --color-grey: #BFBFC8;
 }
 body {
   margin: 0;
