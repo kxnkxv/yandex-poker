@@ -1,4 +1,4 @@
-import HeaderMenu from '../../features/components/header-menu/HeaderMenu'
+import HearderMenu from 'Features/components/header-menu/HeaderMenu'
 import React from 'react'
 
 export type ITableProps = {
