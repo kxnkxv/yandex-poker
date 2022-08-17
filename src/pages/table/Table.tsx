@@ -73,14 +73,15 @@ const Table: TProps = () => {
     }
   })
 
+  console.log(table.seats, !isOnTheTable && 'efwe')
+
   return (
     <div>
       <div className='table-wrapper'>
         <canvas ref={canvasRef} width='2560' height='1320' id='table' />
         {seats.map(
           (seatId) =>
-            !table.seats[seatId] ||
-            (!isOnTheTable && (
+            !isOnTheTable && (
               <div
                 key={seatId}
                 className={`seat seat-${seatId}`}
@@ -89,7 +90,7 @@ const Table: TProps = () => {
                 Seat
                 <br /> open
               </div>
-            )),
+            ),
         )}
       </div>
       <h2 className='text-white'>{name}</h2>
