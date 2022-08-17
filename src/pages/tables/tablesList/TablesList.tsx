@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import Arrow from 'Images/arrow.svg'
 
 export interface ITablesListProps {
@@ -9,12 +9,12 @@ export interface ITablesListProps {
   plrs: number
 }
 
-const TablesList = (props: { tables: any }) => {
+const TablesList: FC = () => {
   return (
     <div>
       <table className='w-full table-auto'>
         <tr className='bg-blue uppercase h-10 border-2 border-dark-blue text-left'>
-          <th/>
+          <th />
           <th>
             Table name
             <img className='h-4 pl-1 inline' src={Arrow} alt='user photo' />
