@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import useDocumentTitle from 'Hooks/useDocumentTitle'
 
 //Components
 import HearderMenu from 'Components/header/Header'
@@ -15,6 +16,8 @@ import Banner from 'Images/banner.svg'
 import { TProps } from './types'
 
 const Tables: TProps = (props) => {
+  useDocumentTitle('Available tables')
+
   const [isModalOpened, setIsModalOpened] = useState(false)
 
   const createTable = () => {

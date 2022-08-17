@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { updateTable } from './TableSlice'
 import { io, Socket } from 'socket.io-client'
 import { createPlayers } from './canvas/Methods'
+import useDocumentTitle from 'Hooks/useDocumentTitle'
 
 //Styles
 import './table.css'
@@ -13,6 +14,7 @@ import { TGameTable, TSeat, TProps } from './types'
 import { RootState } from 'Core/store'
 
 const Table: TProps = () => {
+  useDocumentTitle('Table')
   // Получение id стола и имени пользователя
   const { name, seatId } = useParams()
 

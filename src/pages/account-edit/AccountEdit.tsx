@@ -7,6 +7,7 @@ import {
   phoneValidation,
 } from 'Utils/validation/validation'
 import Avatars from './Avatars' // Mock data
+import useDocumentTitle from 'Hooks/useDocumentTitle'
 
 //Components
 import Input from 'Components/ui/input/Input'
@@ -22,6 +23,8 @@ import './AccountEdit.css'
 import { TProps, TAccountEditForm } from './types'
 
 const AccountEdit: TProps = () => {
+  useDocumentTitle('Edit account')
+
   const [currentAvatar, setCurrentAvatar] = useState(Avatars[0].image)
 
   const { handleSubmit, control, register, setValue } = useForm<TAccountEditForm>({
