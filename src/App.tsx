@@ -63,7 +63,7 @@ const App: FC = (): JSX.Element => {
 
             {/* Table */}
             <Route
-              path='table/:id/:name'
+              path='tables/:id/:name'
               element={
                 <ProtectedRoot>
                   <Table />

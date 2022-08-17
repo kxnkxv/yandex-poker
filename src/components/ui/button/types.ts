@@ -4,7 +4,6 @@ export type TOwnProps = {
   onClick?: () => void
   type?: string
   className?: string
-  id?: string
   children?: ReactNode | string
 }
 
