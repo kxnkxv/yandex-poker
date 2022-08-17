@@ -1,8 +1,11 @@
-import React, { FC } from 'react'
+import React from 'react'
 
-const NotFound: FC = () => {
+//Types
+import { TProps } from './types'
+
+const NotFound: TProps = () => {
   return (
-    <div className='main-wrapper items-center gradient-bottom'>
+    <div className='main-wrapper items-center gradient-bottom justify-center'>
       <h1 className='text-white'>Page not found</h1>
     </div>
   )

@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react'
+import React from 'react'
 import { useForm, SubmitHandler, Controller, useFormState } from 'react-hook-form'
 import {
   emailValidation,
@@ -6,27 +6,21 @@ import {
   nameValidation,
   passwordValidation,
   phoneValidation,
-} from '../../utils/validation/validation'
+} from 'Utils/validation/validation'
+import useDocumentTitle from 'Hooks/useDocumentTitle'
 import { Link } from 'react-router-dom'
-import Input from '../../features/ui/input/Input'
-import Button from '../../features/ui/button/Button'
 
-interface ISignUpForm {
-  first_name: string
-  second_name: string
-  email: string
-  login: string
-  phone: string
-  password: string
-}
+//Components
+import Input from 'Components/ui/input/Input'
+import Button from 'Components/ui/button/Button'
 
-const Registration: FC = () => {
-  //Set page title
-  useEffect(() => {
-    document.title = 'Registration'
-  }, [])
+//Types
+import { TProps, TSignUpForm } from './types'
 
-  const { handleSubmit, control } = useForm<ISignUpForm>({
+const Registration: TProps = () => {
+  useDocumentTitle('Registration')
+
+  const { handleSubmit, control } = useForm<TSignUpForm>({
     defaultValues: {
       first_name: '',
       second_name: '',
@@ -42,7 +36,7 @@ const Registration: FC = () => {
     control,
   })
 
-  const onSubmit: SubmitHandler<ISignUpForm> = (data) => console.log(data)
+  const onSubmit: SubmitHandler<TSignUpForm> = (data) => console.log(data)
 
   return (
     <div className='main-wrapper items-center gradient-bottom'>

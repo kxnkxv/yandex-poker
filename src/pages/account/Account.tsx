@@ -1,10 +1,15 @@
-import Avatars from 'Pages/account-edit/Avatars'
 import React from 'react'
+import { Link } from 'react-router-dom'
+import Avatars from 'Pages/account-edit/Avatars' // Mock data
+
+//Images
 import Back from 'Images/back.svg'
 import Edit from 'Images/edit.svg'
-import { Link } from 'react-router-dom'
 
-const Account = () => {
+//Types
+import { TProps } from './types'
+
+const Account: TProps = () => {
   const userAvatar = Avatars[0].image
 
   return (
@@ -26,7 +31,7 @@ const Account = () => {
             <h2>Username</h2>
             <h4>@Login</h4>
           </div>
-          <div className='h-px bg-magenta w-full mb-5'></div>
+          <div className='h-px bg-magenta w-full mb-5' />
           <div className='grid gap-5 mb-5 md:grid-cols-2'>
             <div className='inline-grid justify-items-start'>
               <div className='text-grey'>Email</div>
@@ -37,7 +42,7 @@ const Account = () => {
               <div>89534933355</div>
             </div>
           </div>
-          <div className='h-px bg-magenta w-full mb-5'></div>
+          <div className='h-px bg-magenta w-full mb-5' />
         </div>
         <div className='inline-grid'>
           <button className='mb-5'>Change password</button>

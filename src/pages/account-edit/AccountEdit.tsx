@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { useState } from 'react'
 import { useForm, SubmitHandler, Controller, useFormState } from 'react-hook-form'
 import {
   emailValidation,
@@ -6,25 +6,25 @@ import {
   nameValidation,
   phoneValidation,
 } from 'Utils/validation/validation'
-import Input from 'Features/ui/input/Input'
-import backArrowIcon from './backArrowIcon.svg'
-import Modal from 'Features/ui/modal/Modal'
-import Avatars from './Avatars'
+import Avatars from './Avatars' // Mock data
+
+//Components
+import Input from 'Components/ui/input/Input'
+import Modal from 'Components/ui/modal/Modal'
+
+//Images
+import backArrowIcon from './img/backArrowIcon.svg'
+
+//Styles
 import './AccountEdit.css'
 
-interface IAccountEditForm {
-  avatar: string
-  first_name: string
-  second_name: string
-  email: string
-  login: string
-  phone: string
-}
+//Types
+import { TProps, TAccountEditForm } from './types'
 
-const AccountEdit: FC = () => {
+const AccountEdit: TProps = () => {
   const [currentAvatar, setCurrentAvatar] = useState(Avatars[0].image)
 
-  const { handleSubmit, control, register, setValue } = useForm<IAccountEditForm>({
+  const { handleSubmit, control, register, setValue } = useForm<TAccountEditForm>({
     defaultValues: {
       avatar: currentAvatar,
       first_name: '',
@@ -56,7 +56,7 @@ const AccountEdit: FC = () => {
     control,
   })
 
-  const onSubmit: SubmitHandler<IAccountEditForm> = (data) => console.log(data)
+  const onSubmit: SubmitHandler<TAccountEditForm> = (data) => console.log(data)
 
   return (
     <div className='main-wrapper pt-28'>
