@@ -4,13 +4,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        purple: 'var(--color-purple)',
-        white: 'var(--color-white)',
-        'dark-blue': 'var(--color-dark-blue)',
-        red: 'var(--color-red)',
-        crimson: 'var(--color-crimson)',
-        magenta: 'var(--color-magenta)',
-        grey: 'var(--color-grey)',
+        "purple": "var(--color-purple)",
+        "white": "var(--color-white)",
+        "blue": "var(--color-blue)",
+        "dark-blue": "var(--color-dark-blue)",
+        "red": "var(--color-red)",
+        "crimson": "var(--color-crimson)",
+        "light-blue": "var(--color-light-blue)",
+        "cyan": "var(--color-cyan)",
+        "magenta": "var(--color-magenta)"
       },
     },
   },

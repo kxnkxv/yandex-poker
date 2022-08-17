@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 import { useForm, SubmitHandler, Controller, useFormState } from 'react-hook-form'
-import { loginValidation, passwordValidation } from '../../utils/validation/validation'
+import { loginValidation, passwordValidation } from 'Utils/validation/validation'
 import { Link } from 'react-router-dom'
-import Input from '../../features/ui/input/Input'
-import Button from '../../features/ui/button/Button'
+import Input from 'Features/ui/input/Input'
+import Button from 'Features/ui/button/Button'
 
 type ISignInForm = {
   login: string
@@ -62,7 +62,7 @@ const Login: FC = () => {
           <Button clicked={undefined}>Login</Button>
           <div className='text-center mb-5'>
             <Link to='/register' className='text-white underline'>
-              SIGN UP
+              Sign in
             </Link>
           </div>
         </form>
