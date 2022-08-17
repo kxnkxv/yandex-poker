@@ -1,10 +1,8 @@
-import { FC, ReactNode } from 'react'
+import { ReactNode } from 'react'
 
-export type TOwnProps = {
+export type TProps = {
   onClick?: () => void
   type?: string
   className?: string
   children?: ReactNode | string
 }
-
-export type TProps = FC<TOwnProps>

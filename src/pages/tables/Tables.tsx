@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 import useDocumentTitle from 'Hooks/useDocumentTitle'
 
 //Components
 import HearderMenu from 'Components/header/Header'
 import Button from 'Components/ui/button/Button'
-import TablesList from './tablesList/TablesList'
+import TablesList from 'Components/table-list'
 import Modal from 'Components/ui/modal/Modal'
 import Input from 'Components/ui/input/Input'
 import Results from 'Components/results'
@@ -12,10 +12,7 @@ import Results from 'Components/results'
 //Images
 import Banner from 'Images/banner.svg'
 
-//Types
-import { TProps } from './types'
-
-const Tables: TProps = (props) => {
+const Tables: FC = (props) => {
   useDocumentTitle('Available tables')
 
   const [isModalOpened, setIsModalOpened] = useState(false)

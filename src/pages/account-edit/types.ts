@@ -1,6 +1,4 @@
-import { FC } from 'react'
-
-export type TAccountEditForm = {
+export type TAccountEditData = {
   avatar: string
   first_name: string
   second_name: string
@@ -8,5 +6,3 @@ export type TAccountEditForm = {
   login: string
   phone: string
 }
-
-export type TProps = FC

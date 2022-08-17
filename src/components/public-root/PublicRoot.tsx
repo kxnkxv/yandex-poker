@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 
@@ -6,7 +6,7 @@ import { Navigate } from 'react-router-dom'
 import { TProps } from './types'
 import { TState } from 'Types/app'
 
-const PublicRoot: TProps = (props) => {
+const PublicRoot: FC<TProps> = (props) => {
   const auth = useSelector((state: TState) => state.auth)
 
   if (auth.user) {

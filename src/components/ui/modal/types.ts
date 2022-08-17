@@ -1,10 +1,8 @@
-import { FC, ReactNode } from 'react'
+import { ReactNode } from 'react'
 
-export type TOwnProps = {
+export type TProps = {
   children?: ReactNode | string
   open?: boolean
   title?: string
   closeHandle?: () => void
 }
-
-export type TProps = FC<TOwnProps>

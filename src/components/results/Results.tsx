@@ -1,13 +1,10 @@
-import React from 'react'
+import React, { FC } from 'react'
 
 //Images
 import Cup from './img/cup.svg'
 import Arrow from 'Images/arrow.svg'
 
-//Types
-import { TProps } from './types'
-
-const Results: TProps = () => {
+const Results: FC = () => {
   return (
     <>
       <div className='flex justify-between items-center h-11 bg-magenta  p-5 uppercase border-2 border-dark-blue'>

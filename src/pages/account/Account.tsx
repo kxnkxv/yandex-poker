@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
 import Avatars from 'Pages/account-edit/Avatars' // Mock data
 import useDocumentTitle from 'Hooks/useDocumentTitle'
@@ -7,10 +7,7 @@ import useDocumentTitle from 'Hooks/useDocumentTitle'
 import Back from 'Images/back.svg'
 import Edit from 'Images/edit.svg'
 
-//Types
-import { TProps } from './types'
-
-const Account: TProps = () => {
+const Account: FC = () => {
   useDocumentTitle('Account')
   const userAvatar = Avatars[0].image
 

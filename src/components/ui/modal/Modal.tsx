@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 
 //Styles
 import './Modal.css'
@@ -9,7 +9,7 @@ import CloseIcon from './img/closeIcon.svg'
 //Types
 import { TProps } from './types'
 
-const Modal: TProps = (props) => {
+const Modal: FC<TProps> = (props) => {
   return (
     <div className={'modal-wrapper items-center flex ' + (props.open ? ' modal-opened' : '')}>
       <div className='modal'>

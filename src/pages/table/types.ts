@@ -1,5 +1,3 @@
-import { FC } from 'react'
-
 export type TPot = {
   amount: number
   contributors: number[]
@@ -42,5 +40,3 @@ export type TGameTable = {
   board: string[]
   log: TLog
 }
-
-export type TProps = FC

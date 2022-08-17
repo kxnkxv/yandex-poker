@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { useForm, SubmitHandler, Controller, useFormState } from 'react-hook-form'
 import {
   emailValidation,
@@ -15,12 +15,12 @@ import Input from 'Components/ui/input/Input'
 import Button from 'Components/ui/button/Button'
 
 //Types
-import { TProps, TSignUpForm } from './types'
+import { TSignUpForm } from './types'
 
-const Registration: TProps = () => {
+const Registration: FC = () => {
   useDocumentTitle('Registration')
 
-  const { handleSubmit, control } = useForm<TSignUpForm>({
+  const { handleSubmit, control } = useForm({
     defaultValues: {
       first_name: '',
       second_name: '',

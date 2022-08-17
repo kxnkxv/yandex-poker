@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 
 //Images
 import Logo from 'Images/logo.svg'
@@ -6,10 +6,7 @@ import User from 'Images/avatar.svg'
 import Settings from 'Images/normal.svg'
 import FullScreen from 'Images/pressed.svg'
 
-//Types
-import { TProps } from './types'
-
-const Header: TProps = () => {
+const Header: FC = () => {
   return (
     <nav>
       <div className='flex flex-wrap justify-between items-center'>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { updateTable } from './TableSlice'
@@ -10,10 +10,10 @@ import useDocumentTitle from 'Hooks/useDocumentTitle'
 import './table.css'
 
 //Types
-import { TGameTable, TSeat, TProps } from './types'
+import { TGameTable, TSeat } from './types'
 import { RootState } from 'Core/store'
 
-const Table: TProps = () => {
+const Table: FC = () => {
   useDocumentTitle('Table')
   // Получение id стола и имени пользователя
   const { name, seatId } = useParams()

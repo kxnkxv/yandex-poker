@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 import { useForm, SubmitHandler, Controller, useFormState } from 'react-hook-form'
 import {
   emailValidation,
@@ -20,14 +20,14 @@ import backArrowIcon from './img/backArrowIcon.svg'
 import './AccountEdit.css'
 
 //Types
-import { TProps, TAccountEditForm } from './types'
+import { TAccountEditData } from './types'
 
-const AccountEdit: TProps = () => {
+const AccountEdit: FC = () => {
   useDocumentTitle('Edit account')
 
   const [currentAvatar, setCurrentAvatar] = useState(Avatars[0].image)
 
-  const { handleSubmit, control, register, setValue } = useForm<TAccountEditForm>({
+  const { handleSubmit, control, register, setValue } = useForm({
     defaultValues: {
       avatar: currentAvatar,
       first_name: '',
@@ -59,7 +59,7 @@ const AccountEdit: TProps = () => {
     control,
   })
 
-  const onSubmit: SubmitHandler<TAccountEditForm> = (data) => console.log(data)
+  const onSubmit: SubmitHandler<TAccountEditData> = (data) => console.log(data)
 
   return (
     <div className='main-wrapper pt-28'>

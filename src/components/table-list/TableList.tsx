@@ -1,12 +1,9 @@
-import React from 'react'
+import React, { FC } from 'react'
 
 //Images
 import Arrow from 'Images/arrow.svg'
 
-//Types
-import { TProps } from './types'
-
-const TablesList: TProps = () => {
+const TablesList: FC = () => {
   return (
     <div>
       <table className='w-full table-auto'>

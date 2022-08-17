@@ -1,10 +1,7 @@
-import React from 'react'
+import React, { FC } from 'react'
 import useDocumentTitle from 'Hooks/useDocumentTitle'
 
-//Types
-import { TProps } from './types'
-
-const NotFound: TProps = () => {
+const NotFound: FC = () => {
   useDocumentTitle('Page not found')
 
   return (

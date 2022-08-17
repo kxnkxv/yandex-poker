@@ -1,7 +1,3 @@
-import { FC } from 'react'
-
-export type TOwnProps = {
+export type TProps = {
   children: React.ReactNode
 }
-
-export type TProps = FC<TOwnProps>

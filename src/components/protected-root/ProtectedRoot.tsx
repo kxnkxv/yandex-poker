@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 import { AppDispatch } from 'Core/store'
@@ -8,7 +8,7 @@ import { checkAuth } from 'Pages/login/LoginSlice'
 import { TProps } from './types'
 import { TState } from 'Types/app'
 
-const ProtectedRoot: TProps = (props) => {
+const ProtectedRoot: FC<TProps> = (props) => {
   const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {

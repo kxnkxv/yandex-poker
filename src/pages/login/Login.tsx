@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { useDispatch } from 'react-redux'
 import { useForm, SubmitHandler, Controller, useFormState } from 'react-hook-form'
 import { loginValidation, passwordValidation } from 'Utils/validation/validation'
@@ -12,14 +12,14 @@ import Input from 'Components/ui/input/Input'
 import Button from 'Components/ui/button/Button'
 
 //Types
-import { TProps, TSignInForm } from './types'
+import { TSignInForm } from './types'
 
-const Login: TProps = () => {
+const Login: FC = () => {
   useDocumentTitle('Login')
 
   const dispatch = useDispatch<AppDispatch>()
 
-  const { handleSubmit, control } = useForm<TSignInForm>({
+  const { handleSubmit, control } = useForm({
     defaultValues: {
       login: '',
       password: '',
