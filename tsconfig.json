@@ -17,11 +17,13 @@
     "baseUrl": "./",
     "outDir": "./dist",
     "paths": {
+      "Components": ["./src/components"],
       "Core": ["./src/core"],
-      "Features": ["./src/features"],
+      "Hooks": ["./src/hooks"],
       "Images": ["./src/images"],
       "Pages": ["./src/pages"],
       "Styles": ["./src/styles"],
+      "Types": ["./src/types"],
       "Utils": ["./src/utils"],
       "*": ["./src/*"]
 

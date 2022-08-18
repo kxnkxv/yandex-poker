@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useForm, SubmitHandler, Controller, useFormState } from 'react-hook-form'
 import {
   emailValidation,
@@ -6,25 +7,28 @@ import {
   nameValidation,
   phoneValidation,
 } from 'Utils/validation/validation'
-import Input from 'Features/ui/input/Input'
-import backArrowIcon from './backArrowIcon.svg'
-import Modal from 'Features/ui/modal/Modal'
-import Avatars from './Avatars'
+import Avatars from './Avatars' // Mock data
+import useDocumentTitle from 'Hooks/useDocumentTitle'
+
+//Components
+import Input from 'Components/ui/input/Input'
+import Modal from 'Components/ui/modal/Modal'
+
+//Images
+import backArrowIcon from './img/backArrowIcon.svg'
+
+//Styles
 import './AccountEdit.css'
 
-interface IAccountEditForm {
-  avatar: string
-  first_name: string
-  second_name: string
-  email: string
-  login: string
-  phone: string
-}
+//Types
+import { TAccountEditData } from './types'
 
 const AccountEdit: FC = () => {
+  useDocumentTitle('Edit account')
+
   const [currentAvatar, setCurrentAvatar] = useState(Avatars[0].image)
 
-  const { handleSubmit, control, register, setValue } = useForm<IAccountEditForm>({
+  const { handleSubmit, control, register, setValue } = useForm({
     defaultValues: {
       avatar: currentAvatar,
       first_name: '',
@@ -56,15 +60,15 @@ const AccountEdit: FC = () => {
     control,
   })
 
-  const onSubmit: SubmitHandler<IAccountEditForm> = (data) => console.log(data)
+  const onSubmit: SubmitHandler<TAccountEditData> = (data) => console.log(data)
 
   return (
     <div className='main-wrapper pt-28'>
       <div className='container mx-auto max-w-md'>
         <div className='nav-header'>
-          <a className='btn-nav'>
+          <Link className='btn-nav' to='/account'>
             <img src={backArrowIcon} alt='Back' />
-          </a>
+          </Link>
         </div>
         <h1 className='mb-5 text-center'>Account edit</h1>
         <form onSubmit={handleSubmit(onSubmit)}>

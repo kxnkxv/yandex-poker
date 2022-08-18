@@ -2,9 +2,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'Utils/axios/axios'
 import errorHandler from 'Utils/error-handler/errorHandler'
 
+//Types
+import { TSignInForm, TAuthInitialState } from './types'
+import { TErrorPayload } from 'Types/app'
+
 export const login = createAsyncThunk(
   '@@auth/login',
-  ({ login, password }: ISignInForm, { rejectWithValue }) => {
+  ({ login, password }: TSignInForm, { rejectWithValue }) => {
     return axios.post('auth/signin', { login, password }).catch((err) => {
       return rejectWithValue(err.response.data)
     })
@@ -17,7 +21,7 @@ export const checkAuth = createAsyncThunk('@@auth/user', (_, { rejectWithValue }
   })
 })
 
-const initialState: IAuthInitialState = {
+const initialState: TAuthInitialState = {
   isPending: false,
   user: null,
 }
@@ -37,7 +41,7 @@ const authSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.isPending = false
-        let data = action.payload as IErrorPayload
+        let data = action.payload as TErrorPayload
         errorHandler(data.reason)
       })
 
