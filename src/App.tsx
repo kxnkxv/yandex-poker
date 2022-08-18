@@ -17,7 +17,7 @@ import Account from 'Pages/account'
 import AccountEdit from 'Pages/account-edit'
 
 //Styles
-import './styles/style.css'
+import 'Styles/style.css'
 
 //Images
 //.....

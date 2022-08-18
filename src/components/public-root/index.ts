@@ -1,1 +1,3 @@
-export { default } from './PublicRoot'
+import PublicRoot from './PublicRoot'
+
+export default PublicRoot
