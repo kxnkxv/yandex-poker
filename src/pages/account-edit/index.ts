@@ -1,3 +1,1 @@
-import AccountEdit from './AccountEdit'
-
-export default AccountEdit
+export { default } from './AccountEdit'

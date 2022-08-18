@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useForm, SubmitHandler, Controller, useFormState } from 'react-hook-form'
 import {
   emailValidation,
@@ -65,9 +66,9 @@ const AccountEdit: FC = () => {
     <div className='main-wrapper pt-28'>
       <div className='container mx-auto max-w-md'>
         <div className='nav-header'>
-          <a className='btn-nav'>
+          <Link className='btn-nav' to='/account'>
             <img src={backArrowIcon} alt='Back' />
-          </a>
+          </Link>
         </div>
         <h1 className='mb-5 text-center'>Account edit</h1>
         <form onSubmit={handleSubmit(onSubmit)}>

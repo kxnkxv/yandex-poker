@@ -1,4 +1,5 @@
 import React, { FC } from 'react'
+import { Link } from 'react-router-dom'
 
 //Images
 import Logo from 'Images/logo.svg'
@@ -17,17 +18,19 @@ const Header: FC = () => {
           </a>
         </div>
         <div className='flex items-center mb-5'>
-          <div className='flex items-center text-white'>
-            <div className='inline-block items-center justify-end text-sm md:order-2'>
-              <h5>Ivan Tekunov</h5>
-              <h5 className='opacity-70 font-roboto'>player</h5>
+          <Link to='/account'>
+            <div className='flex items-center text-white'>
+              <div className='inline-block items-center justify-end text-sm md:order-2'>
+                <h5>Ivan Tekunov</h5>
+                <h5 className='opacity-70 font-roboto'>player</h5>
+              </div>
+              <div className='flex items-center md:order-3'>
+                <img className='w-16 h-16' src={User} alt='user photo' />
+              </div>
             </div>
-            <div className='flex items-center md:order-3'>
-              <img className='w-16 h-16' src={User} alt='user photo' />
-            </div>
-          </div>
+          </Link>
           <div className='flex items-center flex-col border-2 rounded border-white font-roboto text-white text-sm p-1'>
-            <h5 className=''>DEPOSIT</h5>
+            <h5 className=''>Deposit</h5>
             <div className='flex justify-around m-2 border-transperant rounded-xl w-32 bg-purple items-center'>
               <h5 className='p-0.5'>$100.00</h5>
             </div>

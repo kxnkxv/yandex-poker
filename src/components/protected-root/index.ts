@@ -1,3 +1,1 @@
-import ProtectedRoot from './ProtectedRoot'
-
-export default ProtectedRoot
+export { default } from './ProtectedRoot'

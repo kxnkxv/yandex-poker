@@ -15,11 +15,11 @@ const Account: FC = () => {
     <div className='main-wrapper pt-28'>
       <div className='container mx-auto max-w-md'>
         <div className='nav-header'>
-          <Link className='btn-nav' to={''}>
+          <Link className='btn-nav' to='/tables'>
             <img src={Back} alt='Back' />
           </Link>
-          <Link className='btn-nav' to={'/account/edit'}>
-            <img src={Edit} alt='edit' />
+          <Link className='btn-nav' to='/account/edit'>
+            <img src={Edit} alt='Edit' />
           </Link>
         </div>
         <div className='w-full text-center'>

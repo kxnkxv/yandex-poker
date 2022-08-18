@@ -1,3 +1,1 @@
-import TableList from './TableList'
-
-export default TableList
+export { default } from './TableList'

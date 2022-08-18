@@ -1,3 +1,1 @@
-import Results from './Results'
-
-export default Results
+export { default } from './Results'
