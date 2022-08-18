@@ -1,3 +1,1 @@
-import PublicRoot from './PublicRoot'
-
-export default PublicRoot
+export { default } from './PublicRoot'
