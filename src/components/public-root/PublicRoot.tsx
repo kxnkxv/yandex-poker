@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom'
 
 //Types
 import { TProps } from './types'
-import { TState } from 'Types/app'
+import { TState } from 'types/app'
 
 const PublicRoot: FC<TProps> = (props) => {
   const auth = useSelector((state: TState) => state.auth)

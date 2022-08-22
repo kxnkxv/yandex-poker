@@ -40,3 +40,18 @@ export type TGameTable = {
   board: string[]
   log: TLog
 }
+
+export type TGameState = {
+  table: TGameTable
+  notifications: string[]
+  showChipsModal: boolean
+  actionState: string
+  myCards: string
+  mySeat: string
+  betAmount: number
+  sittingOnTable: number | null
+}
+
+export type TWsResponse = {
+  success?: boolean
+}
