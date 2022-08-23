@@ -6,3 +6,7 @@ export type TSignUpForm = {
   phone: string
   password: string
 }
+export type TRegInitialState = {
+  isPending: boolean
+  newRegistration: boolean
+}

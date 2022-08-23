@@ -6,7 +6,7 @@ import { checkAuth } from 'Pages/login/LoginSlice'
 
 //Types
 import { TProps } from './types'
-import { TState } from 'Types/app'
+import { TState,  } from 'Types/app'
 
 const ProtectedRoot: FC<TProps> = (props) => {
   const dispatch = useDispatch<AppDispatch>()
@@ -16,10 +16,12 @@ const ProtectedRoot: FC<TProps> = (props) => {
   }, [])
 
   const auth = useSelector((state: TState) => state.auth)
+  const registration = useSelector((state: TState) => state.registration)
 
-  if (auth.user) {
+  if (auth.user || registration?.newRegistration) {
     return <>{props.children}</>
   }
+
   return <Navigate to='/' />
 }
 

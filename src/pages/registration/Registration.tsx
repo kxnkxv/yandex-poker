@@ -9,6 +9,8 @@ import {
 } from 'Utils/validation/validation'
 import useDocumentTitle from 'Hooks/useDocumentTitle'
 import { Link } from 'react-router-dom'
+import { registration } from 'Pages/registration/RegistrationSlice'
+import { AppDispatch } from 'Core/store'
 
 //Components
 import Input from 'Components/ui/input/Input'
@@ -16,9 +18,12 @@ import Button from 'Components/ui/button/Button'
 
 //Types
 import { TSignUpForm } from './types'
+import { useDispatch } from 'react-redux'
 
 const Registration: FC = () => {
   useDocumentTitle('Registration')
+
+  const dispatch = useDispatch<AppDispatch>()
 
   const { handleSubmit, control } = useForm({
     defaultValues: {
@@ -36,7 +41,10 @@ const Registration: FC = () => {
     control,
   })
 
-  const onSubmit: SubmitHandler<TSignUpForm> = (data) => console.log(data)
+  const onSubmit: SubmitHandler<TSignUpForm> = (data) => {
+    dispatch(registration(data))
+      .catch(() => {})
+  }
 
   return (
     <div className='main-wrapper items-center gradient-bottom'>

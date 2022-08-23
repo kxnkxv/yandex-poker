@@ -16,6 +16,9 @@ export type TState = {
   auth: {
     user: TUserInfoData
   }
+  registration: {
+    newRegistration: boolean
+  }
 }
 
 //HTTP REQUESTS
