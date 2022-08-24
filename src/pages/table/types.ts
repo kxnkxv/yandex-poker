@@ -46,8 +46,8 @@ export type TGameState = {
   notifications: string[]
   showChipsModal: boolean
   actionState: string
-  myCards: string
-  mySeat: string
+  myCards: string[]
+  mySeat: number | null
   betAmount: number
   sittingOnTable: number | null
 }

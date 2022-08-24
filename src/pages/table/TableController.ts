@@ -1,6 +1,5 @@
 import { Socket } from 'socket.io-client'
-import { TGameState, TGameTable, TWsResponse } from 'Pages/table/types'
-import { AppDispatch } from 'Core/store'
+import { TGameState, TGameTable, TWsResponse } from './types'
 
 export enum Actions {
   Register = 'register',
@@ -23,22 +22,20 @@ export enum Listeners {
   ActNotBettedPot = 'actNotBettedPot',
   ActBettedPot = 'actBettedPot',
   ActOthersAllIn = 'actOthersAllIn',
+  DealingCards = 'dealingCards'
 }
 
 class TableController {
   socket: Socket | null
-  dispatch: AppDispatch
   gameState: TGameState
   setGameState: Function
 
   constructor(
     socket: Socket | null,
-    dispatch: AppDispatch,
     gameState: TGameState,
     setGameState: Function,
   ) {
     this.socket = socket
-    this.dispatch = dispatch
     this.gameState = gameState
     this.setGameState = setGameState
 
@@ -58,7 +55,16 @@ class TableController {
   }
 
   sitOnTheTable(seat: number, tableId: number, chips: number) {
-    this.socket!.emit(Actions.SitOnTheTable, { seat, tableId, chips })
+
+    this.setGameState((state: TGameState)=> {
+      return {...state, mySeat: seat}
+    })
+
+    this.socket!.emit(Actions.SitOnTheTable, { seat, tableId, chips }, (response:TWsResponse) => {
+      if (response.success) {
+        console.log('Успешная посадка за стол', response);
+      }
+    })
     console.log('sitOnTheTable', { seat, tableId, chips })
   }
 
@@ -73,7 +79,7 @@ class TableController {
   }
 
   check() {
-    this.socket!.emit(Actions.Check, true, (response: TWsResponse) => {
+    this.socket!.emit(Actions.Check,  (response: TWsResponse) => {
       if (response.success) {
         this.setGameState((state: TGameState) => {
           return { ...state, actionState: '' }
@@ -84,6 +90,36 @@ class TableController {
 
   fold() {
     this.socket!.emit(Actions.Fold, (response: TWsResponse) => {
+      if (response.success) {
+        this.setGameState((state: TGameState) => {
+          return { ...state, actionState: '' }
+        })
+      }
+    })
+  }
+
+  call() {
+    this.socket!.emit(Actions.Call, (response: TWsResponse) => {
+      if (response.success) {
+        this.setGameState((state: TGameState) => {
+          return { ...state, actionState: '' }
+        })
+      }
+    })
+  }
+
+  bet(value: number) {
+    this.socket!.emit(Actions.Bet, value, (response: TWsResponse) => {
+      if (response.success) {
+        this.setGameState((state: TGameState) => {
+          return { ...state, actionState: '' }
+        })
+      }
+    })
+  }
+
+  raise(value: number) {
+    this.socket!.emit(Actions.Raise, value, (response: TWsResponse) => {
       if (response.success) {
         this.setGameState((state: TGameState) => {
           return { ...state, actionState: '' }
@@ -125,6 +161,21 @@ class TableController {
         return { ...state, actionState: Listeners.ActBettedPot }
       })
     })
+
+    //Оппонент не повышал ставку
+    this.socket!.on(Listeners.ActNotBettedPot, () => {
+      this.setGameState((state: TGameState) => {
+        return { ...state, actionState: Listeners.ActNotBettedPot }
+      })
+    })
+
+    //Пришли карты на руки
+    this.socket!.on(Listeners.DealingCards, (cards: string[]) => {
+      this.setGameState((state: TGameState) => {
+        return { ...state, myCards: cards }
+      })
+    })
+
   }
 }
 

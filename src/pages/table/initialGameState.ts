@@ -34,8 +34,8 @@ export const initialGameState: TGameState = {
   notifications: [],
   showChipsModal: false,
   actionState: '',
-  myCards: '',
-  mySeat: '',
+  myCards: [],
+  mySeat: null,
   betAmount: 0,
   sittingOnTable: null,
 }
