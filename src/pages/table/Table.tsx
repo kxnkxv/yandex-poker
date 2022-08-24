@@ -291,6 +291,8 @@ const Table: FC = () => {
                       value={typeof betValue === 'number' ? betValue : 0}
                       onChange={handleSliderChange}
                       aria-labelledby='input-slider'
+                      min={minBetAmount()}
+                      max={maxBetAmount()}
                     />
                   </div>
                 </div>
