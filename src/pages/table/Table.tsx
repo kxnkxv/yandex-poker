@@ -99,8 +99,6 @@ const Table: FC = () => {
   const handleRaise = (value: number) => { tableController!.raise(value) }
   const handleBet = (value: number) => { tableController!.bet(value) }
 
-
-
   //Расчет минимальной возможной ставки в текущий момент
   const minBetAmount = () => {
     console.log('MYSEAT',mySeat, table.seats)
@@ -288,7 +286,7 @@ const Table: FC = () => {
                   <div className='w-full'>
                     <div>Change bet value</div>
                     <BetSlider
-                      value={typeof betValue === 'number' ? betValue : 0}
+                      value={ betValue || minBetAmount() }
                       onChange={handleSliderChange}
                       aria-labelledby='input-slider'
                       min={minBetAmount()}
