@@ -9,7 +9,7 @@ import {
 } from 'Utils/validation/validation'
 import useDocumentTitle from 'Hooks/useDocumentTitle'
 import { Link } from 'react-router-dom'
-import { registration } from 'Pages/registration/RegistrationSlice'
+import { checkReg, registration } from 'Pages/registration/RegistrationSlice'
 import { AppDispatch } from 'Core/store'
 
 //Components
@@ -43,6 +43,8 @@ const Registration: FC = () => {
 
   const onSubmit: SubmitHandler<TSignUpForm> = (data) => {
     dispatch(registration(data))
+      .unwrap()
+      .then(() => dispatch(checkReg()))
       .catch(() => {})
   }
 

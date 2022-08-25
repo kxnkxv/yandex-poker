@@ -4,17 +4,16 @@ import { Navigate } from 'react-router-dom'
 
 //Types
 import { TProps } from './types'
-import { TState, } from 'Types/app'
+import { TState } from 'Types/app'
 
 const PublicRoot: FC<TProps> = (props) => {
-  const auth = useSelector((state: TState) => state.auth)
-  const registration = useSelector((state: TState) => state.registration)
+  const { auth, registration } = useSelector((state: TState) => state)
 
   if (auth.user) {
     return <Navigate to='/tables' />
   }
-  if (registration?.newRegistration) {
-    return <Navigate to='/' />
+  if (registration?.newReg) {
+    return <Navigate to='/tables' />
   }
   return <>{props.children}</>
 }

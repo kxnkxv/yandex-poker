@@ -17,7 +17,7 @@ export type TState = {
     user: TUserInfoData
   }
   registration: {
-    newRegistration: boolean
+    newReg: boolean
   }
 }
 

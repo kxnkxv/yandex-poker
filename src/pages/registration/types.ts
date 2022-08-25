@@ -8,5 +8,5 @@ export type TSignUpForm = {
 }
 export type TRegInitialState = {
   isPending: boolean
-  newRegistration: boolean
+  newReg: boolean
 }

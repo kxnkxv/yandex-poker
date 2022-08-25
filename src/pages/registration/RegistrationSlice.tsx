@@ -15,10 +15,17 @@ export const registration = createAsyncThunk(
   },
 )
 
+export const checkReg = createAsyncThunk('@@registration/user', (_, { rejectWithValue }) => {
+  return axios.get('auth/user').catch((err) => {
+    return rejectWithValue(err.response.data)
+  })
+})
+
 const initialState: TRegInitialState = {
   isPending: false,
-  newRegistration: false,
+  newReg: false,
 }
+
 const registrationSlice = createSlice({
   name: '@@registration',
   initialState,
@@ -29,17 +36,28 @@ const registrationSlice = createSlice({
       //Registration
       .addCase(registration.pending, (state) => {
         state.isPending = true
-        state.newRegistration = false
       })
       .addCase(registration.fulfilled, (state, action) => {
         state.isPending = false
-        state.newRegistration = true
       })
       .addCase(registration.rejected, (state, action) => {
         state.isPending = false
-        state.newRegistration = false
         let data = action.payload as TErrorPayload
         errorHandler(data.reason)
+      })
+      .addCase(checkReg.fulfilled, (state, action) => {
+        if (action.payload.data) {
+          let d_name = action.payload.data.display_name
+          if (typeof d_name === 'string' && d_name.includes('avatar')) {
+            action.payload.data.display_name = d_name.replace('avatar', '')
+          } else {
+            action.payload.data.display_name = 0
+          }
+          state.newReg = action.payload.data ? true : false
+        }
+      })
+      .addCase(checkReg.rejected, (state, action) => {
+        state.newReg = false
       })
   },
 })

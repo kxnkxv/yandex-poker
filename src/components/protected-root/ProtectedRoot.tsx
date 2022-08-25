@@ -7,6 +7,7 @@ import { checkAuth } from 'Pages/login/LoginSlice'
 //Types
 import { TProps } from './types'
 import { TState,  } from 'Types/app'
+import { checkReg } from 'Pages/registration/RegistrationSlice'
 
 const ProtectedRoot: FC<TProps> = (props) => {
   const dispatch = useDispatch<AppDispatch>()
@@ -14,11 +15,14 @@ const ProtectedRoot: FC<TProps> = (props) => {
   useEffect(() => {
     dispatch(checkAuth())
   }, [])
+  useEffect(() => {
+    dispatch(checkReg())
+  }, [])
 
   const auth = useSelector((state: TState) => state.auth)
   const registration = useSelector((state: TState) => state.registration)
 
-  if (auth.user || registration?.newRegistration) {
+  if (auth.user || registration?.newReg) {
     return <>{props.children}</>
   }
 
