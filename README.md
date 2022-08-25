@@ -8,7 +8,7 @@ Setup
 -----
 Clone the repo:
 
-    git clone https://github.com/AIG-GAMING/Poker.git -b 29-action_buttons
+    git clone https://github.com/AIG-GAMING/Poker.git
 
 Move to the project path:
 

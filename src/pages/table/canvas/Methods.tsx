@@ -1,6 +1,5 @@
 import { playerPositions, potPosition } from './parameters'
 import { TGameTable } from '../types'
-import UserAvatar from 'Images/avatars/1.png'
 
 // Todo:Нужен рефактор
 // Метод, перемещающий игроков так, чтобы мы были внизу посередине
@@ -88,17 +87,6 @@ export const createPot = (table: TGameTable, ctx: any) => {
     ctx.textAlign = 'center'
     ctx.fillText('Pot: $ ' + table.pot[0].amount, potPosition[0], potPosition[1])
     ctx.closePath()
-  }
-
-  let avatar = new Image()
-  avatar.src = UserAvatar // can also be a remote URL e.g. http://
-  avatar.onload = function () {
-    ctx.drawImage(avatar, 500, 500)
-    ctx.drawImage(avatar, 600, 500)
-    ctx.drawImage(avatar, 700, 500)
-    ctx.drawImage(avatar, 800, 500)
-    ctx.drawImage(avatar, 900, 500)
-    ctx.drawImage(avatar, 1000, 500)
   }
 }
 
