@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { io } from 'socket.io-client'
-import {createPlayers, createPot} from './canvas/Methods'
+import { createPlayers, createPot, createDealerChip } from './canvas/Methods'
 import useDocumentTitle from 'Hooks/useDocumentTitle'
 import BetSlider from 'Components/bet-slider/BetSlider'
 import TableController from 'Pages/table/TableController'
@@ -12,7 +12,7 @@ import { Listeners } from './TableController'
 import './Table.css'
 
 //Types
-import { TSeat} from './types'
+import { TSeat } from './types'
 import { RootState } from 'Core/store'
 import { initialGameState } from './initialGameState'
 
@@ -74,6 +74,9 @@ const Table: FC = () => {
         //Отрисовываем игроков
         createPlayers(table, userName as string, ctx)
 
+        //Отрисовываем фишку дилера
+        createDealerChip(table, userName as string, ctx,)
+
         //Отрисовываем pot
         createPot(table, ctx)
       }
@@ -91,34 +94,47 @@ const Table: FC = () => {
   })
 
   //Обработчики действий во время игры
-  const handleSit = (seat: number, tableId: number, chips: number) => tableController!.sitOnTheTable(seat, tableId, chips)
+  const handleSit = (seat: number, tableId: number, chips: number) =>
+    tableController!.sitOnTheTable(seat, tableId, chips)
   const handlePostBlind = () => tableController!.postBlind()
   const handleCheck = () => tableController!.check()
   const handleFold = () => tableController!.fold()
   const handleCall = () => tableController!.call()
-  const handleRaise = (value: number) => { tableController!.raise(value) }
-  const handleBet = (value: number) => { tableController!.bet(value) }
+  const handleRaise = (value: number) => {
+    tableController!.raise(value)
+  }
+  const handleBet = (value: number) => {
+    tableController!.bet(value)
+  }
 
   //Расчет минимальной возможной ставки в текущий момент
   const minBetAmount = () => {
-    console.log('MYSEAT',mySeat, table.seats)
-    if (mySeat === null /*|| table.seats[mySeat] === 'undefined'*/ || table.seats[mySeat] === null) return 0
+    console.log('MYSEAT', mySeat, table.seats)
+    if (mySeat === null /*|| table.seats[mySeat] === 'undefined'*/ || table.seats[mySeat] === null)
+      return 0
 
     if (actionState === Listeners.ActBettedPot) {
       //ОБЯЗАТЕЛЬНО ПРОТЕСТИТЬ
       let proposedBet = +table!.biggestBet + table!.bigBlind!
       console.log('MBA', proposedBet)
-      return table.seats[mySeat].chipsInPlay < proposedBet ? table.seats[mySeat].chipsInPlay : proposedBet
+      return table.seats[mySeat].chipsInPlay < proposedBet
+        ? table.seats[mySeat].chipsInPlay
+        : proposedBet
     } else {
-      return table.seats[mySeat].chipsInPlay < table!.bigBlind! ? table.seats[mySeat].chipsInPlay : table!.bigBlind!
+      return table.seats[mySeat].chipsInPlay < table!.bigBlind!
+        ? table.seats[mySeat].chipsInPlay
+        : table!.bigBlind!
     }
   }
 
   //Расчет максимальной возможной ставки в текущий момент
   const maxBetAmount = () => {
-    if (mySeat === null /*|| table.seats[mySeat] === 'undefined'*/ || table.seats[mySeat] === null) return 0
+    if (mySeat === null /*|| table.seats[mySeat] === 'undefined'*/ || table.seats[mySeat] === null)
+      return 0
 
-    return actionState === Listeners.ActBettedPot ? table.seats[mySeat].chipsInPlay + table.seats[mySeat].bet : table.seats[mySeat].chipsInPlay
+    return actionState === Listeners.ActBettedPot
+      ? table.seats[mySeat].chipsInPlay + table.seats[mySeat].bet
+      : table.seats[mySeat].chipsInPlay
   }
 
   //Управление ставкой (слайдер)
@@ -142,8 +158,8 @@ const Table: FC = () => {
     if (mySeat !== null) {
       if (table.seats[mySeat]) {
         return (
-            actionState === Listeners.ActNotBettedPot ||
-            (actionState === Listeners.ActBettedPot && table.biggestBet == table.seats[mySeat].bet)
+          actionState === Listeners.ActNotBettedPot ||
+          (actionState === Listeners.ActBettedPot && table.biggestBet == table.seats[mySeat].bet)
         )
       }
     }
@@ -153,9 +169,9 @@ const Table: FC = () => {
   const showCallButton = () => {
     if (mySeat !== null) {
       return (
-          actionState === Listeners.ActOthersAllIn ||
-          actionState === Listeners.ActBettedPot &&
-          !(actionState === Listeners.ActBettedPot && table.biggestBet == table.seats[mySeat].bet)
+        actionState === Listeners.ActOthersAllIn ||
+        (actionState === Listeners.ActBettedPot &&
+          !(actionState === Listeners.ActBettedPot && table.biggestBet == table.seats[mySeat].bet))
       )
     }
   }
@@ -164,9 +180,9 @@ const Table: FC = () => {
   const showBetButton = () => {
     if (mySeat !== null) {
       return (
-          actionState === Listeners.ActNotBettedPot &&
-          table.seats[mySeat].chipsInPlay &&
-          table.biggestBet < table.seats[mySeat].chipsInPlay
+        actionState === Listeners.ActNotBettedPot &&
+        table.seats[mySeat].chipsInPlay &&
+        table.biggestBet < table.seats[mySeat].chipsInPlay
       )
     }
   }
@@ -175,13 +191,12 @@ const Table: FC = () => {
   const showRaiseButton = () => {
     if (mySeat !== null) {
       return (
-          actionState === Listeners.ActBettedPot &&
-          table.seats[mySeat].chipsInPlay &&
-          table.biggestBet < table.seats[mySeat].chipsInPlay
+        actionState === Listeners.ActBettedPot &&
+        table.seats[mySeat].chipsInPlay &&
+        table.biggestBet < table.seats[mySeat].chipsInPlay
       )
     }
   }
-
 
   console.log('GAME STATE', gameState)
 
@@ -206,20 +221,16 @@ const Table: FC = () => {
       </div>
       <div className='h1 text-white text-center'>
         <span>Table cards: </span>
-        { table.board.length > 0 &&
-            table.board.map(
-                (card:string, key) => <span key={key}>[{card}]</span>
-            )
-        }
+        {table.board.length > 0 &&
+          table.board.map((card: string, key) => <span key={key}>[{card}]</span>)}
       </div>
       <div className='h1 text-white text-center'>
         <span>My cards: </span>
-        { myCards.length > 0 ?
-         myCards.map(
-            (card:string, key) => <span key={key}>[{card}]</span>
-        )
-            : (<span>[][]</span>)
-        }
+        {myCards.length > 0 ? (
+          myCards.map((card: string, key) => <span key={key}>[{card}]</span>)
+        ) : (
+          <span>[][]</span>
+        )}
       </div>
       <div className='table-controls p-5 grid grid-cols-5 gap-5'>
         <div className='table-controls-log_wrapper col-span-1'>
@@ -249,12 +260,12 @@ const Table: FC = () => {
           )}
 
           {showCallButton() && (
-              <a
-                  className='btn-action btn-action-green items-center whitespace-nowrap inline-flex justify-center'
-                  onClick={handleCall}
-              >
-                Call
-              </a>
+            <a
+              className='btn-action btn-action-green items-center whitespace-nowrap inline-flex justify-center'
+              onClick={handleCall}
+            >
+              Call
+            </a>
           )}
 
           {actionState === Listeners.PostSmallBlind && (
@@ -276,50 +287,50 @@ const Table: FC = () => {
           )}
 
           {showBetButton() && (
-              <>
-                <a
-                    className='btn-action btn-action-blue items-center whitespace-nowrap inline-flex justify-center'
-                   onClick={()=>handleBet(betValue || minBetAmount())}>
-                  Bet {betValue || minBetAmount()}
-                </a>
-                <div className='col-span-2 slider items-center whitespace-nowrap inline-flex justify-center p-5'>
-                  <div className='w-full'>
-                    <div>Change bet value</div>
-                    <BetSlider
-                      value={ betValue || minBetAmount() }
-                      onChange={handleSliderChange}
-                      aria-labelledby='input-slider'
-                      min={minBetAmount()}
-                      max={maxBetAmount()}
-                    />
-                  </div>
+            <>
+              <a
+                className='btn-action btn-action-blue items-center whitespace-nowrap inline-flex justify-center'
+                onClick={() => handleBet(betValue || minBetAmount())}
+              >
+                Bet {betValue || minBetAmount()}
+              </a>
+              <div className='col-span-2 slider items-center whitespace-nowrap inline-flex justify-center p-5'>
+                <div className='w-full'>
+                  <div>Change bet value</div>
+                  <BetSlider
+                    value={betValue || minBetAmount()}
+                    onChange={handleSliderChange}
+                    aria-labelledby='input-slider'
+                    min={minBetAmount()}
+                    max={maxBetAmount()}
+                  />
                 </div>
-              </>
+              </div>
+            </>
           )}
 
           {showRaiseButton() && (
-              <>
-                <a
-                    className='btn-action btn-action-blue items-center whitespace-nowrap inline-flex justify-center'
-                    onClick={()=>handleRaise(betValue || minBetAmount())}>
-                    Raise {betValue || minBetAmount()}
-                </a>
-                <div className='col-span-2 slider items-center whitespace-nowrap inline-flex justify-center p-5'>
-                  <div className='w-full'>
-                    <div>Change raise value</div>
-                    <BetSlider
-                        value={ betValue || minBetAmount() }
-                        onChange={handleSliderChange}
-                        aria-labelledby='input-slider'
-                        min={minBetAmount()}
-                        max={maxBetAmount()}
-                    />
-                  </div>
+            <>
+              <a
+                className='btn-action btn-action-blue items-center whitespace-nowrap inline-flex justify-center'
+                onClick={() => handleRaise(betValue || minBetAmount())}
+              >
+                Raise {betValue || minBetAmount()}
+              </a>
+              <div className='col-span-2 slider items-center whitespace-nowrap inline-flex justify-center p-5'>
+                <div className='w-full'>
+                  <div>Change raise value</div>
+                  <BetSlider
+                    value={betValue || minBetAmount()}
+                    onChange={handleSliderChange}
+                    aria-labelledby='input-slider'
+                    min={minBetAmount()}
+                    max={maxBetAmount()}
+                  />
                 </div>
-              </>
+              </div>
+            </>
           )}
-
-
         </div>
       </div>
     </div>
