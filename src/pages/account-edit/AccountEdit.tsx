@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useForm, SubmitHandler, Controller, useFormState } from 'react-hook-form'
 import {
   emailValidation,
@@ -9,6 +9,7 @@ import {
 } from 'Utils/validation/validation'
 import Avatars from './Avatars' // Mock data
 import useDocumentTitle from 'Hooks/useDocumentTitle'
+import { editUser } from './AccountEditSlice'
 
 //Components
 import Input from 'Components/ui/input/Input'
@@ -22,20 +23,32 @@ import './AccountEdit.css'
 
 //Types
 import { TAccountEditData } from './types'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from 'core/store'
+import { checkAuth } from 'Pages/login/LoginSlice'
+import callbackHandler from 'Utils/callback-handler/callbackHandler'
 
 const AccountEdit: FC = () => {
   useDocumentTitle('Edit account')
 
-  const [currentAvatar, setCurrentAvatar] = useState(Avatars[0].image)
+  const dispatch = useDispatch<AppDispatch>()
+  const navigate = useNavigate()
+
+  //Получаем логин пользователя из redux
+  const user = useSelector((state: RootState) => state.auth.user)
+
+  const [currentAvatar, setCurrentAvatar] = useState(user.display_name)
 
   const { handleSubmit, control, register, setValue } = useForm({
     defaultValues: {
-      avatar: currentAvatar,
-      first_name: '',
-      second_name: '',
-      email: '',
-      login: '',
-      phone: '',
+      //Из-за технических ограничений вынуждены прокидывать id аватарки
+      //через поле display_name, добавив строку 'avatar', чтобы бэкенд не ругался
+      display_name: 'avatar' + currentAvatar,
+      first_name: user.first_name,
+      second_name: user.second_name,
+      email: user.email,
+      login: user.login,
+      phone: user.phone,
     },
     mode: 'onBlur',
   })
@@ -50,9 +63,9 @@ const AccountEdit: FC = () => {
     setIsModalOpened(false)
   }
 
-  const changeAvatar = (image: string) => {
-    setCurrentAvatar(image)
-    setValue('avatar', image)
+  const changeAvatar = (image_id: number) => {
+    setCurrentAvatar(image_id)
+    setValue('display_name', 'avatar' + image_id)
     closeModal()
   }
 
@@ -60,7 +73,16 @@ const AccountEdit: FC = () => {
     control,
   })
 
-  const onSubmit: SubmitHandler<TAccountEditData> = (data) => console.log(data)
+  const onSubmit: SubmitHandler<TAccountEditData> = (data) => {
+    dispatch(editUser(data))
+      .unwrap()
+      .then(() => dispatch(checkAuth()))
+      .then(() => {
+        callbackHandler('Information updated')
+        navigate('/account')
+      })
+      .catch(() => {})
+  }
 
   return (
     <div className='main-wrapper pt-28'>
@@ -76,7 +98,7 @@ const AccountEdit: FC = () => {
           <div className='w-full text-center'>
             <div className='profile-avatar mx-auto mb-5 inline-block'>
               <a onClick={openModal} className='cursor-pointer'>
-                <img src={currentAvatar} alt='Username' />
+                <img src={Avatars[currentAvatar].image} alt='Username' />
               </a>
             </div>
           </div>
@@ -86,12 +108,12 @@ const AccountEdit: FC = () => {
               {Avatars.map((avatar) => (
                 <div key={avatar.id}>
                   <input
-                    {...register('avatar')}
+                    {...register('display_name')}
                     type='radio'
                     value={avatar.id}
                     className='hidden'
-                    onChange={() => changeAvatar(avatar.image)}
-                    checked={currentAvatar === avatar.image}
+                    onChange={() => changeAvatar(avatar.id)}
+                    checked={currentAvatar == avatar.id}
                     id={'avatar' + avatar.id}
                   />
                   <label

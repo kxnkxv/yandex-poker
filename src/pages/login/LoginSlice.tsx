@@ -48,6 +48,15 @@ const authSlice = createSlice({
       //Check auth
       .addCase(checkAuth.fulfilled, (state, action) => {
         if (action.payload.data) {
+          //Костыль, нужный для прокидывания аватарок через поле display_name
+          let d_name = action.payload.data.display_name
+          if (typeof d_name === 'string' && d_name.includes('avatar')) {
+            action.payload.data.display_name = d_name.replace('avatar', '')
+          } else {
+            action.payload.data.display_name = 0
+          }
+          //Конец костыля
+
           state.user = action.payload.data
         }
       })

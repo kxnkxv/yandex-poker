@@ -6,10 +6,14 @@ import useDocumentTitle from 'Hooks/useDocumentTitle'
 //Images
 import Back from 'Images/back.svg'
 import Edit from 'Images/edit.svg'
+import { useSelector } from 'react-redux'
+import { RootState } from 'core/store'
 
 const Account: FC = () => {
   useDocumentTitle('Account')
-  const userAvatar = Avatars[0].image
+
+  //Получаем логин пользователя из redux
+  const user = useSelector((state: RootState) => state.auth.user)
 
   return (
     <div className='main-wrapper pt-28'>
@@ -24,21 +28,23 @@ const Account: FC = () => {
         </div>
         <div className='w-full text-center'>
           <div className='profile-avatar mx-auto mb-5 inline-block'>
-            <img className='h-28 w-28' src={userAvatar} alt='Username' />
+            <img className='h-28 w-28' src={Avatars[user.display_name].image} alt='Username' />
           </div>
           <div className='mb-5'>
-            <h2>Username</h2>
-            <h4>@Login</h4>
+            <h2>
+              {user.first_name} {user.second_name}
+            </h2>
+            <h4>@{user.login}</h4>
           </div>
           <div className='h-px bg-magenta w-full mb-5' />
           <div className='grid gap-5 mb-5 md:grid-cols-2'>
             <div className='inline-grid justify-items-start'>
               <div className='text-grey'>Email</div>
-              <div>gulnazmd@gmail.com</div>
+              <div>{user.email}</div>
             </div>
             <div className='inline-grid justify-items-start'>
               <div className='text-grey'>Mobile</div>
-              <div>89534933355</div>
+              <div>{user.phone}</div>
             </div>
           </div>
           <div className='h-px bg-magenta w-full mb-5' />

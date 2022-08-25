@@ -1,5 +1,6 @@
-import {playerPositions, potPosition} from './parameters'
-import {TGameTable} from "../types";
+import { playerPositions, potPosition } from './parameters'
+import { TGameTable } from '../types'
+import UserAvatar from 'Images/avatars/1.png'
 
 // Todo:Нужен рефактор
 // Метод, перемещающий игроков так, чтобы мы были внизу посередине
@@ -32,7 +33,7 @@ const getActiveUserName = (table: TGameTable) => {
       if (table.seats[i].name) return table.seats[i].name
     }
   }
-  return false;
+  return false
 }
 
 // Метод для отрисовки игроков на своих местах
@@ -44,7 +45,6 @@ export const createPlayers = (table: TGameTable, currentUserName: string, ctx: a
 
     seats.forEach((seat: any, id: number) => {
       if (seat !== null) {
-
         //Игрок прозрачный, если не в игре
         let opacity = seat.inHand ? 1 : 0.5
 
@@ -54,31 +54,32 @@ export const createPlayers = (table: TGameTable, currentUserName: string, ctx: a
         ctx.lineJoin = 'round'
         ctx.lineWidth = 5
         if (seat.name === activeUserName) {
-          ctx.strokeStyle = `rgba(255, 202, 97, ${ 1 * opacity })`
+          ctx.strokeStyle = `rgba(255, 202, 97, ${1 * opacity})`
         } else {
-          ctx.strokeStyle = `rgba(255, 255, 255, ${ 0.5 * opacity })`
+          ctx.strokeStyle = `rgba(255, 255, 255, ${0.5 * opacity})`
         }
 
-
-        ctx.fillStyle = `rgba(0, 0, 0, ${ 0.7 * opacity })`
+        ctx.fillStyle = `rgba(0, 0, 0, ${0.7 * opacity})`
         ctx.fill()
 
         ctx.stroke()
 
         // Text
         ctx.font = '32px Arial'
-        ctx.fillStyle = `rgba(255, 202, 97, ${ 1 * opacity })`
+        ctx.fillStyle = `rgba(255, 202, 97, ${1 * opacity})`
         ctx.textAlign = 'center'
         ctx.fillText(seat.name, playerPositions[id][0], playerPositions[id][1] - 7)
-        ctx.fillStyle = `rgba(255, 255, 255, ${ 1 * opacity })`
+        ctx.fillStyle = `rgba(255, 255, 255, ${1 * opacity})`
         ctx.fillText('$ ' + seat.chipsInPlay, playerPositions[id][0], playerPositions[id][1] + 30)
         ctx.closePath()
+
+        //Create avatar
       }
     })
   }
 }
 //Отрисовываем pot
-export const createPot = (table : TGameTable, ctx: any) => {
+export const createPot = (table: TGameTable, ctx: any) => {
   if (table.pot[0].amount) {
     ctx.beginPath()
     console.log('POT = ', table.pot)
@@ -87,6 +88,17 @@ export const createPot = (table : TGameTable, ctx: any) => {
     ctx.textAlign = 'center'
     ctx.fillText('Pot: $ ' + table.pot[0].amount, potPosition[0], potPosition[1])
     ctx.closePath()
+  }
+
+  let avatar = new Image()
+  avatar.src = UserAvatar // can also be a remote URL e.g. http://
+  avatar.onload = function () {
+    ctx.drawImage(avatar, 500, 500)
+    ctx.drawImage(avatar, 600, 500)
+    ctx.drawImage(avatar, 700, 500)
+    ctx.drawImage(avatar, 800, 500)
+    ctx.drawImage(avatar, 900, 500)
+    ctx.drawImage(avatar, 1000, 500)
   }
 }
 

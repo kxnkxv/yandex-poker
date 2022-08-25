@@ -1,13 +1,18 @@
 import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { RootState } from 'core/store'
 
 //Images
 import Logo from 'Images/logo.svg'
-import User from 'Images/avatar.svg'
 import Settings from 'Images/normal.svg'
 import FullScreen from 'Images/pressed.svg'
+import Avatars from 'Pages/account-edit/Avatars'
 
 const Header: FC = () => {
+  //Получаем логин пользователя из redux
+  const user = useSelector((state: RootState) => state.auth.user)
+
   return (
     <nav>
       <div className='flex flex-wrap justify-between items-center'>
@@ -21,11 +26,17 @@ const Header: FC = () => {
           <Link to='/account'>
             <div className='flex items-center text-white'>
               <div className='inline-block items-center justify-end text-sm md:order-2'>
-                <h5>Ivan Tekunov</h5>
-                <h5 className='opacity-70 font-roboto'>player</h5>
+                <h5>
+                  {user.first_name} {user.second_name}
+                </h5>
+                <h5 className='opacity-70 font-roboto'>@{user.login}</h5>
               </div>
               <div className='flex items-center md:order-3'>
-                <img className='w-16 h-16' src={User} alt='user photo' />
+                <img
+                  className='w-16 h-16'
+                  src={Avatars[user.display_name].image}
+                  alt='user photo'
+                />
               </div>
             </div>
           </Link>
