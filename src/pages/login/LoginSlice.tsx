@@ -21,6 +21,12 @@ export const checkAuth = createAsyncThunk('@@auth/user', (_, { rejectWithValue }
   })
 })
 
+export const logout = createAsyncThunk('@@auth/user', (_, { rejectWithValue }) => {
+  return axios.post('auth/user').catch((err) => {
+    return rejectWithValue(err.response.data)
+  })
+})
+
 const initialState: TAuthInitialState = {
   isPending: false,
   user: null,

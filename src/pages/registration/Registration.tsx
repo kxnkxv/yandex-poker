@@ -9,7 +9,7 @@ import {
 } from 'Utils/validation/validation'
 import useDocumentTitle from 'Hooks/useDocumentTitle'
 import { Link } from 'react-router-dom'
-import { checkReg, registration } from 'Pages/registration/RegistrationSlice'
+import { registration } from 'Pages/registration/RegistrationSlice'
 import { AppDispatch } from 'Core/store'
 
 //Components
@@ -19,6 +19,7 @@ import Button from 'Components/ui/button/Button'
 //Types
 import { TSignUpForm } from './types'
 import { useDispatch } from 'react-redux'
+import { checkAuth } from 'Pages/login/LoginSlice'
 
 const Registration: FC = () => {
   useDocumentTitle('Registration')
@@ -44,7 +45,7 @@ const Registration: FC = () => {
   const onSubmit: SubmitHandler<TSignUpForm> = (data) => {
     dispatch(registration(data))
       .unwrap()
-      .then(() => dispatch(checkReg()))
+      .then(() => dispatch(checkAuth()))
       .catch(() => {})
   }
 
