@@ -140,6 +140,7 @@ const Registration: FC = () => {
                   className='form-control'
                   label='Password'
                   error={errors.password}
+                  type='password'
                 />
               )}
             />
