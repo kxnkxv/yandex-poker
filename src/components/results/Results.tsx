@@ -12,27 +12,31 @@ const Results: FC = () => {
         <img className='w-14 h-14 mb-5' src={Cup} alt='cup' />
       </div>
       <table className='w-full table-auto'>
-        <tr className='bg-blue h-10 border-2 border-dark-blue text-left'>
-          <th />
-          <th>
-            Player
-            <img className='h-4 pl-1 inline' src={Arrow} alt='user photo' />
-          </th>
-          <th>
-            Win
-            <img className='h-4 pl-1 inline' src={Arrow} alt='user photo' />
-          </th>
-        </tr>
-        <tr className='bg-blue h-10 border-2 border-dark-blue hover:bg-magenta'>
-          <td />
-          <td>User name</td>
-          <td>$1000</td>
-        </tr>
-        <tr className='bg-blue h-10 border-2 border-dark-blue hover:bg-magenta'>
-          <td />
-          <td>User name</td>
-          <td>$50000</td>
-        </tr>
+        <thead>
+          <tr className='bg-blue h-10 border-2 border-dark-blue text-left'>
+            <th />
+            <th>
+              Player
+              <img className='h-4 pl-1 inline' src={Arrow} alt='user photo' />
+            </th>
+            <th>
+              Win
+              <img className='h-4 pl-1 inline' src={Arrow} alt='user photo' />
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className='bg-blue h-10 border-2 border-dark-blue hover:bg-magenta'>
+            <td />
+            <td>User name</td>
+            <td>$1000</td>
+          </tr>
+          <tr className='bg-blue h-10 border-2 border-dark-blue hover:bg-magenta'>
+            <td />
+            <td>User name</td>
+            <td>$50000</td>
+          </tr>
+        </tbody>
       </table>
     </>
   )

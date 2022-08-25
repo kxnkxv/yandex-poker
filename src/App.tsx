@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { store, persistor } from './core/store'
+import { store, persistor } from 'Core/store'
 import { PersistGate } from 'redux-persist/integration/react'
 import { ToastContainer } from 'react-toastify'
 import PublicRoot from 'Components/public-root/PublicRoot'
@@ -17,7 +17,7 @@ import Account from 'Pages/account'
 import AccountEdit from 'Pages/account-edit'
 
 //Styles
-import 'Styles/style.css'
+import 'Styles/Style.css'
 
 //Images
 //.....
@@ -63,7 +63,7 @@ const App: FC = (): JSX.Element => {
 
             {/* Table */}
             <Route
-              path='tables/:id/:name'
+              path='tables/:tableId'
               element={
                 <ProtectedRoot>
                   <Table />

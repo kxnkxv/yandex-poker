@@ -52,3 +52,62 @@ canvas {
     top: 38%;
     left: 78%;
 }
+.table-controls {
+    position: fixed;
+    background: rgba(255,255,255,0.05);
+    width: 100%;
+    bottom: 0;
+}
+.log {
+    background: #393948;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    height: 100px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.log::-webkit-scrollbar {
+    display: none;
+}
+
+.btn-action {
+    height: 100px;
+    border-radius: 8px;
+    cursor: pointer;
+    /*Green*/
+    &-green {
+        background: #348019;
+    }
+    &-green:hover {
+        background: #327B18;
+    }
+    &-green:active {
+        background: #488D30;
+    }
+    /*Red*/
+    &-red {
+        background: #BE2E2E;
+    }
+    &-red:hover {
+        background: #B42A2A;
+    }
+    &-red:active {
+        background: #BE2E2E;
+    }
+
+    /*Blue*/
+    &-blue {
+        background: #49499E;
+    }
+    &-blue:hover {
+        background: #454597;
+    }
+    &-blue:active {
+        background: #5B5BA8;
+    }
+}
+.slider {
+    height: 100px;
+    border-radius: 8px;
+    background: #393948;
+}
