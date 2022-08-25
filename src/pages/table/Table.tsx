@@ -12,7 +12,7 @@ import { Listeners } from './TableController'
 import './Table.css'
 
 //Types
-import { TSeat } from './types'
+import { TSeat  } from './types'
 import { RootState } from 'Core/store'
 import { initialGameState } from './initialGameState'
 
@@ -95,22 +95,28 @@ const Table: FC = () => {
 
   //Обработчики действий во время игры
   const handleSit = (seat: number, tableId: number, chips: number) =>
+
     tableController!.sitOnTheTable(seat, tableId, chips)
   const handlePostBlind = () => tableController!.postBlind()
   const handleCheck = () => tableController!.check()
   const handleFold = () => tableController!.fold()
   const handleCall = () => tableController!.call()
   const handleRaise = (value: number) => {
+
     tableController!.raise(value)
+
   }
   const handleBet = (value: number) => {
+
     tableController!.bet(value)
+
   }
 
   //Расчет минимальной возможной ставки в текущий момент
   const minBetAmount = () => {
-    console.log('MYSEAT', mySeat, table.seats)
+    console.log('MYSEAT',  mySeat, table.seats)
     if (mySeat === null /*|| table.seats[mySeat] === 'undefined'*/ || table.seats[mySeat] === null)
+
       return 0
 
     if (actionState === Listeners.ActBettedPot) {
@@ -118,11 +124,15 @@ const Table: FC = () => {
       let proposedBet = +table!.biggestBet + table!.bigBlind!
       console.log('MBA', proposedBet)
       return table.seats[mySeat].chipsInPlay < proposedBet
+
         ? table.seats[mySeat].chipsInPlay
+
         : proposedBet
     } else {
       return table.seats[mySeat].chipsInPlay < table!.bigBlind!
+
         ? table.seats[mySeat].chipsInPlay
+
         : table!.bigBlind!
     }
   }
@@ -130,10 +140,13 @@ const Table: FC = () => {
   //Расчет максимальной возможной ставки в текущий момент
   const maxBetAmount = () => {
     if (mySeat === null /*|| table.seats[mySeat] === 'undefined'*/ || table.seats[mySeat] === null)
+
       return 0
 
     return actionState === Listeners.ActBettedPot
+
       ? table.seats[mySeat].chipsInPlay + table.seats[mySeat].bet
+
       : table.seats[mySeat].chipsInPlay
   }
 
@@ -214,7 +227,8 @@ const Table: FC = () => {
                 onClick={() => handleSit(seat, Number(tableId), 400)}
               >
                 Seat
-                <br /> open
+                <br />
+                open
               </div>
             ),
         )}
