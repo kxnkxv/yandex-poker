@@ -6,10 +6,10 @@ export const playerPositions = [
 ]
 
 export const dealerChipPositions = [
-  [1430, 1250], // Player 0
-  [555, 770], // Player 1
-  [1430, 300], // Player 2
-  [2280, 770], // Player 3
+  [1410, 950], // Player 0
+  [580, 740], // Player 1
+  [1410, 320], // Player 2
+  [1940, 785], // Player 3
 ]
 
 export const potPosition = [1280, 442]

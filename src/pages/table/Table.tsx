@@ -75,7 +75,7 @@ const Table: FC = () => {
         createPlayers(table, userName as string, ctx)
 
         //Отрисовываем фишку дилера
-        createDealerChip(table, userName as string, ctx,)
+        createDealerChip(table, userName as string, ctx)
 
         //Отрисовываем pot
         createPot(table, ctx)
