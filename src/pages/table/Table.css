@@ -13,6 +13,13 @@ canvas {
 #table {
     background: url("img/tableBackground.png");
     background-size: cover;
+    position: relative;
+    z-index: 10;
+}
+#avatars {
+    position: absolute;
+    z-index: 20;
+    top:0;
 }
 .table-wrapper {
     position: relative;
@@ -110,4 +117,42 @@ canvas {
     height: 100px;
     border-radius: 8px;
     background: #393948;
+}
+/* CARDS */
+.table-cards {
+    position: absolute;
+    width: 30%;
+    height: auto;
+    left: 50%;
+    margin-left: -15%;
+    top: 50%;
+    margin-top: -3%;
+    z-index: 10;
+
+}
+.table-card {
+    display: inline-block;
+    width: 18%;
+    margin-right: 2.5%;
+    float: left;
+}
+.table-card:last-child {
+    margin-right: 0;
+}
+.my-cards {
+    position: absolute;
+    width: 10%;
+    height: auto;
+    left: 50%;
+    margin-left: -5%;
+    top: 71%;
+    z-index: 90;
+}
+.my-card {
+    display: inline-block;
+    width: 49%;
+    margin-right: 2%;
+}
+.my-card:last-child {
+    margin-right: 0;
 }

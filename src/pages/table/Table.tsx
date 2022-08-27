@@ -2,11 +2,12 @@ import React, { FC, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { io } from 'socket.io-client'
-import { createPlayers, createPot } from './canvas/Methods'
+import { createAvatars, createPlayers, createPot } from './canvas/Methods'
 import useDocumentTitle from 'Hooks/useDocumentTitle'
 import BetSlider from 'Components/bet-slider/BetSlider'
 import TableController from 'Pages/table/TableController'
 import { Listeners } from './TableController'
+import { Cards } from 'Images/cards'
 
 //Styles
 import './Table.css'
@@ -15,8 +16,10 @@ import './Table.css'
 import { TSeat } from './types'
 import { RootState } from 'Core/store'
 import { initialGameState } from './initialGameState'
+import { usePreviousValue } from 'Hooks/usePreviousValue'
 
 const Table: FC = () => {
+  console.log('CARDS:', Cards)
   //Устанавливаем заголовок страницы в браузере
   useDocumentTitle('Table')
 
@@ -27,7 +30,10 @@ const Table: FC = () => {
   const userName = useSelector((state: RootState) => state.auth.user.login)
 
   //Canvas элемент игрового стола
-  const canvasRef = useRef(null)
+  const canvasTable = useRef(null)
+
+  //Отдельный canvas элемент для png аватарок с другой частотой перерисовки
+  const canvasAvatars = useRef(null)
 
   //Объявление контроллера для управления столом
   const [tableController, setTableController] = useState<TableController | null>(null)
@@ -35,13 +41,15 @@ const Table: FC = () => {
   //Объявляем геттер и сеттер состояния иры
   const [gameState, setGameState] = useState(initialGameState)
 
+  const previousTableState = usePreviousValue(gameState.table)
+
   //Получаем состояние стола, экшен, id моего сидения, мои карты
   const { table, actionState, mySeat, myCards } = gameState
 
   //При первой отрисовке компонента
   useEffect(() => {
     //Устанавливаем WS соединение
-    const socket = io('https://poker-back.herokuapp.com/', { transports: ['websocket'] })
+    const socket = io('http://localhost:8080/', { transports: ['websocket'] })
 
     //Инициализируем контроллер для управления столом, прокинув туда WS, геттер и сеттер состояния стола
     const tc = new TableController(socket, gameState, setGameState)
@@ -63,19 +71,30 @@ const Table: FC = () => {
 
   //Перерисовываем стол при изменении состояния игры
   useEffect(() => {
-    if (canvasRef && canvasRef.current) {
-      const canvas = canvasRef.current as HTMLCanvasElement
-      const ctx = canvas.getContext('2d')
+    //Canvas Table
+    if (canvasTable && canvasTable.current) {
+      const canvasT = canvasTable.current as HTMLCanvasElement
+      const ctxT = canvasT.getContext('2d')
 
-      if (ctx) {
+      if (ctxT) {
         // Сброс canvas при каждой перерисовке
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        ctxT.clearRect(0, 0, canvasT.width, canvasT.height)
 
         //Отрисовываем игроков
-        createPlayers(table, userName as string, ctx)
+        createPlayers(table, userName as string, ctxT)
 
         //Отрисовываем pot
-        createPot(table, ctx)
+        createPot(table, ctxT)
+      }
+    }
+    //Canvas avatars
+    if (canvasAvatars && canvasAvatars.current) {
+      const canvasA = canvasAvatars.current as HTMLCanvasElement
+      const ctxA = canvasA.getContext('2d')
+
+      if (ctxA) {
+        //Отрисовываем аватарки
+        createAvatars(previousTableState, table, userName as string, ctxA)
       }
     }
   }, [gameState])
@@ -103,6 +122,12 @@ const Table: FC = () => {
   const handleBet = (value: number) => {
     tableController!.bet(value)
   }
+  //Проверяем были ли изменения с аватарками
+  /*const isAvatarsChanged = (prevGameState: TGameState | null, nextGameState: TGameState) => {
+    console.log('prev:', prevGameState)
+    console.log('current:', nextGameState)
+    return true
+  }*/
 
   //Расчет минимальной возможной ставки в текущий момент
   const minBetAmount = () => {
@@ -200,7 +225,10 @@ const Table: FC = () => {
   return (
     <div>
       <div className='table-wrapper'>
-        <canvas ref={canvasRef} width='2560' height='1320' id='table' />
+        <canvas ref={canvasTable} width='2560' height='1320' id='table' />
+        <canvas ref={canvasAvatars} width='2560' height='1320' id='avatars' />
+
+        {/*Seats*/}
         {seats.map(
           (seat) =>
             !isOnTheTable &&
@@ -216,20 +244,22 @@ const Table: FC = () => {
               </div>
             ),
         )}
+
+        {/*Cards*/}
+        <div className='table-cards'>
+          {table.board.length > 0 &&
+            table.board.map((card: string, key) => (
+              <img key={card} src={Cards(card)} alt={card} className='table-card' />
+            ))}
+        </div>
+        <div className='my-cards'>
+          {myCards.length > 0 &&
+            myCards.map((card: string, key) => (
+              <img key={card} src={Cards(card)} alt={card} className='my-card' />
+            ))}
+        </div>
       </div>
-      <div className='h1 text-white text-center'>
-        <span>Table cards: </span>
-        {table.board.length > 0 &&
-          table.board.map((card: string, key) => <span key={key}>[{card}]</span>)}
-      </div>
-      <div className='h1 text-white text-center'>
-        <span>My cards: </span>
-        {myCards.length > 0 ? (
-          myCards.map((card: string, key) => <span key={key}>[{card}]</span>)
-        ) : (
-          <span>[][]</span>
-        )}
-      </div>
+
       <div className='table-controls p-5 grid grid-cols-5 gap-5'>
         <div className='table-controls-log_wrapper col-span-1'>
           <div className='log'>

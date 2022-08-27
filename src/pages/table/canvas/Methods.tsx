@@ -1,5 +1,7 @@
 import { playerPositions, potPosition } from './parameters'
-import { TGameTable } from '../types'
+import { TGameTable, TSeatAvatar } from '../types'
+import { isEqual } from 'lodash'
+import Avatars from 'Pages/account-edit/Avatars'
 
 // Todo:Нужен рефактор
 // Метод, перемещающий игроков так, чтобы мы были внизу посередине
@@ -94,4 +96,86 @@ export const createPot = (table: TGameTable, ctx: any) => {
 
 //Отрисовываем карты на столе
 
-//Отрисовываем фишку дилера
+//Отрисовываем аватарки
+export const createAvatars = (
+  previousTableState: TGameTable | null,
+  table: TGameTable,
+  currentUserName: string,
+  ctx: any,
+) => {
+  // Смещаем сидения так, чтобы наше было внизу посередине
+  const prevSeatsShifted = previousTableState ? shiftSeats(previousTableState, currentUserName) : []
+  const currentSeatsShifted = shiftSeats(table, currentUserName)
+
+  console.log('CREATE AVATARS')
+  console.log('prevSeatsShifted', prevSeatsShifted)
+  console.log('currentSeatsShifted', currentSeatsShifted)
+
+  currentSeatsShifted.forEach((seat: any, id: number) => {
+    //Создаем специальный объект prevSeatAvatarData состоящий из нужных для аватара полей
+    //За изменениями этих полей мы следим и перерисовываем автар если нужно
+    let prevSeatAvatarData: TSeatAvatar
+
+    //Если в предыдущем игровом состоянии это место существовало
+    if (prevSeatsShifted[id]) {
+      prevSeatAvatarData = {
+        name: prevSeatsShifted[id].name,
+        inHand: prevSeatsShifted[id].inHand,
+      }
+    } else {
+      prevSeatAvatarData = {}
+    }
+
+    let currentSeatAvatarData: TSeatAvatar
+    if (seat) {
+      currentSeatAvatarData = {
+        name: seat.name,
+        inHand: seat.inHand,
+      }
+    } else {
+      currentSeatAvatarData = {}
+    }
+
+    console.log('IS EQUAL:', isEqual(prevSeatAvatarData, currentSeatAvatarData))
+
+    //Если данные по пользователю обновились перерисовываем аватарку
+    if (!isEqual(prevSeatAvatarData, currentSeatAvatarData)) {
+      //Очищаем аватарку
+      ctx.clearRect(
+        playerPositions[id][0] - 112.5,
+        playerPositions[id][1] - 277,
+        150 * 1.5,
+        150 * 1.5,
+      )
+
+      if (currentSeatAvatarData.name) {
+        console.log(
+          'РИСУЕМ АВАТАРКУ',
+          currentSeatAvatarData.name,
+          prevSeatAvatarData,
+          currentSeatAvatarData,
+        )
+        ctx.beginPath()
+        ctx.globalAlpha = 1
+        let avatar = new Image()
+        avatar.src = Avatars[id].image
+
+        //Если неактивен, делаем полупрозрачным
+        if (!currentSeatAvatarData.inHand) {
+          ctx.globalAlpha = 0.75
+        }
+
+        avatar.onload = function () {
+          ctx.drawImage(
+            avatar,
+            playerPositions[id][0] - 112.5,
+            playerPositions[id][1] - 277,
+            avatar.width * 1.5,
+            avatar.height * 1.5,
+          )
+        }
+        ctx.closePath()
+      }
+    }
+  })
+}
