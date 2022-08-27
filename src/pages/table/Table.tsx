@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { io } from 'socket.io-client'
-import { createPlayers, createPot } from './canvas/Methods'
+import { createPlayers, createPot, createDealerChip } from './canvas/Methods'
 import useDocumentTitle from 'Hooks/useDocumentTitle'
 import BetSlider from 'Components/bet-slider/BetSlider'
 import TableController from 'Pages/table/TableController'
@@ -12,7 +12,7 @@ import { Listeners } from './TableController'
 import './Table.css'
 
 //Types
-import { TSeat } from './types'
+import { TSeat  } from './types'
 import { RootState } from 'Core/store'
 import { initialGameState } from './initialGameState'
 
@@ -41,7 +41,7 @@ const Table: FC = () => {
   //При первой отрисовке компонента
   useEffect(() => {
     //Устанавливаем WS соединение
-    const socket = io('https://poker-back.herokuapp.com/', { transports: ['websocket'] })
+    const socket = io('http://localhost:8080', { transports: ['websocket'] })
 
     //Инициализируем контроллер для управления столом, прокинув туда WS, геттер и сеттер состояния стола
     const tc = new TableController(socket, gameState, setGameState)
@@ -74,6 +74,9 @@ const Table: FC = () => {
         //Отрисовываем игроков
         createPlayers(table, userName as string, ctx)
 
+        //Отрисовываем фишку дилера
+        createDealerChip(table, userName as string, ctx)
+
         //Отрисовываем pot
         createPot(table, ctx)
       }
@@ -92,22 +95,28 @@ const Table: FC = () => {
 
   //Обработчики действий во время игры
   const handleSit = (seat: number, tableId: number, chips: number) =>
+
     tableController!.sitOnTheTable(seat, tableId, chips)
   const handlePostBlind = () => tableController!.postBlind()
   const handleCheck = () => tableController!.check()
   const handleFold = () => tableController!.fold()
   const handleCall = () => tableController!.call()
   const handleRaise = (value: number) => {
+
     tableController!.raise(value)
+
   }
   const handleBet = (value: number) => {
+
     tableController!.bet(value)
+
   }
 
   //Расчет минимальной возможной ставки в текущий момент
   const minBetAmount = () => {
-    console.log('MYSEAT', mySeat, table.seats)
+    console.log('MYSEAT',  mySeat, table.seats)
     if (mySeat === null /*|| table.seats[mySeat] === 'undefined'*/ || table.seats[mySeat] === null)
+
       return 0
 
     if (actionState === Listeners.ActBettedPot) {
@@ -115,11 +124,15 @@ const Table: FC = () => {
       let proposedBet = +table!.biggestBet + table!.bigBlind!
       console.log('MBA', proposedBet)
       return table.seats[mySeat].chipsInPlay < proposedBet
+
         ? table.seats[mySeat].chipsInPlay
+
         : proposedBet
     } else {
       return table.seats[mySeat].chipsInPlay < table!.bigBlind!
+
         ? table.seats[mySeat].chipsInPlay
+
         : table!.bigBlind!
     }
   }
@@ -127,10 +140,13 @@ const Table: FC = () => {
   //Расчет максимальной возможной ставки в текущий момент
   const maxBetAmount = () => {
     if (mySeat === null /*|| table.seats[mySeat] === 'undefined'*/ || table.seats[mySeat] === null)
+
       return 0
 
     return actionState === Listeners.ActBettedPot
+
       ? table.seats[mySeat].chipsInPlay + table.seats[mySeat].bet
+
       : table.seats[mySeat].chipsInPlay
   }
 
