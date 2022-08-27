@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 import { io } from 'socket.io-client'
 import { createAvatars, createPlayers, createPot } from './canvas/Methods'
 import useDocumentTitle from 'Hooks/useDocumentTitle'
@@ -14,12 +13,12 @@ import './Table.css'
 
 //Types
 import { TSeat } from './types'
-import { RootState } from 'Core/store'
 import { initialGameState } from './initialGameState'
 import { usePreviousValue } from 'Hooks/usePreviousValue'
+import { useSelector } from 'react-redux'
+import { userSelector } from 'Core/store/selectors/user'
 
 const Table: FC = () => {
-  console.log('CARDS:', Cards)
   //Устанавливаем заголовок страницы в браузере
   useDocumentTitle('Table')
 
@@ -27,7 +26,7 @@ const Table: FC = () => {
   const { tableId } = useParams()
 
   //Получаем логин пользователя из redux
-  const userName = useSelector((state: RootState) => state.auth.user.login)
+  const userName = useSelector(userSelector).login
 
   //Canvas элемент игрового стола
   const canvasTable = useRef(null)
@@ -122,23 +121,34 @@ const Table: FC = () => {
   const handleBet = (value: number) => {
     tableController!.bet(value)
   }
-  //Проверяем были ли изменения с аватарками
-  /*const isAvatarsChanged = (prevGameState: TGameState | null, nextGameState: TGameState) => {
-    console.log('prev:', prevGameState)
-    console.log('current:', nextGameState)
-    return true
-  }*/
+
+  //Расчет величины Call
+  const callAmount = () => {
+    if (
+      mySeat === null /*|| table.seats[mySeat] === 'undefined'*/ ||
+      table.seats[mySeat] === null
+    ) {
+      return 0
+    }
+
+    let callAmount = +table.biggestBet - table.seats[mySeat].bet
+    return callAmount > table.seats[mySeat].chipsInPlay
+      ? table.seats[mySeat].chipsInPlay
+      : callAmount
+  }
 
   //Расчет минимальной возможной ставки в текущий момент
   const minBetAmount = () => {
-    console.log('MYSEAT', mySeat, table.seats)
-    if (mySeat === null /*|| table.seats[mySeat] === 'undefined'*/ || table.seats[mySeat] === null)
+    if (
+      mySeat === null /*|| table.seats[mySeat] === 'undefined'*/ ||
+      table.seats[mySeat] === null
+    ) {
       return 0
+    }
 
     if (actionState === Listeners.ActBettedPot) {
       //ОБЯЗАТЕЛЬНО ПРОТЕСТИТЬ
       let proposedBet = +table!.biggestBet + table!.bigBlind!
-      console.log('MBA', proposedBet)
       return table.seats[mySeat].chipsInPlay < proposedBet
         ? table.seats[mySeat].chipsInPlay
         : proposedBet
@@ -220,7 +230,7 @@ const Table: FC = () => {
     }
   }
 
-  console.log('GAME STATE', gameState)
+  //console.log('GAME STATE', gameState)
 
   return (
     <div>
@@ -245,18 +255,29 @@ const Table: FC = () => {
             ),
         )}
 
-        {/*Cards*/}
+        {/*Table cards*/}
         <div className='table-cards'>
           {table.board.length > 0 &&
-            table.board.map((card: string, key) => (
-              <img key={card} src={Cards(card)} alt={card} className='table-card' />
-            ))}
+            table.board.map(
+              (card: string) =>
+                card && (
+                  <img
+                    key={'table-card' + card}
+                    src={Cards(card)}
+                    alt={card}
+                    className='table-card'
+                  />
+                ),
+            )}
         </div>
+
+        {/*My cards*/}
         <div className='my-cards'>
           {myCards.length > 0 &&
-            myCards.map((card: string, key) => (
-              <img key={card} src={Cards(card)} alt={card} className='my-card' />
-            ))}
+            myCards.map(
+              (card: string) =>
+                card && <img key={card} src={Cards(card)} alt={card} className='my-card' />,
+            )}
         </div>
       </div>
 
@@ -292,7 +313,7 @@ const Table: FC = () => {
               className='btn-action btn-action-green items-center whitespace-nowrap inline-flex justify-center'
               onClick={handleCall}
             >
-              Call
+              Call {callAmount()}
             </a>
           )}
 

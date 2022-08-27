@@ -2,8 +2,6 @@ function importAll(r: __WebpackModuleApi.RequireContext) {
   let images: Record<string, string> = {}
 
   r.keys().map((item: string) => {
-    console.log('item', item, r(item))
-
     images[item.replace('./', '').replace('.svg', '')] = r(item)
   })
   return images

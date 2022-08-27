@@ -24,18 +24,18 @@ import './AccountEdit.css'
 //Types
 import { TAccountEditData } from './types'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from 'core/store'
+import { AppDispatch } from 'Core/store'
 import { checkAuth } from 'Pages/login/LoginSlice'
 import callbackHandler from 'Utils/callback-handler/callbackHandler'
+import { userSelector } from 'Core/store/selectors/user'
 
 const AccountEdit: FC = () => {
   useDocumentTitle('Edit account')
 
+  const user = useSelector(userSelector)
+
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
-
-  //Получаем логин пользователя из redux
-  const user = useSelector((state: RootState) => state.auth.user)
 
   const [currentAvatar, setCurrentAvatar] = useState(user.display_name)
 
@@ -73,7 +73,7 @@ const AccountEdit: FC = () => {
     control,
   })
 
-  const onSubmit: SubmitHandler<TAccountEditData> = (data) => {
+  const onSubmit: SubmitHandler<TAccountEditData> = (data: TAccountEditData) => {
     dispatch(editUser(data))
       .unwrap()
       .then(() => dispatch(checkAuth()))

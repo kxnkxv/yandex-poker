@@ -1,17 +1,16 @@
 import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { RootState } from 'core/store'
 
 //Images
 import Logo from 'Images/logo.svg'
 import Settings from 'Images/normal.svg'
 import FullScreen from 'Images/pressed.svg'
 import Avatars from 'Pages/account-edit/Avatars'
+import { userSelector } from 'Core/store/selectors/user'
 
 const Header: FC = () => {
-  //Получаем логин пользователя из redux
-  const user = useSelector((state: RootState) => state.auth.user)
+  const user = useSelector(userSelector)
 
   return (
     <nav>

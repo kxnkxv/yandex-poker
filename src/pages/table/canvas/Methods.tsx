@@ -83,7 +83,6 @@ export const createPlayers = (table: TGameTable, currentUserName: string, ctx: a
 export const createPot = (table: TGameTable, ctx: any) => {
   if (table.pot[0].amount) {
     ctx.beginPath()
-    console.log('POT = ', table.pot)
     ctx.font = '32px Arial'
     ctx.fillStyle = `rgba(255, 255, 255, 1)`
     ctx.textAlign = 'center'
@@ -106,10 +105,6 @@ export const createAvatars = (
   // Смещаем сидения так, чтобы наше было внизу посередине
   const prevSeatsShifted = previousTableState ? shiftSeats(previousTableState, currentUserName) : []
   const currentSeatsShifted = shiftSeats(table, currentUserName)
-
-  console.log('CREATE AVATARS')
-  console.log('prevSeatsShifted', prevSeatsShifted)
-  console.log('currentSeatsShifted', currentSeatsShifted)
 
   currentSeatsShifted.forEach((seat: any, id: number) => {
     //Создаем специальный объект prevSeatAvatarData состоящий из нужных для аватара полей
@@ -136,8 +131,6 @@ export const createAvatars = (
       currentSeatAvatarData = {}
     }
 
-    console.log('IS EQUAL:', isEqual(prevSeatAvatarData, currentSeatAvatarData))
-
     //Если данные по пользователю обновились перерисовываем аватарку
     if (!isEqual(prevSeatAvatarData, currentSeatAvatarData)) {
       //Очищаем аватарку
@@ -149,12 +142,6 @@ export const createAvatars = (
       )
 
       if (currentSeatAvatarData.name) {
-        console.log(
-          'РИСУЕМ АВАТАРКУ',
-          currentSeatAvatarData.name,
-          prevSeatAvatarData,
-          currentSeatAvatarData,
-        )
         ctx.beginPath()
         ctx.globalAlpha = 1
         let avatar = new Image()

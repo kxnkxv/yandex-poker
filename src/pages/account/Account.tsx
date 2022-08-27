@@ -7,13 +7,11 @@ import useDocumentTitle from 'Hooks/useDocumentTitle'
 import Back from 'Images/back.svg'
 import Edit from 'Images/edit.svg'
 import { useSelector } from 'react-redux'
-import { RootState } from 'core/store'
+import { userSelector } from 'Core/store/selectors/user'
 
 const Account: FC = () => {
   useDocumentTitle('Account')
-
-  //Получаем логин пользователя из redux
-  const user = useSelector((state: RootState) => state.auth.user)
+  const user = useSelector(userSelector)
 
   return (
     <div className='main-wrapper pt-28'>
