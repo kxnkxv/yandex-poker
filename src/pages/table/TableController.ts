@@ -160,6 +160,12 @@ class TableController {
         return { ...state, actionState: Listeners.ActBettedPot }
       })
     })
+    //Кто-то из оппонентов пошел в All in
+    this.socket!.on(Listeners.ActOthersAllIn, () => {
+      this.setGameState((state: TGameState) => {
+        return { ...state, actionState: Listeners.ActOthersAllIn }
+      })
+    })
 
     //Оппонент не повышал ставку
     this.socket!.on(Listeners.ActNotBettedPot, () => {
