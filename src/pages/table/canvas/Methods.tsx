@@ -44,7 +44,11 @@ const getActiveUserName = (table: TGameTable) => {
 }
 
 // Метод для отрисовки игроков на своих местах
-export const createPlayers = (table: TGameTable, currentUserName: string, ctx: any) => {
+export const createPlayers = (
+  table: TGameTable,
+  currentUserName: string,
+  ctx: CanvasRenderingContext2D,
+) => {
   if (table.seats) {
     const activeUserName = getActiveUserName(table)
     // Смещаем сидения так, чтобы наше было внизу посередине
@@ -84,7 +88,7 @@ export const createPlayers = (table: TGameTable, currentUserName: string, ctx: a
   }
 }
 //Отрисовываем pot
-export const createPot = (table: TGameTable, ctx: any) => {
+export const createPot = (table: TGameTable, ctx: CanvasRenderingContext2D) => {
   if (table.pot[0].amount) {
     ctx.beginPath()
     console.log('POT = ', table.pot)
@@ -113,7 +117,11 @@ function getRealDealerSeatId(table: TGameTable, currentUserName: string) {
 }
 //Отрисовываем фишку дилера
 //todo Tests
-export const createDealerChip = (table: TGameTable, currentUserName: string, ctx: any) => {
+export const createDealerChip = (
+  table: TGameTable,
+  currentUserName: string,
+  ctx: CanvasRenderingContext2D,
+) => {
   let dealerSeat = getRealDealerSeatId(table, currentUserName)
   let chip = new Image()
   chip.src = ChipImage
@@ -125,7 +133,7 @@ export const createDealerChip = (table: TGameTable, currentUserName: string, ctx
 }
 
 //Отрисовываем плашку с комбинацией
-export const createCombinationLabel = (rank: string = '', ctx: any) => {
+export const createCombinationLabel = (rank: string = '', ctx: CanvasRenderingContext2D) => {
   if (rank) {
     //Название комбинации с заглавной
     let rankCapitalized = rank[0].toUpperCase() + rank.slice(1)
@@ -184,7 +192,7 @@ export const createAvatars = (
   previousTableState: TGameTable | null,
   table: TGameTable,
   currentUserName: string,
-  ctx: any,
+  ctx: CanvasRenderingContext2D,
 ) => {
   // Смещаем сидения так, чтобы наше было внизу посередине
   const prevSeatsShifted = previousTableState ? shiftSeats(previousTableState, currentUserName) : []

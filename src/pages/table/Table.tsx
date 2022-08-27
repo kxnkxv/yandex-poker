@@ -100,6 +100,7 @@ const Table: FC = () => {
         createCombinationLabel(combination.rank, ctxT)
       }
     }
+
     //Canvas avatars
     if (canvasAvatars && canvasAvatars.current) {
       const canvasA = canvasAvatars.current as HTMLCanvasElement
@@ -129,12 +130,8 @@ const Table: FC = () => {
   const handleCheck = () => tableController!.check()
   const handleFold = () => tableController!.fold()
   const handleCall = () => tableController!.call()
-  const handleRaise = (value: number) => {
-    tableController!.raise(value)
-  }
-  const handleBet = (value: number) => {
-    tableController!.bet(value)
-  }
+  const handleRaise = (value: number) => tableController!.raise(value)
+  const handleBet = (value: number) => tableController!.bet(value)
 
   //Расчет величины Call
   const callAmount = () => {
