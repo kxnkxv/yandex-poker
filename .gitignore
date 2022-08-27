@@ -2,3 +2,4 @@ front/node_modules/
 dist/
 /package-lock.json
 back/
+node_modules
