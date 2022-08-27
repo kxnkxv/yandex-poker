@@ -15,6 +15,11 @@ export type TSeat = {
   bet: number
 }
 
+export type TSeatAvatar = {
+  name?: string
+  inHand?: boolean
+}
+
 export type TLog = {
   message: string
   action: string
@@ -39,4 +44,19 @@ export type TGameTable = {
   phase: Nullable<TPhase>
   board: string[]
   log: TLog
+}
+
+export type TGameState = {
+  table: TGameTable
+  notifications: string[]
+  showChipsModal: boolean
+  actionState: string
+  myCards: string[]
+  mySeat: number | null
+  betAmount: number
+  sittingOnTable: number | null
+}
+
+export type TWsResponse = {
+  success?: boolean
 }

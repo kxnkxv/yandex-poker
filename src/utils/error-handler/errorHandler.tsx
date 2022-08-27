@@ -4,7 +4,7 @@ import 'react-toastify/dist/ReactToastify.css'
 const errorHandler = (error: string = '') => {
   toast.error(error ? error : 'Something went wrong :(', {
     position: 'top-right',
-    autoClose: 5000,
+    autoClose: 2500,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

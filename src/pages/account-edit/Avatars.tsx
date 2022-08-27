@@ -1,25 +1,32 @@
-import Avatar1 from '../../images/avatars/1.png'
-import Avatar2 from '../../images/avatars/2.png'
-import Avatar3 from '../../images/avatars/3.png'
-import Avatar4 from '../../images/avatars/4.png'
-import Avatar5 from '../../images/avatars/5.png'
-import Avatar6 from '../../images/avatars/6.png'
-import Avatar7 from '../../images/avatars/7.png'
-import Avatar8 from '../../images/avatars/8.png'
-import Avatar9 from '../../images/avatars/9.png'
-import Avatar10 from '../../images/avatars/10.png'
-import Avatar11 from '../../images/avatars/11.png'
-import Avatar12 from '../../images/avatars/12.png'
-import Avatar13 from '../../images/avatars/13.png'
-import Avatar14 from '../../images/avatars/14.png'
-import Avatar15 from '../../images/avatars/15.png'
-import Avatar16 from '../../images/avatars/16.png'
-import Avatar17 from '../../images/avatars/17.png'
-import Avatar18 from '../../images/avatars/18.png'
-import Avatar19 from '../../images/avatars/19.png'
-import Avatar20 from '../../images/avatars/20.png'
+import Avatar0 from 'Images/avatars/0.png'
+import Avatar1 from 'Images/avatars/1.png'
+import Avatar2 from 'Images/avatars/2.png'
+import Avatar3 from 'Images/avatars/3.png'
+import Avatar4 from 'Images/avatars/4.png'
+import Avatar5 from 'Images/avatars/5.png'
+import Avatar6 from 'Images/avatars/6.png'
+import Avatar7 from 'Images/avatars/7.png'
+import Avatar8 from 'Images/avatars/8.png'
+import Avatar9 from 'Images/avatars/9.png'
+import Avatar10 from 'Images/avatars/10.png'
+import Avatar11 from 'Images/avatars/11.png'
+import Avatar12 from 'Images/avatars/12.png'
+import Avatar13 from 'Images/avatars/13.png'
+import Avatar14 from 'Images/avatars/14.png'
+import Avatar15 from 'Images/avatars/15.png'
+import Avatar16 from 'Images/avatars/16.png'
+import Avatar17 from 'Images/avatars/17.png'
+import Avatar18 from 'Images/avatars/18.png'
+import Avatar19 from 'Images/avatars/19.png'
 
-const Avatars = [
+type TAvatar = {
+  id: number
+  image: string
+}
+type TAvatars = TAvatar[]
+
+const Avatars: TAvatars = [
+  { id: 0, image: Avatar0 },
   { id: 1, image: Avatar1 },
   { id: 2, image: Avatar2 },
   { id: 3, image: Avatar3 },
@@ -39,6 +46,5 @@ const Avatars = [
   { id: 17, image: Avatar17 },
   { id: 18, image: Avatar18 },
   { id: 19, image: Avatar19 },
-  { id: 20, image: Avatar20 },
 ]
 export default Avatars

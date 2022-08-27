@@ -8,7 +8,7 @@ Setup
 -----
 Clone the repo:
 
-    git clone https://github.com/AIG-GAMING/Poker.git -b develop
+    git clone https://github.com/AIG-GAMING/Poker.git
 
 Move to the project path:
 

@@ -1,0 +1,6 @@
+.table-list tr td {
+    padding: 10px;
+}
+.table-list tr td:first-child {
+    padding: 0;
+}
