@@ -42,7 +42,9 @@ class TableController {
 
   //ACTIONS
   register(userName: string) {
-    this.socket!.emit(Actions.Register, userName)
+    this.socket!.emit(Actions.Register, userName, (response: TWsResponse) => {
+      console.log(response)
+    })
     console.log(Actions.Register, userName)
   }
 

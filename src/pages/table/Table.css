@@ -61,9 +61,9 @@ canvas {
 }
 .table-controls {
     position: fixed;
-    background: rgba(255,255,255,0.05);
     width: 100%;
     bottom: 0;
+    z-index: 100;
 }
 .log {
     background: #393948;
