@@ -1,5 +1,5 @@
 export type TAccountEditData = {
-  avatar: string
+  display_name: string
   first_name: string
   second_name: string
   email: string

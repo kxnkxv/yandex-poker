@@ -15,6 +15,11 @@ export type TSeat = {
   bet: number
 }
 
+export type TSeatAvatar = {
+  name?: string
+  inHand?: boolean
+}
+
 export type TLog = {
   message: string
   action: string

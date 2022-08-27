@@ -1,8 +1,8 @@
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-const errorHandler = (error: string = '') => {
-  toast.error(error ? error : 'Something went wrong :(', {
+const callbackHandler = (result: string = '') => {
+  toast.success(result ? result : 'Success 👍', {
     position: 'top-right',
     autoClose: 2500,
     hideProgressBar: false,
@@ -13,4 +13,4 @@ const errorHandler = (error: string = '') => {
   })
 }
 
-export default errorHandler
+export default callbackHandler

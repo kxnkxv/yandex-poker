@@ -22,7 +22,8 @@ export enum Listeners {
   ActNotBettedPot = 'actNotBettedPot',
   ActBettedPot = 'actBettedPot',
   ActOthersAllIn = 'actOthersAllIn',
-  DealingCards = 'dealingCards'
+  DealingCards = 'dealingCards',
+  EndRound = 'endRound',
 }
 
 class TableController {
@@ -30,11 +31,7 @@ class TableController {
   gameState: TGameState
   setGameState: Function
 
-  constructor(
-    socket: Socket | null,
-    gameState: TGameState,
-    setGameState: Function,
-  ) {
+  constructor(socket: Socket | null, gameState: TGameState, setGameState: Function) {
     this.socket = socket
     this.gameState = gameState
     this.setGameState = setGameState
@@ -55,14 +52,13 @@ class TableController {
   }
 
   sitOnTheTable(seat: number, tableId: number, chips: number) {
-
-    this.setGameState((state: TGameState)=> {
-      return {...state, mySeat: seat}
+    this.setGameState((state: TGameState) => {
+      return { ...state, mySeat: seat }
     })
 
-    this.socket!.emit(Actions.SitOnTheTable, { seat, tableId, chips }, (response:TWsResponse) => {
+    this.socket!.emit(Actions.SitOnTheTable, { seat, tableId, chips }, (response: TWsResponse) => {
       if (response.success) {
-        console.log('Успешная посадка за стол', response);
+        console.log('Успешная посадка за стол', response)
       }
     })
     console.log('sitOnTheTable', { seat, tableId, chips })
@@ -79,7 +75,7 @@ class TableController {
   }
 
   check() {
-    this.socket!.emit(Actions.Check,  (response: TWsResponse) => {
+    this.socket!.emit(Actions.Check, (response: TWsResponse) => {
       if (response.success) {
         this.setGameState((state: TGameState) => {
           return { ...state, actionState: '' }
@@ -176,6 +172,12 @@ class TableController {
       })
     })
 
+    //Раздача окончена
+    this.socket!.on(Listeners.EndRound, (cards: string[]) => {
+      this.setGameState((state: TGameState) => {
+        return { ...state, myCards: [] }
+      })
+    })
   }
 }
 

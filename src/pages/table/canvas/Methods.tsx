@@ -1,6 +1,8 @@
 import { dealerChipPositions, playerPositions, potPosition } from './parameters'
-import { TGameTable } from '../types'
+import { TGameTable, TSeatAvatar } from '../types'
 import ChipImage from 'Images/chip.svg'
+import { isEqual } from 'lodash'
+import Avatars from 'Pages/account-edit/Avatars'
 
 // Todo:Нужен рефактор
 // Метод, перемещающий игроков так, чтобы мы были внизу посередине
@@ -33,7 +35,7 @@ const getActiveUserName = (table: TGameTable) => {
       if (table.seats[i].name) return table.seats[i].name
     }
   }
-  return false
+  return false;
 }
 
 // Метод для отрисовки игроков на своих местах
@@ -45,6 +47,7 @@ export const createPlayers = (table: TGameTable, currentUserName: string, ctx: a
 
     seats.forEach((seat: any, id: number) => {
       if (seat !== null) {
+
         //Игрок прозрачный, если не в игре
         let opacity = seat.inHand ? 1 : 0.5
 
@@ -54,22 +57,23 @@ export const createPlayers = (table: TGameTable, currentUserName: string, ctx: a
         ctx.lineJoin = 'round'
         ctx.lineWidth = 5
         if (seat.name === activeUserName) {
-          ctx.strokeStyle = `rgba(255, 202, 97, ${1 * opacity})`
+          ctx.strokeStyle = `rgba(255, 202, 97, ${ 1 * opacity })`
         } else {
-          ctx.strokeStyle = `rgba(255, 255, 255, ${0.5 * opacity})`
+          ctx.strokeStyle = `rgba(255, 255, 255, ${ 0.5 * opacity })`
         }
 
-        ctx.fillStyle = `rgba(0, 0, 0, ${0.7 * opacity})`
+
+        ctx.fillStyle = `rgba(0, 0, 0, ${ 0.7 * opacity })`
         ctx.fill()
 
         ctx.stroke()
 
         // Text
         ctx.font = '32px Arial'
-        ctx.fillStyle = `rgba(255, 202, 97, ${1 * opacity})`
+        ctx.fillStyle = `rgba(255, 202, 97, ${ 1 * opacity })`
         ctx.textAlign = 'center'
         ctx.fillText(seat.name, playerPositions[id][0], playerPositions[id][1] - 7)
-        ctx.fillStyle = `rgba(255, 255, 255, ${1 * opacity})`
+        ctx.fillStyle = `rgba(255, 255, 255, ${ 1 * opacity })`
         ctx.fillText('$ ' + seat.chipsInPlay, playerPositions[id][0], playerPositions[id][1] + 30)
         ctx.closePath()
       }
@@ -77,7 +81,7 @@ export const createPlayers = (table: TGameTable, currentUserName: string, ctx: a
   }
 }
 //Отрисовываем pot
-export const createPot = (table: TGameTable, ctx: any) => {
+export const createPot = (table : TGameTable, ctx: any) => {
   if (table.pot[0].amount) {
     ctx.beginPath()
     console.log('POT = ', table.pot)
@@ -118,3 +122,75 @@ export const createDealerChip = (table: TGameTable, currentUserName: string, ctx
 }
 
 //Отрисовываем карты на столе
+
+//Отрисовываем аватарки
+export const createAvatars = (
+  previousTableState: TGameTable | null,
+  table: TGameTable,
+  currentUserName: string,
+  ctx: any,
+) => {
+  // Смещаем сидения так, чтобы наше было внизу посередине
+  const prevSeatsShifted = previousTableState ? shiftSeats(previousTableState, currentUserName) : []
+  const currentSeatsShifted = shiftSeats(table, currentUserName)
+
+  currentSeatsShifted.forEach((seat: any, id: number) => {
+    //Создаем специальный объект prevSeatAvatarData состоящий из нужных для аватара полей
+    //За изменениями этих полей мы следим и перерисовываем автар если нужно
+    let prevSeatAvatarData: TSeatAvatar
+
+    //Если в предыдущем игровом состоянии это место существовало
+    if (prevSeatsShifted[id]) {
+      prevSeatAvatarData = {
+        name: prevSeatsShifted[id].name,
+        inHand: prevSeatsShifted[id].inHand,
+      }
+    } else {
+      prevSeatAvatarData = {}
+    }
+
+    let currentSeatAvatarData: TSeatAvatar
+    if (seat) {
+      currentSeatAvatarData = {
+        name: seat.name,
+        inHand: seat.inHand,
+      }
+    } else {
+      currentSeatAvatarData = {}
+    }
+
+    //Если данные по пользователю обновились перерисовываем аватарку
+    if (!isEqual(prevSeatAvatarData, currentSeatAvatarData)) {
+      //Очищаем аватарку
+      ctx.clearRect(
+        playerPositions[id][0] - 112.5,
+        playerPositions[id][1] - 277,
+        150 * 1.5,
+        150 * 1.5,
+      )
+
+      if (currentSeatAvatarData.name) {
+        ctx.beginPath()
+        ctx.globalAlpha = 1
+        let avatar = new Image()
+        avatar.src = Avatars[id].image
+
+        //Если неактивен, делаем полупрозрачным
+        if (!currentSeatAvatarData.inHand) {
+          ctx.globalAlpha = 0.75
+        }
+
+        avatar.onload = function () {
+          ctx.drawImage(
+            avatar,
+            playerPositions[id][0] - 112.5,
+            playerPositions[id][1] - 277,
+            avatar.width * 1.5,
+            avatar.height * 1.5,
+          )
+        }
+        ctx.closePath()
+      }
+    }
+  })
+}
