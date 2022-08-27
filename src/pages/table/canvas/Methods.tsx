@@ -105,6 +105,7 @@ function getRealDealerSeatId(table: TGameTable, currentUserName: string) {
   return result
 }
 //Отрисовываем фишку дилера
+//todo Tests
 export const createDealerChip = (table: TGameTable, currentUserName: string, ctx: any) => {
   let dealerSeat = getRealDealerSeatId(table, currentUserName)
   let chip = new Image()
