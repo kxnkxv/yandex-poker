@@ -1,4 +1,9 @@
-import { dealerChipPositions, playerPositions, potPosition } from './parameters'
+import {
+  dealerChipPositions,
+  playerPositions,
+  potPosition,
+  combinationPosition,
+} from './parameters'
 import { TGameTable, TSeatAvatar } from '../types'
 import ChipImage from 'Images/chip.svg'
 import { isEqual } from 'lodash'
@@ -35,7 +40,7 @@ const getActiveUserName = (table: TGameTable) => {
       if (table.seats[i].name) return table.seats[i].name
     }
   }
-  return false;
+  return false
 }
 
 // Метод для отрисовки игроков на своих местах
@@ -47,7 +52,6 @@ export const createPlayers = (table: TGameTable, currentUserName: string, ctx: a
 
     seats.forEach((seat: any, id: number) => {
       if (seat !== null) {
-
         //Игрок прозрачный, если не в игре
         let opacity = seat.inHand ? 1 : 0.5
 
@@ -57,23 +61,22 @@ export const createPlayers = (table: TGameTable, currentUserName: string, ctx: a
         ctx.lineJoin = 'round'
         ctx.lineWidth = 5
         if (seat.name === activeUserName) {
-          ctx.strokeStyle = `rgba(255, 202, 97, ${ 1 * opacity })`
+          ctx.strokeStyle = `rgba(255, 202, 97, ${1 * opacity})`
         } else {
-          ctx.strokeStyle = `rgba(255, 255, 255, ${ 0.5 * opacity })`
+          ctx.strokeStyle = `rgba(255, 255, 255, ${0.5 * opacity})`
         }
 
-
-        ctx.fillStyle = `rgba(0, 0, 0, ${ 0.7 * opacity })`
+        ctx.fillStyle = `rgba(0, 0, 0, ${0.7 * opacity})`
         ctx.fill()
 
         ctx.stroke()
 
         // Text
         ctx.font = '32px Arial'
-        ctx.fillStyle = `rgba(255, 202, 97, ${ 1 * opacity })`
+        ctx.fillStyle = `rgba(255, 202, 97, ${1 * opacity})`
         ctx.textAlign = 'center'
         ctx.fillText(seat.name, playerPositions[id][0], playerPositions[id][1] - 7)
-        ctx.fillStyle = `rgba(255, 255, 255, ${ 1 * opacity })`
+        ctx.fillStyle = `rgba(255, 255, 255, ${1 * opacity})`
         ctx.fillText('$ ' + seat.chipsInPlay, playerPositions[id][0], playerPositions[id][1] + 30)
         ctx.closePath()
       }
@@ -81,7 +84,7 @@ export const createPlayers = (table: TGameTable, currentUserName: string, ctx: a
   }
 }
 //Отрисовываем pot
-export const createPot = (table : TGameTable, ctx: any) => {
+export const createPot = (table: TGameTable, ctx: any) => {
   if (table.pot[0].amount) {
     ctx.beginPath()
     console.log('POT = ', table.pot)
@@ -121,7 +124,60 @@ export const createDealerChip = (table: TGameTable, currentUserName: string, ctx
   }
 }
 
-//Отрисовываем карты на столе
+//Отрисовываем плашку с комбинацией
+export const createCombinationLabel = (rank: string = '', ctx: any) => {
+  if (rank) {
+    //Название комбинации с заглавной
+    let rankCapitalized = rank[0].toUpperCase() + rank.slice(1)
+
+    //Желтая плашка комбинации
+    ctx.beginPath()
+    ctx.moveTo(combinationPosition.x - 110, combinationPosition.y)
+    ctx.lineTo(combinationPosition.x + 110, combinationPosition.y)
+    ctx.quadraticCurveTo(
+      combinationPosition.x + 110 + 16,
+      combinationPosition.y,
+      combinationPosition.x + 110 + 16,
+      combinationPosition.y + 16,
+    )
+    ctx.quadraticCurveTo(
+      combinationPosition.x + 110 + 16,
+      combinationPosition.y + 32,
+      combinationPosition.x + 110,
+      combinationPosition.y + 32,
+    )
+    ctx.lineTo(combinationPosition.x - 100, combinationPosition.y + 32)
+
+    ctx.quadraticCurveTo(
+      combinationPosition.x - 110 - 16,
+      combinationPosition.y + 32,
+      combinationPosition.x - 110 - 16,
+      combinationPosition.y + 16,
+    )
+
+    ctx.quadraticCurveTo(
+      combinationPosition.x - 110 - 16,
+      combinationPosition.y,
+      combinationPosition.x - 110,
+      combinationPosition.y,
+    )
+
+    ctx.fillStyle = '#FFCA61'
+    ctx.fill()
+
+    ctx.closePath()
+
+    //Текст комбинации
+    ctx.beginPath()
+
+    ctx.font = '32px Arial'
+    ctx.fillStyle = `rgba(0, 0, 0, 1)`
+    ctx.textAlign = 'center'
+    ctx.fillText(rankCapitalized, playerPositions[0][0], playerPositions[0][1] + 97)
+
+    ctx.closePath()
+  }
+}
 
 //Отрисовываем аватарки
 export const createAvatars = (

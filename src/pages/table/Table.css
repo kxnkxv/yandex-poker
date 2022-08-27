@@ -139,6 +139,11 @@ canvas {
 .table-card:last-child {
     margin-right: 0;
 }
+.card-active {
+    outline: 0.3vw solid #FFCA61;
+    outline-offset: -0.3vw;
+    border-radius: 0.6vw;
+}
 .my-cards {
     position: absolute;
     width: 10%;

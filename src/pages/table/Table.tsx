@@ -2,7 +2,13 @@ import React, { FC, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { io } from 'socket.io-client'
-import { createAvatars, createPlayers, createPot, createDealerChip } from './canvas/Methods'
+import {
+  createAvatars,
+  createPlayers,
+  createPot,
+  createDealerChip,
+  createCombinationLabel,
+} from './canvas/Methods'
 import useDocumentTitle from 'Hooks/useDocumentTitle'
 import BetSlider from 'Components/bet-slider/BetSlider'
 import TableController from 'Pages/table/TableController'
@@ -43,7 +49,9 @@ const Table: FC = () => {
   const previousTableState = usePreviousValue(gameState.table)
 
   //Получаем состояние стола, экшен, id моего сидения, мои карты
-  const { table, actionState, mySeat, myCards } = gameState
+  const { table, actionState, mySeat, myCards, combination } = gameState
+
+  console.log('COMBINATION:', combination)
 
   //При первой отрисовке компонента
   useEffect(() => {
@@ -87,6 +95,9 @@ const Table: FC = () => {
 
         //Отрисовываем pot
         createPot(table, ctxT)
+
+        //Отрисовываем плашку с информацией о собранной комбинации
+        createCombinationLabel(combination.rank, ctxT)
       }
     }
     //Canvas avatars
@@ -264,7 +275,9 @@ const Table: FC = () => {
                     key={'table-card' + card}
                     src={Cards(card)}
                     alt={card}
-                    className='table-card'
+                    className={
+                      'table-card' + (combination.cards?.includes(card) ? ' card-active' : '')
+                    }
                   />
                 ),
             )}
@@ -275,7 +288,16 @@ const Table: FC = () => {
           {myCards.length > 0 &&
             myCards.map(
               (card: string) =>
-                card && <img key={card} src={Cards(card)} alt={card} className='my-card' />,
+                card && (
+                  <img
+                    key={card}
+                    src={Cards(card)}
+                    alt={card}
+                    className={
+                      'my-card' + (combination.cards?.includes(card) ? ' card-active' : '')
+                    }
+                  />
+                ),
             )}
         </div>
       </div>

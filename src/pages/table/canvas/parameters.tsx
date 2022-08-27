@@ -12,4 +12,9 @@ export const dealerChipPositions = [
   [1940, 785], // Player 3
 ]
 
+export const combinationPosition = {
+  x: 1280,
+  y: 1250,
+}
+
 export const potPosition = [1280, 442]

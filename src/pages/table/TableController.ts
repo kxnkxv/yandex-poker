@@ -1,5 +1,5 @@
 import { Socket } from 'socket.io-client'
-import { TGameState, TGameTable, TWsResponse } from './types'
+import { TCombination, TGameState, TGameTable, TWsResponse } from './types'
 
 export enum Actions {
   Register = 'register',
@@ -24,6 +24,7 @@ export enum Listeners {
   ActOthersAllIn = 'actOthersAllIn',
   DealingCards = 'dealingCards',
   EndRound = 'endRound',
+  Combination = 'combination',
 }
 
 class TableController {
@@ -171,6 +172,13 @@ class TableController {
     this.socket!.on(Listeners.DealingCards, (cards: string[]) => {
       this.setGameState((state: TGameState) => {
         return { ...state, myCards: cards }
+      })
+    })
+
+    //Собрали комбинацию
+    this.socket!.on(Listeners.Combination, (combination: TCombination) => {
+      this.setGameState((state: TGameState) => {
+        return { ...state, combination }
       })
     })
 
