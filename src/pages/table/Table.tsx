@@ -15,6 +15,9 @@ import TableController from 'Pages/table/TableController'
 import { Listeners } from './TableController'
 import { Cards } from 'Images/cards'
 
+//Components
+import YouWin from 'Components/you-win'
+
 //Styles
 import './Table.css'
 
@@ -49,9 +52,7 @@ const Table: FC = () => {
   const previousTableState = usePreviousValue(gameState.table)
 
   //Получаем состояние стола, экшен, id моего сидения, мои карты
-  const { table, actionState, mySeat, myCards, combination } = gameState
-
-  console.log('COMBINATION:', combination)
+  const { table, actionState, mySeat, myCards, combination, winModal } = gameState
 
   //При первой отрисовке компонента
   useEffect(() => {
@@ -297,6 +298,8 @@ const Table: FC = () => {
                 ),
             )}
         </div>
+
+        <YouWin {...winModal} />
       </div>
 
       <div className='table-controls p-5 grid grid-cols-5 gap-5'>
