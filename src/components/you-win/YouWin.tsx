@@ -22,7 +22,7 @@ const YouWin: FC<TProps> = ({ isOpened, amount }) => {
         scalar: 5,
         spread: 500,
         origin: {
-          y: 0.5,
+          y: 0.3,
         },
       })
 
