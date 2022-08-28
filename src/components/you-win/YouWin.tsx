@@ -21,10 +21,16 @@ const YouWin: FC<TProps> = ({ isOpened, amount }) => {
       winConfetti({
         scalar: 5,
         spread: 500,
-        origin: {},
+        origin: {
+          y: 0.5,
+        },
       })
-      setWinModalClass('win-modal-zoomed')
+
       if (isOpened) {
+        setTimeout(() => {
+          setWinModalClass('win-modal-zoomed')
+        }, 1)
+
         setTimeout(() => {
           setWinModalClass('')
           winConfetti.reset()
