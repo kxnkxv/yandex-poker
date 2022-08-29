@@ -52,6 +52,7 @@ export type TGameState = {
   showChipsModal: boolean
   actionState: string
   myCards: string[]
+  combination: TCombination
   mySeat: number | null
   betAmount: number
   sittingOnTable: number | null
@@ -59,4 +60,9 @@ export type TGameState = {
 
 export type TWsResponse = {
   success?: boolean
+}
+
+export type TCombination = {
+  rank?: string
+  cards?: string[]
 }

@@ -1,5 +1,5 @@
 import { Socket } from 'socket.io-client'
-import { TGameState, TGameTable, TWsResponse } from './types'
+import { TCombination, TGameState, TGameTable, TWsResponse } from './types'
 
 export enum Actions {
   Register = 'register',
@@ -24,6 +24,7 @@ export enum Listeners {
   ActOthersAllIn = 'actOthersAllIn',
   DealingCards = 'dealingCards',
   EndRound = 'endRound',
+  Combination = 'combination',
 }
 
 class TableController {
@@ -45,12 +46,10 @@ class TableController {
     this.socket!.emit(Actions.Register, userName, (response: TWsResponse) => {
       console.log(response)
     })
-    console.log(Actions.Register, userName)
   }
 
   enterRoom(tableId: number) {
     this.socket!.emit(Actions.EnterRoom, tableId)
-    console.log('enterRoom', tableId)
   }
 
   sitOnTheTable(seat: number, tableId: number, chips: number) {
@@ -159,6 +158,12 @@ class TableController {
         return { ...state, actionState: Listeners.ActBettedPot }
       })
     })
+    //Кто-то из оппонентов пошел в All in
+    this.socket!.on(Listeners.ActOthersAllIn, () => {
+      this.setGameState((state: TGameState) => {
+        return { ...state, actionState: Listeners.ActOthersAllIn }
+      })
+    })
 
     //Оппонент не повышал ставку
     this.socket!.on(Listeners.ActNotBettedPot, () => {
@@ -171,6 +176,13 @@ class TableController {
     this.socket!.on(Listeners.DealingCards, (cards: string[]) => {
       this.setGameState((state: TGameState) => {
         return { ...state, myCards: cards }
+      })
+    })
+
+    //Собрали комбинацию
+    this.socket!.on(Listeners.Combination, (combination: TCombination) => {
+      this.setGameState((state: TGameState) => {
+        return { ...state, combination }
       })
     })
 

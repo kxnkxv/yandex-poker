@@ -1,8 +1,22 @@
-import { dealerChipPositions, playerPositions, potPosition } from './parameters'
+import {
+  dealerChipPositions,
+  playerPositions,
+  potPosition,
+  //combinationPosition,
+} from './parameters'
 import { TGameTable, TSeatAvatar } from '../types'
 import ChipImage from 'Images/chip.svg'
 import { isEqual } from 'lodash'
 import Avatars from 'Pages/account-edit/Avatars'
+import CombinationLabel from 'Images/svg-sources/CombinationLabel'
+import UserInfoPanel from 'Images/svg-sources/UserInfoPanel'
+import UserInfoPanelActive from 'Images/svg-sources/UserInfoPanelActive'
+
+import SbBbLabel from 'Images/svg-sources/SbBbLabel'
+import CallCheckLabel from 'Images/svg-sources/CallCheckLabel'
+import BetRaiseLabel from 'Images/svg-sources/BetRaiseLabel'
+import FoldLabel from 'Images/svg-sources/FoldLabel'
+import AllInLabel from 'Images/svg-sources/AllInLabel'
 
 // Todo:Нужен рефактор
 // Метод, перемещающий игроков так, чтобы мы были внизу посередине
@@ -35,11 +49,15 @@ const getActiveUserName = (table: TGameTable) => {
       if (table.seats[i].name) return table.seats[i].name
     }
   }
-  return false;
+  return false
 }
 
 // Метод для отрисовки игроков на своих местах
-export const createPlayers = (table: TGameTable, currentUserName: string, ctx: any) => {
+export const createPlayers = (
+  table: TGameTable,
+  currentUserName: string,
+  ctx: CanvasRenderingContext2D,
+) => {
   if (table.seats) {
     const activeUserName = getActiveUserName(table)
     // Смещаем сидения так, чтобы наше было внизу посередине
@@ -47,44 +65,90 @@ export const createPlayers = (table: TGameTable, currentUserName: string, ctx: a
 
     seats.forEach((seat: any, id: number) => {
       if (seat !== null) {
-
         //Игрок прозрачный, если не в игре
         let opacity = seat.inHand ? 1 : 0.5
 
         ctx.beginPath()
-        ctx.rect(playerPositions[id][0] - 150, playerPositions[id][1] - 50, 300, 100)
 
-        ctx.lineJoin = 'round'
-        ctx.lineWidth = 5
+        ctx.globalAlpha = opacity
         if (seat.name === activeUserName) {
-          ctx.strokeStyle = `rgba(255, 202, 97, ${ 1 * opacity })`
+          ctx.drawImage(
+            UserInfoPanelActive,
+            playerPositions[id][0] - 158,
+            playerPositions[id][1] - 60,
+          )
         } else {
-          ctx.strokeStyle = `rgba(255, 255, 255, ${ 0.5 * opacity })`
+          ctx.drawImage(UserInfoPanel, playerPositions[id][0] - 158, playerPositions[id][1] - 60)
         }
-
-
-        ctx.fillStyle = `rgba(0, 0, 0, ${ 0.7 * opacity })`
-        ctx.fill()
-
-        ctx.stroke()
+        ctx.globalAlpha = 1
+        ctx.closePath()
 
         // Text
+        ctx.beginPath()
         ctx.font = '32px Arial'
-        ctx.fillStyle = `rgba(255, 202, 97, ${ 1 * opacity })`
+
+        //Username
+        ctx.fillStyle = `rgba(255, 202, 97, ${1 * opacity})`
         ctx.textAlign = 'center'
-        ctx.fillText(seat.name, playerPositions[id][0], playerPositions[id][1] - 7)
-        ctx.fillStyle = `rgba(255, 255, 255, ${ 1 * opacity })`
+        ctx.fillText(seat.name, playerPositions[id][0], playerPositions[id][1] - 5)
+
+        //Balance
+        ctx.fillStyle = `rgba(255, 255, 255, ${1 * opacity})`
         ctx.fillText('$ ' + seat.chipsInPlay, playerPositions[id][0], playerPositions[id][1] + 30)
+
+        //Last action
+        if (seat.name !== activeUserName) {
+          //Last action label
+          switch (seat.lastAction) {
+            case 'SB':
+              ctx.drawImage(SbBbLabel, playerPositions[id][0] - 50, playerPositions[id][1] - 65)
+              break
+            case 'BB':
+              ctx.drawImage(SbBbLabel, playerPositions[id][0] - 50, playerPositions[id][1] - 65)
+              break
+            case 'Call':
+              ctx.drawImage(
+                CallCheckLabel,
+                playerPositions[id][0] - 50,
+                playerPositions[id][1] - 65,
+              )
+              break
+            case 'Check':
+              ctx.drawImage(
+                CallCheckLabel,
+                playerPositions[id][0] - 50,
+                playerPositions[id][1] - 65,
+              )
+              break
+            case 'Bet':
+              ctx.drawImage(BetRaiseLabel, playerPositions[id][0] - 50, playerPositions[id][1] - 65)
+              break
+            case 'Raise':
+              ctx.drawImage(BetRaiseLabel, playerPositions[id][0] - 50, playerPositions[id][1] - 65)
+              break
+            case 'Fold':
+              ctx.drawImage(FoldLabel, playerPositions[id][0] - 50, playerPositions[id][1] - 65)
+              break
+            case 'All In':
+              ctx.drawImage(AllInLabel, playerPositions[id][0] - 70, playerPositions[id][1] - 85)
+              break
+          }
+
+          //Last action text
+          ctx.font = '28px Arial'
+          ctx.fillStyle = `rgba(0, 0, 0, ${1 * opacity})`
+          ctx.fillText(seat.lastAction, playerPositions[id][0], playerPositions[id][1] - 39)
+        }
+
         ctx.closePath()
       }
     })
   }
 }
 //Отрисовываем pot
-export const createPot = (table : TGameTable, ctx: any) => {
+export const createPot = (table: TGameTable, ctx: CanvasRenderingContext2D) => {
   if (table.pot[0].amount) {
     ctx.beginPath()
-    console.log('POT = ', table.pot)
     ctx.font = '32px Arial'
     ctx.fillStyle = `rgba(255, 255, 255, 1)`
     ctx.textAlign = 'center'
@@ -110,7 +174,11 @@ function getRealDealerSeatId(table: TGameTable, currentUserName: string) {
 }
 //Отрисовываем фишку дилера
 //todo Tests
-export const createDealerChip = (table: TGameTable, currentUserName: string, ctx: any) => {
+export const createDealerChip = (
+  table: TGameTable,
+  currentUserName: string,
+  ctx: CanvasRenderingContext2D,
+) => {
   let dealerSeat = getRealDealerSeatId(table, currentUserName)
   let chip = new Image()
   chip.src = ChipImage
@@ -121,14 +189,35 @@ export const createDealerChip = (table: TGameTable, currentUserName: string, ctx
   }
 }
 
-//Отрисовываем карты на столе
+export const getCombinationLabel = () => {}
+
+//Отрисовываем плашку с комбинацией
+export const createCombinationLabel = (rank: string = '', ctx: CanvasRenderingContext2D) => {
+  if (rank) {
+    //Название комбинации с заглавной
+    let rankCapitalized = rank[0].toUpperCase() + rank.slice(1)
+
+    //Желтая плашка комбинации
+    ctx.drawImage(CombinationLabel, 1160, 1245)
+
+    //Текст комбинации
+    ctx.beginPath()
+
+    ctx.font = '32px Arial'
+    ctx.fillStyle = `rgba(0, 0, 0, 1)`
+    ctx.textAlign = 'center'
+    ctx.fillText(rankCapitalized, playerPositions[0][0], playerPositions[0][1] + 96)
+
+    ctx.closePath()
+  }
+}
 
 //Отрисовываем аватарки
 export const createAvatars = (
   previousTableState: TGameTable | null,
   table: TGameTable,
   currentUserName: string,
-  ctx: any,
+  ctx: CanvasRenderingContext2D,
 ) => {
   // Смещаем сидения так, чтобы наше было внизу посередине
   const prevSeatsShifted = previousTableState ? shiftSeats(previousTableState, currentUserName) : []

@@ -2,7 +2,13 @@ import React, { FC, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { io } from 'socket.io-client'
-import { createAvatars, createPlayers, createPot, createDealerChip } from './canvas/Methods'
+import {
+  createAvatars,
+  createPlayers,
+  createPot,
+  createDealerChip,
+  createCombinationLabel,
+} from './canvas/Methods'
 import useDocumentTitle from 'Hooks/useDocumentTitle'
 import BetSlider from 'Components/bet-slider/BetSlider'
 import TableController from 'Pages/table/TableController'
@@ -43,7 +49,7 @@ const Table: FC = () => {
   const previousTableState = usePreviousValue(gameState.table)
 
   //Получаем состояние стола, экшен, id моего сидения, мои карты
-  const { table, actionState, mySeat, myCards } = gameState
+  const { table, actionState, mySeat, myCards, combination } = gameState
 
   //При первой отрисовке компонента
   useEffect(() => {
@@ -87,8 +93,12 @@ const Table: FC = () => {
 
         //Отрисовываем pot
         createPot(table, ctxT)
+
+        //Отрисовываем плашку с информацией о собранной комбинации
+        createCombinationLabel(combination.rank, ctxT)
       }
     }
+
     //Canvas avatars
     if (canvasAvatars && canvasAvatars.current) {
       const canvasA = canvasAvatars.current as HTMLCanvasElement
@@ -118,12 +128,8 @@ const Table: FC = () => {
   const handleCheck = () => tableController!.check()
   const handleFold = () => tableController!.fold()
   const handleCall = () => tableController!.call()
-  const handleRaise = (value: number) => {
-    tableController!.raise(value)
-  }
-  const handleBet = (value: number) => {
-    tableController!.bet(value)
-  }
+  const handleRaise = (value: number) => tableController!.raise(value)
+  const handleBet = (value: number) => tableController!.bet(value)
 
   //Расчет величины Call
   const callAmount = () => {
@@ -229,14 +235,13 @@ const Table: FC = () => {
     }
   }
 
-  //console.log('GAME STATE', gameState)
+  console.log('GAME STATE', gameState.table.seats)
 
   return (
     <div>
       <div className='table-wrapper'>
-        <canvas ref={canvasTable} width='2560' height='1320' id='table' />
         <canvas ref={canvasAvatars} width='2560' height='1320' id='avatars' />
-
+        <canvas ref={canvasTable} width='2560' height='1320' id='table' />
         {/*Seats*/}
         {seats.map(
           (seat) =>
@@ -264,7 +269,9 @@ const Table: FC = () => {
                     key={'table-card' + card}
                     src={Cards(card)}
                     alt={card}
-                    className='table-card'
+                    className={
+                      'table-card' + (combination.cards?.includes(card) ? ' card-active' : '')
+                    }
                   />
                 ),
             )}
@@ -275,7 +282,16 @@ const Table: FC = () => {
           {myCards.length > 0 &&
             myCards.map(
               (card: string) =>
-                card && <img key={card} src={Cards(card)} alt={card} className='my-card' />,
+                card && (
+                  <img
+                    key={card}
+                    src={Cards(card)}
+                    alt={card}
+                    className={
+                      'my-card' + (combination.cards?.includes(card) ? ' card-active' : '')
+                    }
+                  />
+                ),
             )}
         </div>
       </div>
