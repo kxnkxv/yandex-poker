@@ -51,8 +51,6 @@ const Table: FC = () => {
   //Получаем состояние стола, экшен, id моего сидения, мои карты
   const { table, actionState, mySeat, myCards, combination } = gameState
 
-  console.log('COMBINATION:', combination)
-
   //При первой отрисовке компонента
   useEffect(() => {
     //Устанавливаем WS соединение
