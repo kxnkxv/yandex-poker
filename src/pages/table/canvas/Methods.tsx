@@ -2,13 +2,15 @@ import {
   dealerChipPositions,
   playerPositions,
   potPosition,
-  combinationPosition,
+  //combinationPosition,
 } from './parameters'
 import { TGameTable, TSeatAvatar } from '../types'
 import ChipImage from 'Images/chip.svg'
 import { isEqual } from 'lodash'
 import Avatars from 'Pages/account-edit/Avatars'
 import CombinationLabel from 'Images/svg-sources/CombinationLabel'
+import UserInfoPanel from 'Images/svg-sources/UserInfoPanel'
+import UserInfoPanelActive from 'Images/svg-sources/UserInfoPanelActive'
 
 // Todo:Нужен рефактор
 // Метод, перемещающий игроков так, чтобы мы были внизу посередине
@@ -61,22 +63,22 @@ export const createPlayers = (
         let opacity = seat.inHand ? 1 : 0.5
 
         ctx.beginPath()
-        ctx.rect(playerPositions[id][0] - 150, playerPositions[id][1] - 50, 300, 100)
 
-        ctx.lineJoin = 'round'
-        ctx.lineWidth = 5
+        ctx.globalAlpha = opacity
         if (seat.name === activeUserName) {
-          ctx.strokeStyle = `rgba(255, 202, 97, ${1 * opacity})`
+          ctx.drawImage(UserInfoPanel, playerPositions[id][0] - 158, playerPositions[id][1] - 60)
         } else {
-          ctx.strokeStyle = `rgba(255, 255, 255, ${0.5 * opacity})`
+          ctx.drawImage(
+            UserInfoPanelActive,
+            playerPositions[id][0] - 158,
+            playerPositions[id][1] - 60,
+          )
         }
-
-        ctx.fillStyle = `rgba(0, 0, 0, ${0.7 * opacity})`
-        ctx.fill()
-
-        ctx.stroke()
+        ctx.globalAlpha = 1
+        ctx.closePath()
 
         // Text
+        ctx.beginPath()
         ctx.font = '32px Arial'
         ctx.fillStyle = `rgba(255, 202, 97, ${1 * opacity})`
         ctx.textAlign = 'center'
@@ -137,48 +139,12 @@ export const getCombinationLabel = () => {}
 
 //Отрисовываем плашку с комбинацией
 export const createCombinationLabel = (rank: string = '', ctx: CanvasRenderingContext2D) => {
-  ctx.drawImage(CombinationLabel, 1280, 1280)
-
   if (rank) {
     //Название комбинации с заглавной
     let rankCapitalized = rank[0].toUpperCase() + rank.slice(1)
 
     //Желтая плашка комбинации
-    ctx.beginPath()
-    ctx.moveTo(combinationPosition.x - 110, combinationPosition.y)
-    ctx.lineTo(combinationPosition.x + 110, combinationPosition.y)
-    ctx.quadraticCurveTo(
-      combinationPosition.x + 110 + 16,
-      combinationPosition.y,
-      combinationPosition.x + 110 + 16,
-      combinationPosition.y + 16,
-    )
-    ctx.quadraticCurveTo(
-      combinationPosition.x + 110 + 16,
-      combinationPosition.y + 32,
-      combinationPosition.x + 110,
-      combinationPosition.y + 32,
-    )
-    ctx.lineTo(combinationPosition.x - 100, combinationPosition.y + 32)
-
-    ctx.quadraticCurveTo(
-      combinationPosition.x - 110 - 16,
-      combinationPosition.y + 32,
-      combinationPosition.x - 110 - 16,
-      combinationPosition.y + 16,
-    )
-
-    ctx.quadraticCurveTo(
-      combinationPosition.x - 110 - 16,
-      combinationPosition.y,
-      combinationPosition.x - 110,
-      combinationPosition.y,
-    )
-
-    ctx.fillStyle = '#FFCA61'
-    ctx.fill()
-
-    ctx.closePath()
+    ctx.drawImage(CombinationLabel, 1160, 1245)
 
     //Текст комбинации
     ctx.beginPath()
@@ -186,7 +152,7 @@ export const createCombinationLabel = (rank: string = '', ctx: CanvasRenderingCo
     ctx.font = '32px Arial'
     ctx.fillStyle = `rgba(0, 0, 0, 1)`
     ctx.textAlign = 'center'
-    ctx.fillText(rankCapitalized, playerPositions[0][0], playerPositions[0][1] + 97)
+    ctx.fillText(rankCapitalized, playerPositions[0][0], playerPositions[0][1] + 96)
 
     ctx.closePath()
   }
