@@ -8,6 +8,7 @@ import { TGameTable, TSeatAvatar } from '../types'
 import ChipImage from 'Images/chip.svg'
 import { isEqual } from 'lodash'
 import Avatars from 'Pages/account-edit/Avatars'
+import CombinationLabel from 'Images/svg-sources/CombinationLabel'
 
 // Todo:Нужен рефактор
 // Метод, перемещающий игроков так, чтобы мы были внизу посередине
@@ -132,8 +133,12 @@ export const createDealerChip = (
   }
 }
 
+export const getCombinationLabel = () => {}
+
 //Отрисовываем плашку с комбинацией
 export const createCombinationLabel = (rank: string = '', ctx: CanvasRenderingContext2D) => {
+  ctx.drawImage(CombinationLabel, 1280, 1280)
+
   if (rank) {
     //Название комбинации с заглавной
     let rankCapitalized = rank[0].toUpperCase() + rank.slice(1)
