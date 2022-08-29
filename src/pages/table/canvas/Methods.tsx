@@ -5,10 +5,11 @@ import {
   combinationPosition,
 } from './parameters'
 import { TGameTable, TSeatAvatar } from '../types'
-import ChipImage from 'Images/chip.svg'
+//import ChipImage from 'Images/chip.svg'
 import { isEqual } from 'lodash'
 import Avatars from 'Pages/account-edit/Avatars'
 import CombinationLabel from 'Images/svg-sources/CombinationLabel'
+import ChipCanvas from 'Images/svg-sources/ChipCanvas'
 
 // Todo:Нужен рефактор
 // Метод, перемещающий игроков так, чтобы мы были внизу посередине
@@ -124,14 +125,14 @@ export const createDealerChip = (
   ctx: CanvasRenderingContext2D,
 ) => {
   let dealerSeat = getRealDealerSeatId(table, currentUserName)
-  let chip = new Image()
-  chip.src = ChipImage
-  chip.onload = function () {
+ // let chip = new Image()
+  //chip.src = ChipImage
+  //chip.onload = function () {
     if (dealerSeat !== null) {
-      ctx.drawImage(chip, dealerChipPositions[dealerSeat][0], dealerChipPositions[dealerSeat][1])
+      ctx.drawImage(ChipCanvas, dealerChipPositions[dealerSeat][0], dealerChipPositions[dealerSeat][1])
     }
   }
-}
+//}
 
 export const getCombinationLabel = () => {}
 
