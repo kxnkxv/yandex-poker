@@ -1,0 +1,51 @@
+.you-win-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top:0;
+    overflow: hidden;
+    z-index: 999;
+    display: none;
+}
+.you-win-wrapper-opened {
+    display: flex;
+}
+#confetti-canvas {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left: 0;
+    z-index: 10;
+}
+.win-modal {
+    width: 30%;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all .2s ease-in-out;
+    padding: 1vw 8vw;
+    background: rgba(0,0,0,0.5);
+    border-radius: 1vw;
+    margin-top: -16.5%;
+}
+.win-modal-zoomed {
+    opacity: 1;
+    transform: scale(1);
+    transition: all .2s ease-in-out;
+}
+.gold-text {
+    width: 100%;
+    margin-top: -2%;
+}
+
+.win-amount {
+    background: #FFCA61;
+    display: inline-block;
+    padding: 0.25vw 1vw;
+    border-radius: 30px;
+    color: #222;
+    font-size: 1vw;
+    margin: auto;
+    font-weight: bold;
+    margin-top: -10%;
+}

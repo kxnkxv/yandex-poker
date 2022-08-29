@@ -25,6 +25,7 @@ export enum Listeners {
   DealingCards = 'dealingCards',
   EndRound = 'endRound',
   Combination = 'combination',
+  YouWin = 'youWin',
 }
 
 class TableController {
@@ -191,6 +192,21 @@ class TableController {
       this.setGameState((state: TGameState) => {
         return { ...state, myCards: [] }
       })
+    })
+
+    //Вы выиграли
+    this.socket!.on(Listeners.YouWin, (amount: number) => {
+      //Показываем модалку
+      this.setGameState((state: TGameState) => {
+        return { ...state, winModal: { isOpened: true, amount } }
+      })
+
+      //Скрываем через 3.2 сек
+      setTimeout(() => {
+        this.setGameState((state: TGameState) => {
+          return { ...state, winModal: { isOpened: false, amount: 0 } }
+        })
+      }, 5200)
     })
   }
 }

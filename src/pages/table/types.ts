@@ -46,12 +46,18 @@ export type TGameTable = {
   log: TLog
 }
 
+export type TWinModal = {
+  isOpened: boolean
+  amount: number
+}
+
 export type TGameState = {
   table: TGameTable
   notifications: string[]
   showChipsModal: boolean
   actionState: string
   myCards: string[]
+  winModal: TWinModal
   combination: TCombination
   mySeat: number | null
   betAmount: number

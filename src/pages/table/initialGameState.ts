@@ -35,6 +35,10 @@ export const initialGameState: TGameState = {
   showChipsModal: false,
   actionState: '',
   myCards: [],
+  winModal: {
+    isOpened: false,
+    amount: 0,
+  },
   combination: {
     rank: '',
     cards: [],
