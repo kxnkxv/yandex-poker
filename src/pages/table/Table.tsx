@@ -235,14 +235,13 @@ const Table: FC = () => {
     }
   }
 
-  //console.log('GAME STATE', gameState)
+  console.log('GAME STATE', gameState.table.seats)
 
   return (
     <div>
       <div className='table-wrapper'>
-        <canvas ref={canvasTable} width='2560' height='1320' id='table' />
         <canvas ref={canvasAvatars} width='2560' height='1320' id='avatars' />
-
+        <canvas ref={canvasTable} width='2560' height='1320' id='table' />
         {/*Seats*/}
         {seats.map(
           (seat) =>
