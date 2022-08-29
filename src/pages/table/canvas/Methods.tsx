@@ -12,6 +12,12 @@ import CombinationLabel from 'Images/svg-sources/CombinationLabel'
 import UserInfoPanel from 'Images/svg-sources/UserInfoPanel'
 import UserInfoPanelActive from 'Images/svg-sources/UserInfoPanelActive'
 
+import SbBbLabel from 'Images/svg-sources/SbBbLabel'
+import CallCheckLabel from 'Images/svg-sources/CallCheckLabel'
+import BetRaiseLabel from 'Images/svg-sources/BetRaiseLabel'
+import FoldLabel from 'Images/svg-sources/FoldLabel'
+import AllInLabel from 'Images/svg-sources/AllInLabel'
+
 // Todo:Нужен рефактор
 // Метод, перемещающий игроков так, чтобы мы были внизу посередине
 export const shiftSeats = (table: TGameTable, currentUserName: string) => {
@@ -66,13 +72,13 @@ export const createPlayers = (
 
         ctx.globalAlpha = opacity
         if (seat.name === activeUserName) {
-          ctx.drawImage(UserInfoPanel, playerPositions[id][0] - 158, playerPositions[id][1] - 60)
-        } else {
           ctx.drawImage(
             UserInfoPanelActive,
             playerPositions[id][0] - 158,
             playerPositions[id][1] - 60,
           )
+        } else {
+          ctx.drawImage(UserInfoPanel, playerPositions[id][0] - 158, playerPositions[id][1] - 60)
         }
         ctx.globalAlpha = 1
         ctx.closePath()
@@ -80,11 +86,60 @@ export const createPlayers = (
         // Text
         ctx.beginPath()
         ctx.font = '32px Arial'
+
+        //Username
         ctx.fillStyle = `rgba(255, 202, 97, ${1 * opacity})`
         ctx.textAlign = 'center'
-        ctx.fillText(seat.name, playerPositions[id][0], playerPositions[id][1] - 7)
+        ctx.fillText(seat.name, playerPositions[id][0], playerPositions[id][1] - 5)
+
+        //Balance
         ctx.fillStyle = `rgba(255, 255, 255, ${1 * opacity})`
         ctx.fillText('$ ' + seat.chipsInPlay, playerPositions[id][0], playerPositions[id][1] + 30)
+
+        //Last action
+        if (seat.name !== activeUserName) {
+          //Last action label
+          switch (seat.lastAction) {
+            case 'SB':
+              ctx.drawImage(SbBbLabel, playerPositions[id][0] - 50, playerPositions[id][1] - 65)
+              break
+            case 'BB':
+              ctx.drawImage(SbBbLabel, playerPositions[id][0] - 50, playerPositions[id][1] - 65)
+              break
+            case 'Call':
+              ctx.drawImage(
+                CallCheckLabel,
+                playerPositions[id][0] - 50,
+                playerPositions[id][1] - 65,
+              )
+              break
+            case 'Check':
+              ctx.drawImage(
+                CallCheckLabel,
+                playerPositions[id][0] - 50,
+                playerPositions[id][1] - 65,
+              )
+              break
+            case 'Bet':
+              ctx.drawImage(BetRaiseLabel, playerPositions[id][0] - 50, playerPositions[id][1] - 65)
+              break
+            case 'Raise':
+              ctx.drawImage(BetRaiseLabel, playerPositions[id][0] - 50, playerPositions[id][1] - 65)
+              break
+            case 'Fold':
+              ctx.drawImage(FoldLabel, playerPositions[id][0] - 50, playerPositions[id][1] - 65)
+              break
+            case 'All In':
+              ctx.drawImage(AllInLabel, playerPositions[id][0] - 70, playerPositions[id][1] - 85)
+              break
+          }
+
+          //Last action text
+          ctx.font = '28px Arial'
+          ctx.fillStyle = `rgba(0, 0, 0, ${1 * opacity})`
+          ctx.fillText(seat.lastAction, playerPositions[id][0], playerPositions[id][1] - 39)
+        }
+
         ctx.closePath()
       }
     })
@@ -94,7 +149,6 @@ export const createPlayers = (
 export const createPot = (table: TGameTable, ctx: CanvasRenderingContext2D) => {
   if (table.pot[0].amount) {
     ctx.beginPath()
-    console.log('POT = ', table.pot)
     ctx.font = '32px Arial'
     ctx.fillStyle = `rgba(255, 255, 255, 1)`
     ctx.textAlign = 'center'

@@ -51,8 +51,6 @@ const Table: FC = () => {
   //Получаем состояние стола, экшен, id моего сидения, мои карты
   const { table, actionState, mySeat, myCards, combination } = gameState
 
-  console.log('COMBINATION:', combination)
-
   //При первой отрисовке компонента
   useEffect(() => {
     //Устанавливаем WS соединение
@@ -237,14 +235,13 @@ const Table: FC = () => {
     }
   }
 
-  //console.log('GAME STATE', gameState)
+  console.log('GAME STATE', gameState.table.seats)
 
   return (
     <div>
       <div className='table-wrapper'>
-        <canvas ref={canvasTable} width='2560' height='1320' id='table' />
         <canvas ref={canvasAvatars} width='2560' height='1320' id='avatars' />
-
+        <canvas ref={canvasTable} width='2560' height='1320' id='table' />
         {/*Seats*/}
         {seats.map(
           (seat) =>
