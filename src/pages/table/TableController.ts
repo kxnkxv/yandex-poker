@@ -198,7 +198,6 @@ class TableController {
 
     //Вы выиграли
     this.socket!.on(Listeners.YouWin, (amount: number) => {
-      console.log('YOU WIN', amount)
       //Показываем модалку
       this.setGameState((state: TGameState) => {
         return { ...state, winModal: { isOpened: true, amount } }

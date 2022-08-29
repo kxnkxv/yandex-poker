@@ -9,8 +9,6 @@ import './YouWin.css'
 import { TProps } from './types'
 
 const YouWin: FC<TProps> = ({ isOpened, amount }) => {
-  //Canvas confetti
-
   const canvasConfetti = useRef(null)
   const [winModalClass, setWinModalClass] = useState('')
 
