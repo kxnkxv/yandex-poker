@@ -11,17 +11,18 @@ canvas {
     zoom: 0.25;
 }
 #table {
-    background: url("img/tableBackground.png");
-    background-size: cover;
     position: relative;
-    z-index: 10;
-}
-#avatars {
-    position: absolute;
     z-index: 20;
     top:0;
 }
+#avatars {
+    position: absolute;
+    z-index: 10;
+    top:0;
+}
 .table-wrapper {
+    background: url("img/tableBackground.png");
+    background-size: cover;
     position: relative;
 }
 .seat {

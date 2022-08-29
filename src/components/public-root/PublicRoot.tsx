@@ -9,7 +9,8 @@ import { checkAuth } from 'Pages/login/LoginSlice'
 import { AppDispatch } from 'Core/store'
 
 const PublicRoot: FC<TProps> = (props) => {
-  const dispatch = useDispatch<AppDispatch>()
+
+const dispatch = useDispatch<AppDispatch>()
   useEffect(() => {
     dispatch(checkAuth())
   }, [])
@@ -19,6 +20,7 @@ const PublicRoot: FC<TProps> = (props) => {
   if (auth.user) {
     return <Navigate to='/tables' />
   }
+
   return <>{props.children}</>
 }
 

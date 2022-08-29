@@ -47,12 +47,10 @@ class TableController {
     this.socket!.emit(Actions.Register, userName, (response: TWsResponse) => {
       console.log(response)
     })
-    console.log(Actions.Register, userName)
   }
 
   enterRoom(tableId: number) {
     this.socket!.emit(Actions.EnterRoom, tableId)
-    console.log('enterRoom', tableId)
   }
 
   sitOnTheTable(seat: number, tableId: number, chips: number) {
