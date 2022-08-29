@@ -5,13 +5,14 @@ import {
   //combinationPosition,
 } from './parameters'
 import { TGameTable, TSeatAvatar } from '../types'
-import ChipImage from 'Images/chip.svg'
+//import ChipImage from 'Images/chip.svg'
 import { isEqual } from 'lodash'
 import Avatars from 'Pages/account-edit/Avatars'
 import CombinationLabel from 'Images/svg-sources/CombinationLabel'
+
+import ChipCanvas from 'Images/svg-sources/ChipCanvas'
 import UserInfoPanel from 'Images/svg-sources/UserInfoPanel'
 import UserInfoPanelActive from 'Images/svg-sources/UserInfoPanelActive'
-
 import SbBbLabel from 'Images/svg-sources/SbBbLabel'
 import CallCheckLabel from 'Images/svg-sources/CallCheckLabel'
 import BetRaiseLabel from 'Images/svg-sources/BetRaiseLabel'
@@ -180,14 +181,14 @@ export const createDealerChip = (
   ctx: CanvasRenderingContext2D,
 ) => {
   let dealerSeat = getRealDealerSeatId(table, currentUserName)
-  let chip = new Image()
-  chip.src = ChipImage
-  chip.onload = function () {
+ // let chip = new Image()
+  //chip.src = ChipImage
+  //chip.onload = function () {
     if (dealerSeat !== null) {
-      ctx.drawImage(chip, dealerChipPositions[dealerSeat][0], dealerChipPositions[dealerSeat][1])
+      ctx.drawImage(ChipCanvas, dealerChipPositions[dealerSeat][0], dealerChipPositions[dealerSeat][1])
     }
   }
-}
+//}
 
 export const getCombinationLabel = () => {}
 
