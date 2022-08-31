@@ -131,8 +131,16 @@ const Table: FC = () => {
   const handleCheck = () => tableController!.check()
   const handleFold = () => tableController!.fold()
   const handleCall = () => tableController!.call()
-  const handleRaise = (value: number) => tableController!.raise(value)
-  const handleBet = (value: number) => tableController!.bet(value)
+  const handleRaise = (value: number) => {
+    tableController!.raise(value)
+    //Сбрасываем величину ставки
+    setBetValue(0)
+  }
+  const handleBet = (value: number) => {
+    tableController!.bet(value)
+    //Сбрасываем величину ставки
+    setBetValue(0)
+  }
 
   //Расчет величины Call
   const callAmount = () => {
@@ -238,7 +246,7 @@ const Table: FC = () => {
     }
   }
 
-  console.log('GAME STATE', gameState.table.seats)
+  console.log('GAME STATE', gameState.table)
 
   return (
     <div>
