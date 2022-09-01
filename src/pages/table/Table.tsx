@@ -151,7 +151,7 @@ const Table: FC = () => {
       return 0
     }
 
-    let callAmount = +table.biggestBet - table.seats[mySeat].bet
+    let callAmount = table.biggestBet - table.seats[mySeat].bet
     return callAmount > table.seats[mySeat].chipsInPlay
       ? table.seats[mySeat].chipsInPlay
       : callAmount
@@ -164,7 +164,7 @@ const Table: FC = () => {
 
     if (actionState === Listeners.ActBettedPot) {
       //ОБЯЗАТЕЛЬНО ПРОТЕСТИТЬ
-      let proposedBet = +table!.biggestBet + table!.bigBlind!
+      let proposedBet = table!.biggestBet + table!.bigBlind!
       return table.seats[mySeat].chipsInPlay < proposedBet
         ? table.seats[mySeat].chipsInPlay
         : proposedBet
