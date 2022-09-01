@@ -1,6 +1,6 @@
 import React from 'react'
 
-//Types
+// Types
 import { TProps } from './types'
 
 const Input = React.forwardRef<HTMLInputElement, TProps>((props, ref) => {

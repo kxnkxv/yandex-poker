@@ -12,11 +12,11 @@ import { Link } from 'react-router-dom'
 import { registration } from 'Pages/registration/RegistrationSlice'
 import { AppDispatch } from 'Core/store'
 
-//Components
+// Components
 import Input from 'Components/ui/input/Input'
 import Button from 'Components/ui/button/Button'
 
-//Types
+// Types
 import { TSignUpForm } from './types'
 import { useDispatch } from 'react-redux'
 import { checkAuth } from 'Pages/login/LoginSlice'

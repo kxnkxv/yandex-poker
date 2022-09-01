@@ -4,10 +4,10 @@ import { testRender } from 'Utils/testRender'
 
 describe('Login Form', () => {
   it('Render Login Page', () => {
-    const { getByRole, getByTestId, ...screen } = testRender(<Login />, {
+    const { getByRole, getByTestId } = testRender(<Login />, {
       preloadedState: {
         auth: {
-          isPending: null,
+          isPending: false,
           user: null,
         },
       },

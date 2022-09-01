@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'Utils/axios/axios'
-//import errorHandler from 'Utils/error-handler/errorHandler'
+// import errorHandler from 'Utils/error-handler/errorHandler'
 
-//Types
+// Types
 import { TAccountEditData } from './types'
 
 export const editUser = createAsyncThunk(

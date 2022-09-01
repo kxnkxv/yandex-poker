@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-const errorHandler = (error: string = '') => {
+const errorHandler = (error = '') => {
   toast.error(error ? error : 'Something went wrong :(', {
     position: 'top-right',
     autoClose: 2500,

@@ -7,7 +7,7 @@ import { ToastContainer } from 'react-toastify'
 import PublicRoot from 'Components/public-root/PublicRoot'
 import ProtectedRoot from 'Components/protected-root/ProtectedRoot'
 
-//Pages
+// Pages
 import NotFound from 'Pages/notFound'
 import Login from 'Pages/login'
 import Registration from 'Pages/registration/Registration'
@@ -16,11 +16,11 @@ import Tables from 'Pages/tables/Tables'
 import Account from 'Pages/account'
 import AccountEdit from 'Pages/account-edit'
 
-//Styles
+// Styles
 import 'Styles/Style.css'
 
-//Images
-//.....
+// Images
+// .....
 
 const App: FC = (): JSX.Element => {
   return (

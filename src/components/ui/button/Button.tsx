@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 
-//Types
+// Types
 import { TProps } from './types'
 
 const Button: FC<TProps> = (props) => <button className='btn-red'>{props.children}</button>

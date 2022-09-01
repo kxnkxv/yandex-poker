@@ -1,6 +1,6 @@
 export type Nullable<T> = T | null
 
-//STORE
+// STORE
 export type TUserInfoData = {
   id: number
   first_name: string
@@ -21,7 +21,7 @@ export type TState = {
   }
 }
 
-//HTTP REQUESTS
+// HTTP REQUESTS
 export type TErrorPayload = {
   reason?: string
 }

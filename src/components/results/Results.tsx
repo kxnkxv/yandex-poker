@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 
-//Images
+// Images
 import Cup from './img/cup.svg'
 import Arrow from 'Images/arrow.svg'
 

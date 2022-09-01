@@ -2,20 +2,20 @@ import React, { FC, useEffect, useRef, useState } from 'react'
 import YouWinImage from 'Images/youWin.svg'
 import confetti from 'canvas-confetti'
 
-//Styles
+// Styles
 import './YouWin.css'
 
-//Types
+// Types
 import { TProps } from './types'
 
 const YouWin: FC<TProps> = ({ isOpened, amount }) => {
   const canvasConfetti = useRef(null)
   const [winModalClass, setWinModalClass] = useState('')
 
-  //При первой отрисовке компонента
+  // При первой отрисовке компонента
   useEffect(() => {
     if (canvasConfetti.current) {
-      let winConfetti = confetti.create(canvasConfetti.current, { resize: true })
+      const winConfetti = confetti.create(canvasConfetti.current, { resize: true })
       winConfetti({
         scalar: 5,
         spread: 500,
