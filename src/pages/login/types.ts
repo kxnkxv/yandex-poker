@@ -4,6 +4,6 @@ export type TSignInForm = {
 }
 
 export type TAuthInitialState = {
-  isPending: boolean
+  isPending: boolean | null
   user: any
 }

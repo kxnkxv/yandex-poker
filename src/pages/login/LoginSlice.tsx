@@ -28,7 +28,7 @@ export const logout = createAsyncThunk('@@auth/user', (_, { rejectWithValue }) =
 })
 
 const initialState: TAuthInitialState = {
-  isPending: false,
+  isPending: null,
   user: null,
 }
 const authSlice = createSlice({
@@ -47,7 +47,7 @@ const authSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.isPending = false
-        let data = action.payload as TErrorPayload
+        const data = action.payload as TErrorPayload
         errorHandler(data.reason)
       })
 
