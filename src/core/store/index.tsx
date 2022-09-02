@@ -5,7 +5,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import { combineReducers } from 'redux'
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   auth: authReducer,
   table: tableReducer,
 })
@@ -16,7 +16,7 @@ const persistConfig = {
   whitelist: ['auth'],
 }
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+export const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const store = configureStore({
   reducer: persistedReducer,

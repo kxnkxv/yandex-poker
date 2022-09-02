@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-const callbackHandler = (result: string = '') => {
+const callbackHandler = (result = '') => {
   toast.success(result ? result : 'Success 👍', {
     position: 'top-right',
     autoClose: 2500,

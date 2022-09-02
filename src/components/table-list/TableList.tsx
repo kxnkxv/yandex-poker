@@ -1,10 +1,10 @@
 import React, { FC } from 'react'
 
-//Images
+// Images
 import Arrow from 'Images/arrow.svg'
 import { Link } from 'react-router-dom'
 
-//Styles
+// Styles
 import './TableList.css'
 
 const TablesList: FC = () => {

@@ -2,10 +2,10 @@ import {
   dealerChipPositions,
   playerPositions,
   potPosition,
-  //combinationPosition,
+  // combinationPosition,
 } from './parameters'
 import { TGameTable, TSeatAvatar } from '../types'
-//import ChipImage from 'Images/chip.svg'
+// import ChipImage from 'Images/chip.svg'
 import { isEqual } from 'lodash'
 import Avatars from 'Pages/account-edit/Avatars'
 import CombinationLabel from 'Images/svg-sources/CombinationLabel'
@@ -66,8 +66,8 @@ export const createPlayers = (
 
     seats.forEach((seat: any, id: number) => {
       if (seat !== null) {
-        //Игрок прозрачный, если не в игре
-        let opacity = seat.inHand ? 1 : 0.5
+        // Игрок прозрачный, если не в игре
+        const opacity = seat.inHand ? 1 : 0.5
 
         ctx.beginPath()
 
@@ -88,18 +88,18 @@ export const createPlayers = (
         ctx.beginPath()
         ctx.font = '32px Arial'
 
-        //Username
+        // Username
         ctx.fillStyle = `rgba(255, 202, 97, ${1 * opacity})`
         ctx.textAlign = 'center'
         ctx.fillText(seat.name, playerPositions[id][0], playerPositions[id][1] - 5)
 
-        //Balance
+        // Balance
         ctx.fillStyle = `rgba(255, 255, 255, ${1 * opacity})`
         ctx.fillText('$ ' + seat.chipsInPlay, playerPositions[id][0], playerPositions[id][1] + 30)
 
-        //Last action
+        // Last action
         if (seat.name !== activeUserName) {
-          //Last action label
+          // Last action label
           switch (seat.lastAction) {
             case 'SB':
               ctx.drawImage(SbBbLabel, playerPositions[id][0] - 50, playerPositions[id][1] - 65)
@@ -135,7 +135,7 @@ export const createPlayers = (
               break
           }
 
-          //Last action text
+          // Last action text
           ctx.font = '28px Arial'
           ctx.fillStyle = `rgba(0, 0, 0, ${1 * opacity})`
           ctx.fillText(seat.lastAction, playerPositions[id][0], playerPositions[id][1] - 39)
@@ -146,18 +146,18 @@ export const createPlayers = (
     })
   }
 }
-//Отрисовываем pot
+// Отрисовываем pot
 export const createPot = (table: TGameTable, ctx: CanvasRenderingContext2D) => {
   if (table.pot[0].amount) {
     ctx.beginPath()
     ctx.font = '32px Arial'
-    ctx.fillStyle = `rgba(255, 255, 255, 1)`
+    ctx.fillStyle = 'rgba(255, 255, 255, 1)'
     ctx.textAlign = 'center'
     ctx.fillText('Pot: $ ' + table.pot[0].amount, potPosition[0], potPosition[1])
     ctx.closePath()
   }
 }
-//Функция для нахождения относительного места дилера
+// Функция для нахождения относительного места дилера
 function getRealDealerSeatId(table: TGameTable, currentUserName: string) {
   let result = null
   if (table?.dealerSeat !== null) {
@@ -173,39 +173,43 @@ function getRealDealerSeatId(table: TGameTable, currentUserName: string) {
   }
   return result
 }
-//Отрисовываем фишку дилера
-//todo Tests
+// Отрисовываем фишку дилера
+// todo Tests
 export const createDealerChip = (
   table: TGameTable,
   currentUserName: string,
   ctx: CanvasRenderingContext2D,
 ) => {
-  let dealerSeat = getRealDealerSeatId(table, currentUserName)
- // let chip = new Image()
-  //chip.src = ChipImage
-  //chip.onload = function () {
-    if (dealerSeat !== null) {
-      ctx.drawImage(ChipCanvas, dealerChipPositions[dealerSeat][0], dealerChipPositions[dealerSeat][1])
-    }
+  const dealerSeat = getRealDealerSeatId(table, currentUserName)
+  // let chip = new Image()
+  // chip.src = ChipImage
+  // chip.onload = function () {
+  if (dealerSeat !== null) {
+    ctx.drawImage(
+      ChipCanvas,
+      dealerChipPositions[dealerSeat][0],
+      dealerChipPositions[dealerSeat][1],
+    )
   }
-//}
+}
+// }
 
 export const getCombinationLabel = () => {}
 
-//Отрисовываем плашку с комбинацией
-export const createCombinationLabel = (rank: string = '', ctx: CanvasRenderingContext2D) => {
+// Отрисовываем плашку с комбинацией
+export const createCombinationLabel = (rank = '', ctx: CanvasRenderingContext2D) => {
   if (rank) {
-    //Название комбинации с заглавной
-    let rankCapitalized = rank[0].toUpperCase() + rank.slice(1)
+    // Название комбинации с заглавной
+    const rankCapitalized = rank[0].toUpperCase() + rank.slice(1)
 
-    //Желтая плашка комбинации
+    // Желтая плашка комбинации
     ctx.drawImage(CombinationLabel, 1160, 1245)
 
-    //Текст комбинации
+    // Текст комбинации
     ctx.beginPath()
 
     ctx.font = '32px Arial'
-    ctx.fillStyle = `rgba(0, 0, 0, 1)`
+    ctx.fillStyle = 'rgba(0, 0, 0, 1)'
     ctx.textAlign = 'center'
     ctx.fillText(rankCapitalized, playerPositions[0][0], playerPositions[0][1] + 96)
 
@@ -213,7 +217,7 @@ export const createCombinationLabel = (rank: string = '', ctx: CanvasRenderingCo
   }
 }
 
-//Отрисовываем аватарки
+// Отрисовываем аватарки
 export const createAvatars = (
   previousTableState: TGameTable | null,
   table: TGameTable,
@@ -225,11 +229,11 @@ export const createAvatars = (
   const currentSeatsShifted = shiftSeats(table, currentUserName)
 
   currentSeatsShifted.forEach((seat: any, id: number) => {
-    //Создаем специальный объект prevSeatAvatarData состоящий из нужных для аватара полей
-    //За изменениями этих полей мы следим и перерисовываем автар если нужно
+    // Создаем специальный объект prevSeatAvatarData состоящий из нужных для аватара полей
+    // За изменениями этих полей мы следим и перерисовываем автар если нужно
     let prevSeatAvatarData: TSeatAvatar
 
-    //Если в предыдущем игровом состоянии это место существовало
+    // Если в предыдущем игровом состоянии это место существовало
     if (prevSeatsShifted[id]) {
       prevSeatAvatarData = {
         name: prevSeatsShifted[id].name,
@@ -249,9 +253,9 @@ export const createAvatars = (
       currentSeatAvatarData = {}
     }
 
-    //Если данные по пользователю обновились перерисовываем аватарку
+    // Если данные по пользователю обновились перерисовываем аватарку
     if (!isEqual(prevSeatAvatarData, currentSeatAvatarData)) {
-      //Очищаем аватарку
+      // Очищаем аватарку
       ctx.clearRect(
         playerPositions[id][0] - 112.5,
         playerPositions[id][1] - 277,
@@ -262,10 +266,10 @@ export const createAvatars = (
       if (currentSeatAvatarData.name) {
         ctx.beginPath()
         ctx.globalAlpha = 1
-        let avatar = new Image()
+        const avatar = new Image()
         avatar.src = Avatars[id].image
 
-        //Если неактивен, делаем полупрозрачным
+        // Если неактивен, делаем полупрозрачным
         if (!currentSeatAvatarData.inHand) {
           ctx.globalAlpha = 0.75
         }
