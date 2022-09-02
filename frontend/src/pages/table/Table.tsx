@@ -8,6 +8,7 @@ import {
   createPot,
   createDealerChip,
   createCombinationLabel,
+  createUserChips,
 } from './canvas/Methods'
 import useDocumentTitle from 'Hooks/useDocumentTitle'
 import BetSlider from 'Components/bet-slider/BetSlider'
@@ -96,6 +97,9 @@ const Table: FC = () => {
 
         //Отрисовываем pot
         createPot(table, ctxT)
+
+        //Отрисовываем фишки
+        createUserChips(table, userName as string, ctxT)
 
         //Отрисовываем плашку с информацией о собранной комбинации
         createCombinationLabel(combination.rank, ctxT)
