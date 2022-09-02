@@ -20,6 +20,7 @@
     "paths": {
       "Components": ["./src/components"],
       "Core": ["./src/core"],
+      "core": ["./src/core"],
       "Hooks": ["./src/hooks"],
       "Images": ["./src/images"],
       "Pages": ["./src/pages"],

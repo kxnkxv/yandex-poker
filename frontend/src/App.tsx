@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { store, persistor } from 'Core/store'
+import { store, persistor } from 'core/store'
 import { PersistGate } from 'redux-persist/integration/react'
 import { ToastContainer } from 'react-toastify'
 import PublicRoot from 'Components/public-root/PublicRoot'

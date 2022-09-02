@@ -1,6 +1,5 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 
 module.exports = {
   entry: './src/index.tsx',
@@ -13,6 +12,7 @@ module.exports = {
     alias: {
       Components: path.resolve(__dirname, '../src/components'),
       Core: path.resolve(__dirname, '../src/core'),
+      core: path.resolve(__dirname, '../src/core'),
       Hooks: path.resolve(__dirname, '../src/hooks'),
       Images: path.resolve(__dirname, '../src/images'),
       Pages: path.resolve(__dirname, '../src/pages'),
@@ -51,7 +51,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new CaseSensitivePathsPlugin(),
     new HtmlWebpackPlugin({
       template: './www/index.html',
       favicon: './www/favicon.svg',
