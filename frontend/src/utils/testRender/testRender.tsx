@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { render as rtlRender, RenderOptions } from '@testing-library/react'
 import { configureStore, Store } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
@@ -11,6 +11,10 @@ type TRenderProps = {
   preloadedState?: any
   store?: Store<RootState>
 } & RenderOptions
+
+export type TWrapperProps = {
+  children?: ReactNode | string
+}
 
 type TRenderReturn = ReturnType<typeof rtlRender> & {
   store: Store<RootState>
@@ -28,7 +32,7 @@ const testRender = (
     ...renderOptions
   }: TRenderProps = {},
 ): TRenderReturn => {
-  const Wrapper: React.FC = ({ children }) => {
+  const Wrapper: React.FC<TWrapperProps> = ({ children }) => {
     return (
       <Provider store={store}>
         <BrowserRouter>
