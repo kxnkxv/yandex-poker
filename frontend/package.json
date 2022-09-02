@@ -95,6 +95,7 @@
     "webpack-dev-server": "4.9.3"
   },
   "engines": {
-    "node": "16.13.2"
+    "node": "16.13.2",
+    "npm": "8.4.6"
   }
 }
