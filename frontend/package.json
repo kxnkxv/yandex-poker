@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "heroku-prebuild": "npm install --dev",
     "test": "jest --watch",
     "start": "webpack --mode production --config webpack/webpack.config.js && node ./server.js",
     "dev": "webpack serve --mode development --config webpack/webpack.config.js --open --hot",
@@ -42,7 +41,11 @@
     "@types/canvas-confetti": "1.4.3",
     "axios": "0.27.2",
     "canvas-confetti": "1.5.1",
+    "clean-webpack-plugin": "4.0.0",
+    "copy-webpack-plugin": "11.0.0",
+    "css-minimizer-webpack-plugin": "4.0.0",
     "lodash.isequal": "4.5.0",
+    "mini-css-extract-plugin": "2.6.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "7.34.0",
@@ -50,7 +53,8 @@
     "react-router-dom": "6.3.0",
     "react-toastify": "9.0.8",
     "redux-persist": "6.0.0",
-    "socket.io-client": "4.5.1"
+    "socket.io-client": "4.5.1",
+    "terser-webpack-plugin": "5.3.6"
   },
   "devDependencies": {
     "@babel/core": "7.18.10",

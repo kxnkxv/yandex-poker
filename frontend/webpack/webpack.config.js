@@ -1,11 +1,28 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const TerserWebpackPlugin = require("terser-webpack-plugin");
+const {CleanWebpackPlugin} = require("clean-webpack-plugin");
+
+let isProd = true;
+
+const optimization = () => {
+  const config = {};
+  if (isProd) {
+    config.minimizer = [
+      new CssMinimizerPlugin(),
+      new TerserWebpackPlugin(),
+    ];
+    config.minimize = true;
+  }
+  return config;
+};
 
 module.exports = {
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: 'bundle.js',
+    filename: 'bundle.[fullhash].js',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
@@ -51,10 +68,12 @@ module.exports = {
       },
     ],
   },
+  optimization: optimization(),
   plugins: [
     new HtmlWebpackPlugin({
       template: './www/index.html',
       favicon: './www/favicon.svg',
     }),
+    new CleanWebpackPlugin(),
   ],
 }
