@@ -1,6 +1,6 @@
 import React from 'react'
 import Login from './Login'
-import { testRender } from 'Utils/testRender'
+import { testRender } from 'Utils/testRender/testRender'
 
 describe('Login Form', () => {
   it('Render Login Page', () => {
