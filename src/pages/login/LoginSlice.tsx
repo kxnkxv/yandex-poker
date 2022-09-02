@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'Utils/axios/axios'
 import errorHandler from 'Utils/error-handler/errorHandler'
 
-//Types
+// Types
 import { TSignInForm, TAuthInitialState } from './types'
 import { TErrorPayload } from 'Types/app'
 
@@ -38,7 +38,7 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
 
-      //Login
+      // Login
       .addCase(login.pending, (state) => {
         state.isPending = true
       })
@@ -47,22 +47,22 @@ const authSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.isPending = false
-        let data = action.payload as TErrorPayload
+        const data = action.payload as TErrorPayload
         errorHandler(data.reason)
       })
 
-      //Check auth
+      // Check auth
       .addCase(checkAuth.fulfilled, (state, action) => {
         if (action.payload.data) {
           // ToDo требуется рефакторинг
-          //Костыль, нужный для прокидывания аватарок через поле display_name
-          let d_name = action.payload.data.display_name
+          // Костыль, нужный для прокидывания аватарок через поле display_name
+          const d_name = action.payload.data.display_name
           if (typeof d_name === 'string' && d_name.includes('avatar')) {
             action.payload.data.display_name = d_name.replace('avatar', '')
           } else {
             action.payload.data.display_name = 0
           }
-          //Конец костыля
+          // Конец костыля
 
           state.user = action.payload.data
         }

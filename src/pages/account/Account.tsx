@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import Avatars from 'Pages/account-edit/Avatars' // Mock data
 import useDocumentTitle from 'Hooks/useDocumentTitle'
 
-//Images
+// Images
 import Back from 'Images/back.svg'
 import Edit from 'Images/edit.svg'
 import { useSelector } from 'react-redux'

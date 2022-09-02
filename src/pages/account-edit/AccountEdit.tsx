@@ -11,17 +11,17 @@ import Avatars from './Avatars' // Mock data
 import useDocumentTitle from 'Hooks/useDocumentTitle'
 import { editUser } from './AccountEditSlice'
 
-//Components
+// Components
 import Input from 'Components/ui/input/Input'
 import Modal from 'Components/ui/modal/Modal'
 
-//Images
+// Images
 import backArrowIcon from './img/backArrowIcon.svg'
 
-//Styles
+// Styles
 import './AccountEdit.css'
 
-//Types
+// Types
 import { TAccountEditData } from './types'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from 'Core/store'
@@ -41,8 +41,8 @@ const AccountEdit: FC = () => {
 
   const { handleSubmit, control, register, setValue } = useForm({
     defaultValues: {
-      //Из-за технических ограничений вынуждены прокидывать id аватарки
-      //через поле display_name, добавив строку 'avatar', чтобы бэкенд не ругался
+      // Из-за технических ограничений вынуждены прокидывать id аватарки
+      // через поле display_name, добавив строку 'avatar', чтобы бэкенд не ругался
       display_name: 'avatar' + currentAvatar,
       first_name: user.first_name,
       second_name: user.second_name,

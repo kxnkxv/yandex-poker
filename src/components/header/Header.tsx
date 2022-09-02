@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-//Images
+// Images
 import Logo from 'Images/logo.svg'
 import Settings from 'Images/normal.svg'
 import FullScreen from 'Images/pressed.svg'

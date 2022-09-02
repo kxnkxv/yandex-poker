@@ -4,9 +4,9 @@ import { Navigate } from 'react-router-dom'
 import { AppDispatch } from 'Core/store'
 import { checkAuth } from 'Pages/login/LoginSlice'
 
-//Types
+// Types
 import { TProps } from './types'
-import { TState,  } from 'Types/app'
+import { TState } from 'Types/app'
 
 const ProtectedRoot: FC<TProps> = (props) => {
   const dispatch = useDispatch<AppDispatch>()

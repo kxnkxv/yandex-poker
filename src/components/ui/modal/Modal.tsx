@@ -1,12 +1,12 @@
 import React, { FC } from 'react'
 
-//Styles
+// Styles
 import './Modal.css'
 
-//Images
+// Images
 import CloseIcon from './img/closeIcon.svg'
 
-//Types
+// Types
 import { TProps } from './types'
 
 const Modal: FC<TProps> = (props) => {

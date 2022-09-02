@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react'
 import useDocumentTitle from 'Hooks/useDocumentTitle'
 
-//Components
+// Components
 import HearderMenu from 'Components/header/Header'
 import Button from 'Components/ui/button/Button'
 import TablesList from 'Components/table-list'
@@ -9,7 +9,7 @@ import Modal from 'Components/ui/modal/Modal'
 import Input from 'Components/ui/input/Input'
 import Results from 'Components/results'
 
-//Images
+// Images
 import Banner from 'Images/banner.svg'
 
 const Tables: FC = (props) => {

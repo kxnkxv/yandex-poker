@@ -7,11 +7,11 @@ import { Link } from 'react-router-dom'
 import { AppDispatch } from 'Core/store'
 import useDocumentTitle from 'Hooks/useDocumentTitle'
 
-//Components
+// Components
 import Input from 'Components/ui/input/Input'
 import Button from 'Components/ui/button/Button'
 
-//Types
+// Types
 import { TSignInForm } from './types'
 
 const Login: FC = () => {
@@ -42,7 +42,7 @@ const Login: FC = () => {
     <div className='main-wrapper items-center gradient-bottom'>
       <div className='container mx-auto max-w-md'>
         <h1 className='mb-5 text-center'>Login</h1>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} data-testid='form-login'>
           {/* Login */}
           <div className='grid gap-6 mb-5'>
             <div>
