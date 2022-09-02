@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
+    "heroku-prebuild": "npm install --dev",
     "test": "jest --watch",
     "start": "webpack --mode production --config webpack/webpack.config.js && node ./server.js",
     "dev": "webpack serve --mode development --config webpack/webpack.config.js --open --hot",
