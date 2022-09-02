@@ -6,14 +6,14 @@ import {
   loginValidation,
   nameValidation,
   phoneValidation,
-} from 'Utils/validation/validation'
+} from 'utils/validation/validation'
 import Avatars from './Avatars' // Mock data
-import useDocumentTitle from 'Hooks/useDocumentTitle'
+import useDocumentTitle from 'hooks/useDocumentTitle'
 import { editUser } from './AccountEditSlice'
 
 // Components
-import Input from 'Components/ui/input/Input'
-import Modal from 'Components/ui/modal/Modal'
+import Input from 'components/ui/input/Input'
+import Modal from 'components/ui/modal/Modal'
 
 // Images
 import backArrowIcon from './img/backArrowIcon.svg'
@@ -24,10 +24,10 @@ import './AccountEdit.css'
 // Types
 import { TAccountEditData } from './types'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch } from 'Core/store'
-import { checkAuth } from 'Pages/login/LoginSlice'
-import callbackHandler from 'Utils/callback-handler/callbackHandler'
-import { userSelector } from 'Core/store/selectors/user'
+import { AppDispatch } from 'core/store'
+import { checkAuth } from 'pages/login/LoginSlice'
+import callbackHandler from 'utils/callback-handler/callbackHandler'
+import { userSelector } from 'core/store/selectors/user'
 
 const AccountEdit: FC = () => {
   useDocumentTitle('Edit account')

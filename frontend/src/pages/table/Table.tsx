@@ -9,14 +9,14 @@ import {
   createDealerChip,
   createCombinationLabel,
 } from './canvas/Methods'
-import useDocumentTitle from 'Hooks/useDocumentTitle'
-import BetSlider from 'Components/bet-slider/BetSlider'
-import TableController from 'Pages/table/TableController'
+import useDocumentTitle from 'hooks/useDocumentTitle'
+import BetSlider from 'components/bet-slider/BetSlider'
+import TableController from 'pages/table/TableController'
 import { Listeners } from './TableController'
-import { Cards } from 'Images/cards'
+import { Cards } from 'images/cards'
 
 //Components
-import YouWin from 'Components/you-win'
+import YouWin from 'components/you-win'
 
 //Styles
 import './Table.css'
@@ -24,8 +24,8 @@ import './Table.css'
 //Types
 import { TSeat } from './types'
 import { initialGameState } from './initialGameState'
-import { usePreviousValue } from 'Hooks/usePreviousValue'
-import { userSelector } from 'Core/store/selectors/user'
+import { usePreviousValue } from 'hooks/usePreviousValue'
+import { userSelector } from 'core/store/selectors/user'
 
 const Table: FC = () => {
   //Устанавливаем заголовок страницы в браузере

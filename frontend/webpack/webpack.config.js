@@ -10,15 +10,15 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     alias: {
-      Components: path.resolve(__dirname, '../src/components'),
-      Core: path.resolve(__dirname, '../src/core'),
+      components: path.resolve(__dirname, '../src/components'),
       core: path.resolve(__dirname, '../src/core'),
-      Hooks: path.resolve(__dirname, '../src/hooks'),
-      Images: path.resolve(__dirname, '../src/images'),
-      Pages: path.resolve(__dirname, '../src/pages'),
-      Styles: path.resolve(__dirname, '../src/styles'),
-      Types: path.resolve(__dirname, '../src/types'),
-      Utils: path.resolve(__dirname, '../src/utils'),
+      hooks: path.resolve(__dirname, '../src/hooks'),
+      images: path.resolve(__dirname, '../src/images'),
+      pages: path.resolve(__dirname, '../src/pages'),
+      styles: path.resolve(__dirname, '../src/styles'),
+      types: path.resolve(__dirname, '../src/types'),
+      utils: path.resolve(__dirname, '../src/utils'),
+      '@': path.resolve(__dirname, '../src'),
     },
   },
   devServer: {

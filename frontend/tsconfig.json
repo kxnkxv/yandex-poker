@@ -18,15 +18,15 @@
     "baseUrl": "./",
     "outDir": "./dist",
     "paths": {
-      "Components": ["./src/components"],
-      "Core": ["./src/core"],
+      "components": ["./src/components"],
       "core": ["./src/core"],
-      "Hooks": ["./src/hooks"],
-      "Images": ["./src/images"],
-      "Pages": ["./src/pages"],
-      "Styles": ["./src/styles"],
-      "Types": ["./src/types"],
-      "Utils": ["./src/utils"],
+      "hooks": ["./src/hooks"],
+      "images": ["./src/images"],
+      "pages": ["./src/pages"],
+      "styles": ["./src/styles"],
+      "types": ["./src/types"],
+      "utils": ["./src/utils"],
+      "@/*": ["src/*"],
       "*": ["./src/*"]
     },
     "typeRoots": ["typings/**/*.d.ts", "node_modules/@types", "src/types"]

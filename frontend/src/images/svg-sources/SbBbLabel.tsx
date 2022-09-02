@@ -1,4 +1,4 @@
-import svgToCanvas from 'Utils/svgToCanvas/svgToCanvas'
+import svgToCanvas from 'utils/svgToCanvas/svgToCanvas'
 
 const SbBbLabel = svgToCanvas(`
 
