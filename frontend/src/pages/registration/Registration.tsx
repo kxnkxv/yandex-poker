@@ -6,20 +6,20 @@ import {
   nameValidation,
   passwordValidation,
   phoneValidation,
-} from 'Utils/validation/validation'
-import useDocumentTitle from 'Hooks/useDocumentTitle'
+} from 'utils/validation/validation'
+import useDocumentTitle from 'hooks/useDocumentTitle'
 import { Link } from 'react-router-dom'
-import { registration } from 'Pages/registration/RegistrationSlice'
-import { AppDispatch } from 'Core/store'
+import { registration } from 'pages/registration/RegistrationSlice'
+import { AppDispatch } from 'core/store'
 
 // Components
-import Input from 'Components/ui/input/Input'
-import Button from 'Components/ui/button/Button'
+import Input from 'components/ui/input/Input'
+import Button from 'components/ui/button/Button'
 
 // Types
 import { TSignUpForm } from './types'
 import { useDispatch } from 'react-redux'
-import { checkAuth } from 'Pages/login/LoginSlice'
+import { checkAuth } from 'pages/login/LoginSlice'
 
 const Registration: FC = () => {
   useDocumentTitle('Registration')

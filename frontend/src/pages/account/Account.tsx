@@ -1,13 +1,13 @@
 import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
-import Avatars from 'Pages/account-edit/Avatars' // Mock data
-import useDocumentTitle from 'Hooks/useDocumentTitle'
+import Avatars from 'pages/account-edit/Avatars' // Mock data
+import useDocumentTitle  from 'hooks/useDocumentTitle'
 
 // Images
-import Back from 'Images/back.svg'
-import Edit from 'Images/edit.svg'
+import Back from 'images/back.svg'
+import Edit from 'images/edit.svg'
 import { useSelector } from 'react-redux'
-import { userSelector } from 'Core/store/selectors/user'
+import { userSelector } from 'core/store/selectors/user'
 
 const Account: FC = () => {
   useDocumentTitle('Account')

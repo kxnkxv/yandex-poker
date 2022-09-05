@@ -9,15 +9,16 @@ import {
   createPot,
   createDealerChip,
   createCombinationLabel,
+  createUserChips,
 } from './canvas/Methods'
-import useDocumentTitle from 'Hooks/useDocumentTitle'
-import BetSlider from 'Components/bet-slider/BetSlider'
-import TableController from 'Pages/table/TableController'
+import useDocumentTitle from 'hooks/useDocumentTitle'
+import BetSlider from 'components/bet-slider/BetSlider'
+import TableController from 'pages/table/TableController'
 import { Listeners } from './TableController'
-import { Cards } from 'Images/cards'
+import { Cards } from 'images/cards'
 
 //Components
-import YouWin from 'Components/you-win'
+import YouWin from 'components/you-win'
 
 //Styles
 import './Table.css'
@@ -25,10 +26,10 @@ import './Table.css'
 //Types
 import { TSeat } from './types'
 import { initialGameState } from './initialGameState'
-import { usePreviousValue } from 'Hooks/usePreviousValue'
-import { userSelector } from 'Core/store/selectors/user'
+import { usePreviousValue } from 'hooks/usePreviousValue'
+import { userSelector } from 'core/store/selectors/user'
 
-import cardShuffle from 'Pages/table/sounds/cardShuffle.mp3'
+import cardShuffle from 'pages/table/sounds/cardShuffle.mp3'
 
 const Table: FC = () => {
   //Устанавливаем заголовок страницы в браузере
@@ -60,7 +61,7 @@ const Table: FC = () => {
   //При первой отрисовке компонента
   useEffect(() => {
     //Устанавливаем WS соединение
-    const socket = io('http://localhost:8080/', { transports: ['websocket'] })
+    const socket = io('https://yandex-poker-back.herokuapp.com/', { transports: ['websocket'] })
 
     //Инициализируем контроллер для управления столом, прокинув туда WS, геттер и сеттер состояния стола
     const tc = new TableController(socket, gameState, setGameState)
@@ -103,6 +104,9 @@ const Table: FC = () => {
 
         //Отрисовываем pot
         createPot(table, ctxT)
+
+        //Отрисовываем фишки
+        createUserChips(table, userName as string, ctxT)
 
         //Отрисовываем плашку с информацией о собранной комбинации
         createCombinationLabel(combination.rank, ctxT)

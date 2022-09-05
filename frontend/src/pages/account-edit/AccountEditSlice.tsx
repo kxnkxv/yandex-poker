@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import axios from 'Utils/axios/axios'
+import axios from 'utils/axios/axios'
 // import errorHandler from 'Utils/error-handler/errorHandler'
 
 // Types

@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 // Images
-import Logo from 'Images/logo.svg'
-import Settings from 'Images/normal.svg'
-import FullScreen from 'Images/pressed.svg'
-import Avatars from 'Pages/account-edit/Avatars'
-import { userSelector } from 'Core/store/selectors/user'
+import Logo from 'images/logo.svg'
+import Settings from 'images/normal.svg'
+import FullScreen from 'images/pressed.svg'
+import Avatars from 'pages/account-edit/Avatars'
+import { userSelector } from 'core/store/selectors/user'
 
 const Header: FC = () => {
   const user = useSelector(userSelector)

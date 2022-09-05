@@ -1,6 +1,6 @@
-import chipSvgToCanvas from 'Utils/svgToCanvas/chipSvgToCanvas'
+import svgToCanvas from 'utils/svgToCanvas/svgToCanvas'
 
-const ChipCanvas = chipSvgToCanvas(`
+const ChipCanvas = svgToCanvas(`
 
 <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_1_1412)">
