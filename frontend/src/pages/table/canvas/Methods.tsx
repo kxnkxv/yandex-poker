@@ -11,15 +11,15 @@ import { isEqual } from 'lodash'
 import Avatars from 'pages/account-edit/Avatars'
 import CombinationLabel from 'images/svg-sources/CombinationLabel'
 
-import ChipCanvas from 'Images/svg-sources/ChipCanvas'
-import UserInfoPanel from 'Images/svg-sources/UserInfoPanel'
-import UserInfoPanelActive from 'Images/svg-sources/UserInfoPanelActive'
-import SbBbLabel from 'Images/svg-sources/SbBbLabel'
-import CallCheckLabel from 'Images/svg-sources/CallCheckLabel'
-import BetRaiseLabel from 'Images/svg-sources/BetRaiseLabel'
-import FoldLabel from 'Images/svg-sources/FoldLabel'
-import AllInLabel from 'Images/svg-sources/AllInLabel'
-import UserChip from 'Images/svg-sources/UserChip'
+import ChipCanvas from 'images/svg-sources/ChipCanvas'
+import UserInfoPanel from 'images/svg-sources/UserInfoPanel'
+import UserInfoPanelActive from 'images/svg-sources/UserInfoPanelActive'
+import SbBbLabel from 'images/svg-sources/SbBbLabel'
+import CallCheckLabel from 'images/svg-sources/CallCheckLabel'
+import BetRaiseLabel from 'images/svg-sources/BetRaiseLabel'
+import FoldLabel from 'images/svg-sources/FoldLabel'
+import AllInLabel from 'images/svg-sources/AllInLabel'
+import UserChip from 'images/svg-sources/UserChip'
 
 // Todo:Нужен рефактор
 // Метод, перемещающий игроков так, чтобы мы были внизу посередине
@@ -163,11 +163,7 @@ export const createCurrentUserChip = (seat: TSeat, ctx: CanvasRenderingContext2D
   if (seat.bet !== 0) {
     ctx.drawImage(UserChip, userChipPositions[0][0], userChipPositions[0][1])
     ctx.fillStyle = `rgba(255, 255, 255)`
-    ctx.fillText(
-      '$ ' + seat.bet,
-      userChipPositions[0][0] + 130,
-      userChipPositions[0][1] + 30,
-    )
+    ctx.fillText('$ ' + seat.bet, userChipPositions[0][0] + 130, userChipPositions[0][1] + 30)
   }
 }
 export const createUserChips = (
