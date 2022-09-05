@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react'
+import useSound from 'use-sound'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { io } from 'socket.io-client'
@@ -27,6 +28,8 @@ import { initialGameState } from './initialGameState'
 import { usePreviousValue } from 'Hooks/usePreviousValue'
 import { userSelector } from 'Core/store/selectors/user'
 
+import cardShuffle from 'Pages/table/sounds/cardShuffle.mp3'
+
 const Table: FC = () => {
   //Устанавливаем заголовок страницы в браузере
   useDocumentTitle('Table')
@@ -52,7 +55,7 @@ const Table: FC = () => {
   const previousTableState = usePreviousValue(gameState.table)
 
   //Получаем состояние стола, экшен, id моего сидения, мои карты
-  const { table, actionState, mySeat, myCards, combination, winModal } = gameState
+  const { table, actionState, mySeat, myCards, combination, winModal, playShuffleSound } = gameState
 
   //При первой отрисовке компонента
   useEffect(() => {
@@ -77,9 +80,13 @@ const Table: FC = () => {
     }
   }, [])
 
+  const [play] = useSound(cardShuffle)
   //Перерисовываем стол при изменении состояния игры
   useEffect(() => {
     //Canvas Table
+    if (playShuffleSound) {
+      play()
+    }
     if (canvasTable && canvasTable.current) {
       const canvasT = canvasTable.current as HTMLCanvasElement
       const ctxT = canvasT.getContext('2d')

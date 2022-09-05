@@ -70,7 +70,7 @@ class TableController {
     this.socket!.emit(Actions.PostBlind, true, (response: TWsResponse) => {
       if (response.success) {
         this.setGameState((state: TGameState) => {
-          return { ...state, actionState: '' }
+          return { ...state, actionState: '', playShuffleSound: true }
         })
       }
     })
