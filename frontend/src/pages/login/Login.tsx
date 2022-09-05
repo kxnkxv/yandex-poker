@@ -1,15 +1,15 @@
 import React, { FC } from 'react'
 import { useDispatch } from 'react-redux'
 import { useForm, SubmitHandler, Controller, useFormState } from 'react-hook-form'
-import { loginValidation, passwordValidation } from 'Utils/validation/validation'
-import { checkAuth, login } from 'Pages/login/LoginSlice'
+import { loginValidation, passwordValidation } from 'utils/validation/validation'
+import { checkAuth, login } from 'pages/login/LoginSlice'
 import { Link } from 'react-router-dom'
-import { AppDispatch } from 'Core/store'
-import useDocumentTitle from 'Hooks/useDocumentTitle'
+import { AppDispatch } from 'core/store'
+import useDocumentTitle from 'hooks/useDocumentTitle'
 
 // Components
-import Input from 'Components/ui/input/Input'
-import Button from 'Components/ui/button/Button'
+import Input from 'components/ui/input/Input'
+import Button from 'components/ui/button/Button'
 
 // Types
 import { TSignInForm } from './types'

@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react'
-import YouWinImage from 'Images/youWin.svg'
+import YouWinImage from 'images/youWin.svg'
 import confetti from 'canvas-confetti'
 
 // Styles

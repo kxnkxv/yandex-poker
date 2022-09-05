@@ -3,7 +3,7 @@ import { render as rtlRender, RenderOptions } from '@testing-library/react'
 import { configureStore, Store } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { RootState, persistedReducer } from 'Core/store/index'
+import { RootState, persistedReducer } from 'core/store/index'
 
 // TToDo find correct type for preloaded state
 

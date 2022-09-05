@@ -1,4 +1,4 @@
-import chipSvgToCanvas from 'Utils/svgToCanvas/chipSvgToCanvas'
+import chipSvgToCanvas from 'utils/svgToCanvas/chipSvgToCanvas'
 
 const ChipCanvas = chipSvgToCanvas(`
 
