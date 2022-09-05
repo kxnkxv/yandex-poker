@@ -18,3 +18,10 @@ export const combinationPosition = {
 }
 
 export const potPosition = [1280, 442]
+
+export const userChipPositions = [
+  [1220, 815], // Player 0
+  [600, 660], // Player 1
+  [1140, 320], // Player 2
+  [1750, 670], // Player 3
+]
