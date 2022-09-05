@@ -18,83 +18,86 @@ import AccountEdit from 'Pages/account-edit'
 
 // Styles
 import 'Styles/Style.css'
+import ErrorBoundary from 'Components/error-boundary'
 
 // Images
 // .....
 
 const App: FC = (): JSX.Element => {
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <BrowserRouter>
-          <Routes>
-            {/* 404 Page */}
-            <Route path='*' element={<NotFound />} />
+    <ErrorBoundary>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <BrowserRouter>
+            <Routes>
+              {/* 404 Page */}
+              <Route path='*' element={<NotFound />} />
 
-            {/* Login */}
-            <Route
-              path='/'
-              element={
-                <PublicRoot>
-                  <Login />
-                </PublicRoot>
-              }
-            />
+              {/* Login */}
+              <Route
+                path='/'
+                element={
+                  <PublicRoot>
+                    <Login />
+                  </PublicRoot>
+                }
+              />
 
-            {/* Registration */}
-            <Route
-              path='register'
-              element={
-                <PublicRoot>
-                  <Registration />
-                </PublicRoot>
-              }
-            />
+              {/* Registration */}
+              <Route
+                path='register'
+                element={
+                  <PublicRoot>
+                    <Registration />
+                  </PublicRoot>
+                }
+              />
 
-            {/* Tables */}
-            <Route
-              path='tables'
-              element={
-                <ProtectedRoot>
-                  <Tables />
-                </ProtectedRoot>
-              }
-            />
+              {/* Tables */}
+              <Route
+                path='tables'
+                element={
+                  <ProtectedRoot>
+                    <Tables />
+                  </ProtectedRoot>
+                }
+              />
 
-            {/* Table */}
-            <Route
-              path='tables/:tableId'
-              element={
-                <ProtectedRoot>
-                  <Table />
-                </ProtectedRoot>
-              }
-            />
+              {/* Table */}
+              <Route
+                path='tables/:tableId'
+                element={
+                  <ProtectedRoot>
+                    <Table />
+                  </ProtectedRoot>
+                }
+              />
 
-            {/* Account */}
-            <Route
-              path='account'
-              element={
-                <ProtectedRoot>
-                  <Account />
-                </ProtectedRoot>
-              }
-            />
+              {/* Account */}
+              <Route
+                path='account'
+                element={
+                  <ProtectedRoot>
+                    <Account />
+                  </ProtectedRoot>
+                }
+              />
 
-            {/* Account edit */}
-            <Route
-              path='account/edit'
-              element={
-                <ProtectedRoot>
-                  <AccountEdit />
-                </ProtectedRoot>
-              }
-            />
-          </Routes>
-        </BrowserRouter>
-        <ToastContainer />
-      </PersistGate>
-    </Provider>
+              {/* Account edit */}
+              <Route
+                path='account/edit'
+                element={
+                  <ProtectedRoot>
+                    <AccountEdit />
+                  </ProtectedRoot>
+                }
+              />
+            </Routes>
+          </BrowserRouter>
+          <ToastContainer />
+        </PersistGate>
+      </Provider>
+    </ErrorBoundary>
   )
 }
 
