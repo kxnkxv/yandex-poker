@@ -8,8 +8,8 @@ import {
 import { TGameTable, TSeat, TSeatAvatar } from '../types'
 // import ChipImage from 'Images/chip.svg'
 import { isEqual } from 'lodash'
-import Avatars from 'Pages/account-edit/Avatars'
-import CombinationLabel from 'Images/svg-sources/CombinationLabel'
+import Avatars from 'pages/account-edit/Avatars'
+import CombinationLabel from 'images/svg-sources/CombinationLabel'
 
 import ChipCanvas from 'Images/svg-sources/ChipCanvas'
 import UserInfoPanel from 'Images/svg-sources/UserInfoPanel'

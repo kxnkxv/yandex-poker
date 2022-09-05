@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 
 // Images
-import Arrow from 'Images/arrow.svg'
+import Arrow from 'images/arrow.svg'
 import { Link } from 'react-router-dom'
 
 // Styles

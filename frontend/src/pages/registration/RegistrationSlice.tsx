@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import axios from 'Utils/axios/axios'
-import errorHandler from 'Utils/error-handler/errorHandler'
+import axios from 'utils/axios/axios'
+import errorHandler from 'utils/error-handler/errorHandler'
 
 // Types
 import { TSignUpForm } from './types'

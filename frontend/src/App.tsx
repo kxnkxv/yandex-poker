@@ -1,23 +1,23 @@
 import React, { FC } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { store, persistor } from 'Core/store'
+import { store, persistor } from 'core/store'
 import { PersistGate } from 'redux-persist/integration/react'
 import { ToastContainer } from 'react-toastify'
-import PublicRoot from 'Components/public-root/PublicRoot'
-import ProtectedRoot from 'Components/protected-root/ProtectedRoot'
+import PublicRoot from 'components/public-root/PublicRoot'
+import ProtectedRoot from 'components/protected-root/ProtectedRoot'
 
 // Pages
-import NotFound from 'Pages/notFound'
-import Login from 'Pages/login'
-import Registration from 'Pages/registration/Registration'
-import Table from 'Pages/table/Table'
-import Tables from 'Pages/tables/Tables'
-import Account from 'Pages/account'
-import AccountEdit from 'Pages/account-edit'
+import NotFound from 'pages/notFound'
+import Login from 'pages/login'
+import Registration from 'pages/registration/Registration'
+import Table from 'pages/table/Table'
+import Tables from 'pages/tables/Tables'
+import Account from 'pages/account'
+import AccountEdit from 'pages/account-edit'
 
 // Styles
-import 'Styles/Style.css'
+import 'styles/Style.css'
 
 // Images
 // .....
