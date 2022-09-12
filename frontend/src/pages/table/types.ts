@@ -64,6 +64,7 @@ export type TGameState = {
   sittingOnTable: number | null
   playChipsSound: boolean
   playWowSound: boolean
+  playWinSound: boolean
 }
 
 export type TWsResponse = {

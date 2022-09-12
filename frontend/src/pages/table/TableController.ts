@@ -198,7 +198,7 @@ class TableController {
     this.socket!.on(Listeners.YouWin, (amount: number) => {
       // Показываем модалку
       this.setGameState((state: TGameState) => {
-        return { ...state, winModal: { isOpened: true, amount }, playWowSound: true }
+        return { ...state, winModal: { isOpened: true, amount }, playWinSound: true }
       })
 
       // Скрываем через 3.2 сек

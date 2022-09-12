@@ -32,6 +32,7 @@ import { userSelector } from 'core/store/selectors/user'
 //Sounds
 import chips from 'pages/table/sounds/chips.mp3'
 import wow from 'pages/table/sounds/wow.mp3'
+import win from 'pages/table/sounds/win.mp3'
 
 const Table: FC = () => {
   //Устанавливаем заголовок страницы в браузере
@@ -58,7 +59,7 @@ const Table: FC = () => {
   const previousTableState = usePreviousValue(gameState.table)
 
   //Получаем состояние стола, экшен, id моего сидения, мои карты
-  const { table, actionState, mySeat, myCards, combination, winModal, playChipsSound, playWowSound } = gameState
+  const { table, actionState, mySeat, myCards, combination, winModal, playChipsSound, playWowSound, playWinSound } = gameState
 
   //При первой отрисовке компонента
   useEffect(() => {
@@ -85,6 +86,7 @@ const Table: FC = () => {
 
   const [playChips] = useSound(chips)
   const [playWow] = useSound(wow)
+  const [playWin] = useSound(win)
 
   //Перерисовываем стол при изменении состояния игры
   useEffect(() => {
@@ -94,6 +96,9 @@ const Table: FC = () => {
     }
     if (playWowSound) {
       playWow()
+    }
+    if (playWinSound) {
+      playWin()
     }
     if (canvasTable && canvasTable.current) {
       const canvasT = canvasTable.current as HTMLCanvasElement
