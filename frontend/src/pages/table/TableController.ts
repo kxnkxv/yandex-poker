@@ -70,7 +70,7 @@ class TableController {
     this.socket!.emit(Actions.PostBlind, true, (response: TWsResponse) => {
       if (response.success) {
         this.setGameState((state: TGameState) => {
-          return { ...state, actionState: '', playShuffleSound: true }
+          return { ...state, actionState: '', playChipsSound: true }
         })
       }
     })
@@ -162,7 +162,7 @@ class TableController {
     // Кто-то из оппонентов пошел в All in
     this.socket!.on(Listeners.ActOthersAllIn, () => {
       this.setGameState((state: TGameState) => {
-        return { ...state, actionState: Listeners.ActOthersAllIn }
+        return { ...state, actionState: Listeners.ActOthersAllIn, playWowSound: true }
       })
     })
 
@@ -198,7 +198,7 @@ class TableController {
     this.socket!.on(Listeners.YouWin, (amount: number) => {
       // Показываем модалку
       this.setGameState((state: TGameState) => {
-        return { ...state, winModal: { isOpened: true, amount } }
+        return { ...state, winModal: { isOpened: true, amount }, playWowSound: true }
       })
 
       // Скрываем через 3.2 сек

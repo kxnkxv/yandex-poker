@@ -29,7 +29,9 @@ import { initialGameState } from './initialGameState'
 import { usePreviousValue } from 'hooks/usePreviousValue'
 import { userSelector } from 'core/store/selectors/user'
 
-import cardShuffle from 'pages/table/sounds/cardShuffle.mp3'
+//Sounds
+import chips from 'pages/table/sounds/chips.mp3'
+import wow from 'pages/table/sounds/wow.mp3'
 
 const Table: FC = () => {
   //Устанавливаем заголовок страницы в браузере
@@ -56,7 +58,7 @@ const Table: FC = () => {
   const previousTableState = usePreviousValue(gameState.table)
 
   //Получаем состояние стола, экшен, id моего сидения, мои карты
-  const { table, actionState, mySeat, myCards, combination, winModal, playShuffleSound } = gameState
+  const { table, actionState, mySeat, myCards, combination, winModal, playChipsSound, playWowSound } = gameState
 
   //При первой отрисовке компонента
   useEffect(() => {
@@ -81,12 +83,17 @@ const Table: FC = () => {
     }
   }, [])
 
-  const [play] = useSound(cardShuffle)
+  const [playChips] = useSound(chips)
+  const [playWow] = useSound(wow)
+
   //Перерисовываем стол при изменении состояния игры
   useEffect(() => {
     //Canvas Table
-    if (playShuffleSound) {
-      play()
+    if (playChipsSound) {
+      playChips()
+    }
+    if (playWowSound) {
+      playWow()
     }
     if (canvasTable && canvasTable.current) {
       const canvasT = canvasTable.current as HTMLCanvasElement
