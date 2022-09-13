@@ -7,10 +7,10 @@ type Props = {
 }
 
 type State = {
-  error: Error | null
+  error: Nullable<Error>
 }
 
-const DefaultFallback: FC<{ error: Error | null; reset?: () => void }> = ({ error, reset }) => {
+const DefaultFallback: FC<{ error: Nullable<Error>; reset?: () => void }> = ({ error, reset }) => {
   return (
     <div>
       <h1>Что то пошло не так</h1>
