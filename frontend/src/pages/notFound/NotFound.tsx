@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import useDocumentTitle from 'Hooks/useDocumentTitle'
+import useDocumentTitle from 'hooks/useDocumentTitle'
 
 const NotFound: FC = () => {
   useDocumentTitle('Page not found')

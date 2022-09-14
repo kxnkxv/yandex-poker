@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
-import tableReducer from 'Pages/table/TableSlice'
-import { authReducer } from 'Pages/login/LoginSlice'
+import tableReducer from 'pages/table/TableSlice'
+import { authReducer } from 'pages/login/LoginSlice'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import { combineReducers } from 'redux'

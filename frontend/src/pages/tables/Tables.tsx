@@ -1,16 +1,16 @@
 import React, { FC, useState } from 'react'
-import useDocumentTitle from 'Hooks/useDocumentTitle'
+import useDocumentTitle from 'hooks/useDocumentTitle'
 
 // Components
-import HearderMenu from 'Components/header/Header'
-import Button from 'Components/ui/button/Button'
-import TablesList from 'Components/table-list'
-import Modal from 'Components/ui/modal/Modal'
-import Input from 'Components/ui/input/Input'
-import Results from 'Components/results'
+import HearderMenu from 'components/header/Header'
+import Button from 'components/ui/button/Button'
+import TablesList from 'components/table-list'
+import Modal from 'components/ui/modal/Modal'
+import Input from 'components/ui/input/Input'
+import Results from 'components/results'
 
 // Images
-import Banner from 'Images/banner.svg'
+import Banner from 'images/banner.svg'
 
 const Tables: FC = (props) => {
   useDocumentTitle('Available tables')

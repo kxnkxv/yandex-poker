@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'Utils/axios/axios'
-import errorHandler from 'Utils/error-handler/errorHandler'
+import axios from 'utils/axios/axios'
+import errorHandler from 'utils/error-handler/errorHandler'
 
 // Types
 import { TSignInForm, TAuthInitialState } from './types'
-import { TErrorPayload } from 'Types/app'
+import { TErrorPayload } from 'types/app'
 
 export const login = createAsyncThunk(
   '@@auth/login',

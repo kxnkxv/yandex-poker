@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 
 // Images
 import Cup from './img/cup.svg'
-import Arrow from 'Images/arrow.svg'
+import Arrow from 'images/arrow.svg'
 
 const Results: FC = () => {
   return (
