@@ -11,7 +11,7 @@ import { userSelector } from 'core/store/selectors/user'
 
 const Header: FC = () => {
   const user = useSelector(userSelector)
-  const [isFullScreen, setFullScreen] = useState(false)
+  const [isFullScreen, setIsFullScreen] = useState(false)
   useEffect(() => {
     if (isFullScreen) {
       document.body.requestFullscreen()
@@ -58,7 +58,7 @@ const Header: FC = () => {
             <button className='p-5'>
               <img src={Settings} className='h-6 sm:h-9' alt='Settings' />
             </button>
-            <button onClick={() => setFullScreen(!isFullScreen)}>
+            <button onClick={() => setIsFullScreen(!isFullScreen)}>
               <img src={FullScreen} className='h-6 sm:h-9' alt='FullScreen' />
             </button>
           </div>
