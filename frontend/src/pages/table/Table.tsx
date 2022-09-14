@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useRef, useState } from 'react'
-import useSound from 'use-sound'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { io } from 'socket.io-client'
@@ -29,11 +28,6 @@ import { initialGameState } from './initialGameState'
 import { usePreviousValue } from 'hooks/usePreviousValue'
 import { userSelector } from 'core/store/selectors/user'
 
-//Sounds
-import chips from 'pages/table/sounds/chips.mp3'
-import wow from 'pages/table/sounds/wow.mp3'
-import win from 'pages/table/sounds/win.mp3'
-
 const Table: FC = () => {
   //Устанавливаем заголовок страницы в браузере
   useDocumentTitle('Table')
@@ -59,7 +53,7 @@ const Table: FC = () => {
   const previousTableState = usePreviousValue(gameState.table)
 
   //Получаем состояние стола, экшен, id моего сидения, мои карты
-  const { table, actionState, mySeat, myCards, combination, winModal, playChipsSound, playWowSound, playWinSound } = gameState
+  const { table, actionState, mySeat, myCards, combination, winModal} = gameState
 
   //При первой отрисовке компонента
   useEffect(() => {
@@ -84,22 +78,9 @@ const Table: FC = () => {
     }
   }, [])
 
-  const [playChips] = useSound(chips)
-  const [playWow] = useSound(wow)
-  const [playWin] = useSound(win)
-
   //Перерисовываем стол при изменении состояния игры
   useEffect(() => {
     //Canvas Table
-    if (playChipsSound) {
-      playChips()
-    }
-    if (playWowSound) {
-      playWow()
-    }
-    if (playWinSound) {
-      playWin()
-    }
     if (canvasTable && canvasTable.current) {
       const canvasT = canvasTable.current as HTMLCanvasElement
       const ctxT = canvasT.getContext('2d')

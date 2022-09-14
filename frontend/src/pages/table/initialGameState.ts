@@ -45,8 +45,5 @@ export const initialGameState: TGameState = {
   },
   mySeat: null,
   betAmount: 0,
-  sittingOnTable: null,
-  playChipsSound: false,
-  playWowSound: false,
-  playWinSound: false
+  sittingOnTable: null
 }
