@@ -3,9 +3,12 @@ import { TCombination, TGameState, TGameTable, TWsResponse } from './types'
 
 //Sounds
 import chips from 'pages/table/sounds/chips.mp3'
-import wow from 'pages/table/sounds/wow.mp3'
-import win from 'pages/table/sounds/win.mp3'
+import allIn from 'pages/table/sounds/allIn.mp3'
+import win from 'pages/table/sounds/win31.mp3'
 import cardsShuffle from 'pages/table/sounds/cardshuffle.mp3'
+import foldSound from 'pages/table/sounds/fold.mp3'
+import betSound from 'pages/table/sounds/bet.mp3'
+import raiseSound from 'pages/table/sounds/raise.mp3'
 
 export enum Actions {
   Register = 'register',
@@ -99,7 +102,7 @@ class TableController {
     this.socket!.emit(Actions.Fold, (response: TWsResponse) => {
       if (response.success) {
         this.setGameState((state: TGameState) => {
-          this.melody = new Audio(chips)
+          this.melody = new Audio(foldSound)
           this.melody.play()
           return { ...state, actionState: '' }
         })
@@ -123,7 +126,7 @@ class TableController {
     this.socket!.emit(Actions.Bet, value, (response: TWsResponse) => {
       if (response.success) {
         this.setGameState((state: TGameState) => {
-          this.melody = new Audio(chips)
+          this.melody = new Audio(betSound)
           this.melody.play()
           return { ...state, actionState: '' }
         })
@@ -135,7 +138,7 @@ class TableController {
     this.socket!.emit(Actions.Raise, value, (response: TWsResponse) => {
       if (response.success) {
         this.setGameState((state: TGameState) => {
-          this.melody = new Audio(chips)
+          this.melody = new Audio(raiseSound)
           this.melody.play()
           return { ...state, actionState: '' }
         })
@@ -179,7 +182,7 @@ class TableController {
     // Кто-то из оппонентов пошел в All in
     this.socket!.on(Listeners.ActOthersAllIn, () => {
       this.setGameState((state: TGameState) => {
-        this.melody = new Audio(wow)
+        this.melody = new Audio(allIn)
         this.melody.play()
         return { ...state, actionState: Listeners.ActOthersAllIn }
       })
