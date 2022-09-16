@@ -16,7 +16,7 @@ const prodConfig = {
     filename: 'static/js/[name].[chunkhash].js',
     chunkFilename: 'static/js/[name].[chunkhash].chunk.js',
     assetModuleFilename: 'static/media/[name].[hash:8].[ext]',
-    clean: true,
+    clean: false,
   },
 
   module: {
