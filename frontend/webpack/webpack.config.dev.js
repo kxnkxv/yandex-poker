@@ -4,7 +4,7 @@ const common = require('./webpack.config.common.js')
 
 const path = require('path')
 
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
 const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 
 const devConfig = {
@@ -61,6 +61,6 @@ const devConfig = {
     },
     emitOnErrors: false,
   },
-  plugins: [new ReactRefreshPlugin()],
+  plugins: [new webpack.HotModuleReplacementPlugin(), new ReactRefreshPlugin()],
 }
 module.exports = merge(common, devConfig)
