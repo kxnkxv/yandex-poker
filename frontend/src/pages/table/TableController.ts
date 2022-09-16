@@ -2,13 +2,16 @@ import { Socket } from 'socket.io-client'
 import { TCombination, TGameState, TGameTable, TWsResponse } from './types'
 
 //Sounds
-import chips from 'pages/table/sounds/chips.mp3'
-import allIn from 'pages/table/sounds/allIn.mp3'
-import win from 'pages/table/sounds/win31.mp3'
-import cardsShuffle from 'pages/table/sounds/cardshuffle.mp3'
-import foldSound from 'pages/table/sounds/fold.mp3'
-import betSound from 'pages/table/sounds/bet.mp3'
-import raiseSound from 'pages/table/sounds/raise.mp3'
+import {
+  playChipsSound,
+  playWinSound,
+  playAllInSound,
+  playCardsShuffleSound,
+  playFoldSound,
+  playBetSound,
+  playRaiseSound,
+  playCombinationSound
+} from 'pages/table/soundsHelper'
 
 export enum Actions {
   Register = 'register',
@@ -41,7 +44,6 @@ class TableController {
   socket: Socket | null
   gameState: TGameState
   setGameState: Function
-  melody: HTMLAudioElement | undefined
 
   constructor(socket: Socket | null, gameState: TGameState, setGameState: Function) {
     this.socket = socket
@@ -80,8 +82,7 @@ class TableController {
     this.socket!.emit(Actions.PostBlind, true, (response: TWsResponse) => {
       if (response.success) {
         this.setGameState((state: TGameState) => {
-          this.melody = new Audio(chips)
-          this.melody.play()
+          playChipsSound()
           return { ...state, actionState: '' }
         })
       }
@@ -102,8 +103,7 @@ class TableController {
     this.socket!.emit(Actions.Fold, (response: TWsResponse) => {
       if (response.success) {
         this.setGameState((state: TGameState) => {
-          this.melody = new Audio(foldSound)
-          this.melody.play()
+          playFoldSound()
           return { ...state, actionState: '' }
         })
       }
@@ -114,8 +114,7 @@ class TableController {
     this.socket!.emit(Actions.Call, (response: TWsResponse) => {
       if (response.success) {
         this.setGameState((state: TGameState) => {
-          this.melody = new Audio(chips)
-          this.melody.play()
+          playChipsSound()
           return { ...state, actionState: '' }
         })
       }
@@ -126,8 +125,7 @@ class TableController {
     this.socket!.emit(Actions.Bet, value, (response: TWsResponse) => {
       if (response.success) {
         this.setGameState((state: TGameState) => {
-          this.melody = new Audio(betSound)
-          this.melody.play()
+          playBetSound()
           return { ...state, actionState: '' }
         })
       }
@@ -138,8 +136,7 @@ class TableController {
     this.socket!.emit(Actions.Raise, value, (response: TWsResponse) => {
       if (response.success) {
         this.setGameState((state: TGameState) => {
-          this.melody = new Audio(raiseSound)
-          this.melody.play()
+          playRaiseSound()
           return { ...state, actionState: '' }
         })
       }
@@ -182,8 +179,7 @@ class TableController {
     // Кто-то из оппонентов пошел в All in
     this.socket!.on(Listeners.ActOthersAllIn, () => {
       this.setGameState((state: TGameState) => {
-        this.melody = new Audio(allIn)
-        this.melody.play()
+        playAllInSound()
         return { ...state, actionState: Listeners.ActOthersAllIn }
       })
     })
@@ -198,8 +194,7 @@ class TableController {
     // Пришли карты на руки
     this.socket!.on(Listeners.DealingCards, (cards: string[]) => {
       this.setGameState((state: TGameState) => {
-        this.melody = new Audio(cardsShuffle)
-        this.melody.play()
+        playCardsShuffleSound()
         return { ...state, myCards: cards }
       })
     })
@@ -214,6 +209,7 @@ class TableController {
     // Раздача окончена
     this.socket!.on(Listeners.EndRound, (cards: string[]) => {
       this.setGameState((state: TGameState) => {
+        playCombinationSound()
         return { ...state, myCards: [] }
       })
     })
@@ -222,8 +218,7 @@ class TableController {
     this.socket!.on(Listeners.YouWin, (amount: number) => {
       // Показываем модалку
       this.setGameState((state: TGameState) => {
-        this.melody = new Audio(win)
-        this.melody.play()
+        playWinSound()
         return { ...state, winModal: { isOpened: true, amount }, playWinSound: true }
       })
 
