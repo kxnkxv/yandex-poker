@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react'
+import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
@@ -11,16 +11,15 @@ import { userSelector } from 'core/store/selectors/user'
 
 const Header: FC = () => {
   const user = useSelector(userSelector)
-  const [isFullScreen, setIsFullScreen] = useState(false)
-  useEffect(() => {
-    if (isFullScreen) {
-      document.body.requestFullscreen()
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen()
+    const toggleFullScreen = () => {
+      if( window.innerHeight == screen.height) {
+          if (document.exitFullscreen) {
+              document.exitFullscreen()
+          }
+      } else {
+          document.body.requestFullscreen()
       }
     }
-  })
   return (
     <nav>
       <div className='flex flex-wrap justify-between items-center'>
@@ -58,7 +57,7 @@ const Header: FC = () => {
             <button className='p-5'>
               <img src={Settings} className='h-6 sm:h-9' alt='Settings' />
             </button>
-            <button onClick={() => setIsFullScreen(!isFullScreen)}>
+            <button onClick={() => toggleFullScreen()}>
               <img src={FullScreen} className='h-6 sm:h-9' alt='FullScreen' />
             </button>
           </div>
