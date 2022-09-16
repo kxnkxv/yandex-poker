@@ -57,7 +57,7 @@ const Header: FC = () => {
             <button className='p-5'>
               <img src={Settings} className='h-6 sm:h-9' alt='Settings' />
             </button>
-            <button onClick={() => toggleFullScreen()}>
+            <button onClick={toggleFullScreen}>
               <img src={FullScreen} className='h-6 sm:h-9' alt='FullScreen' />
             </button>
           </div>
