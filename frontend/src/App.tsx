@@ -1,8 +1,8 @@
 import React, { FC } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { store, persistor } from 'core/store'
-import { PersistGate } from 'redux-persist/integration/react'
+import { store } from 'core/store'
+//import { PersistGate } from 'redux-persist/integration/react'
 import { ToastContainer } from 'react-toastify'
 import PublicRoot from 'components/public-root/PublicRoot'
 import ProtectedRoot from 'components/protected-root/ProtectedRoot'
@@ -11,7 +11,7 @@ import ProtectedRoot from 'components/protected-root/ProtectedRoot'
 import NotFound from 'pages/notFound'
 import Login from 'pages/login'
 import Registration from 'pages/registration/Registration'
-//import Table from 'pages/table/Table'
+import Table from 'pages/table/Table'
 import Tables from 'pages/tables/Tables'
 import Account from 'pages/account'
 import AccountEdit from 'pages/account-edit'
@@ -29,8 +29,17 @@ const routes = (
     <Route path='*' element={<NotFound />} />
 
     {/* Login */}
+
     <Route
       path='/'
+      element={
+        <PublicRoot>
+          <Navigate to='/login' />
+        </PublicRoot>
+      }
+    />
+    <Route
+      path='login'
       element={
         <PublicRoot>
           <Login />
@@ -52,17 +61,17 @@ const routes = (
     <Route
       path='tables'
       element={
-        <>
-          SSS
-          <ProtectedRoot>
-            <Tables />
-          </ProtectedRoot>
-        </>
+        <ProtectedRoot>
+          <Tables />
+        </ProtectedRoot>
       }
     />
 
     {/* Table */}
-
+    <Route
+      path='tables/:tableId'
+      element={<ProtectedRoot>{!isServer && <Table />}</ProtectedRoot>}
+    />
     {/* Account */}
     <Route
       path='account'
@@ -89,13 +98,7 @@ const App: FC = (): JSX.Element => {
   return (
     <>
       <Provider store={store}>
-        {isServer ? (
-          routes
-        ) : (
-          <PersistGate loading={null} persistor={persistor}>
-            {routes}
-          </PersistGate>
-        )}
+        {isServer ? routes : routes}
 
         <ToastContainer />
       </Provider>

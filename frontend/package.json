@@ -6,8 +6,8 @@
   "scripts": {
     "clean": "rimraf dist",
     "test": "jest --watch",
-    "start": "npm run clean && webpack --mode production && node ./index.js",
-    "dev": "npm run clean && webpack --mode development && node ./index.js",
+    "start": "npm run clean && cross-env NODE_ENV=production webpack --mode production && node ./index.js",
+    "dev": "npm run clean && cross-env NODE_ENV=development webpack --mode development && node ./index.js ",
     "build": "npm run clean && cross-env NODE_ENV=production webpack --mode production",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx,json}",
     "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx,json}'"
@@ -42,6 +42,7 @@
     "@types/canvas-confetti": "1.4.3",
     "axios": "0.27.2",
     "canvas-confetti": "1.5.1",
+    "compression-webpack-plugin": "10.0.0",
     "copy-webpack-plugin": "11.0.0",
     "cross-env": "7.0.3",
     "css-minimizer-webpack-plugin": "4.0.0",
@@ -63,6 +64,7 @@
     "socket.io-client": "4.5.1",
     "terser-webpack-plugin": "5.3.6",
     "tsconfig-paths-webpack-plugin": "4.0.0",
+    "webpack-bundle-analyzer": "4.6.1",
     "webpack-node-externals": "3.0.0"
   },
   "devDependencies": {

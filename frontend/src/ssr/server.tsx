@@ -11,26 +11,28 @@ const app = express()
 
 app.use(express.static('./dist'))
 
-//const ssrPage = isServer && 'Sever rendered'
-
-app.get('*', (req: Request, res: Response) => {
+const showPrerenderedPage = (req: Request, res: Response) => {
   fs.readFile(path.resolve('./dist/index.html'), 'utf-8', (err, data) => {
     if (err) console.log('index.html not found')
 
     if (data) {
-      console.log('DATA')
       const jsx = (
         <StaticRouter location={req.url}>
           <App />
         </StaticRouter>
       )
       const reactHtml = renderToString(jsx)
-      console.log('Req url:', req.url)
-      console.log('JSX:', jsx)
-      console.log('reactHtml:', reactHtml)
+      console.log('SSR', req.url)
       res.send(data.replace('<div id="root"></div>', `<div id="root">${reactHtml}</div>`))
     }
   })
+}
+
+app.get('/login', showPrerenderedPage)
+app.get('/registration', showPrerenderedPage)
+app.get('*', (req: Request, res: Response) => {
+  console.log('CSR', req.url)
+  res.sendFile(__dirname + '/index.html')
 })
 
 export { app }

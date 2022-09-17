@@ -74,14 +74,19 @@ export const createPlayers = (
         ctx.beginPath()
 
         ctx.globalAlpha = opacity
+
         if (seat.name === activeUserName) {
-          ctx.drawImage(
-            UserInfoPanelActive,
-            playerPositions[id][0] - 158,
-            playerPositions[id][1] - 60,
-          )
+          if (UserInfoPanelActive) {
+            ctx.drawImage(
+              UserInfoPanelActive,
+              playerPositions[id][0] - 158,
+              playerPositions[id][1] - 60,
+            )
+          }
         } else {
-          ctx.drawImage(UserInfoPanel, playerPositions[id][0] - 158, playerPositions[id][1] - 60)
+          if (UserInfoPanel) {
+            ctx.drawImage(UserInfoPanel, playerPositions[id][0] - 158, playerPositions[id][1] - 60)
+          }
         }
         ctx.globalAlpha = 1
         ctx.closePath()
@@ -104,36 +109,60 @@ export const createPlayers = (
           // Last action label
           switch (seat.lastAction) {
             case 'SB':
-              ctx.drawImage(SbBbLabel, playerPositions[id][0] - 50, playerPositions[id][1] - 65)
+              if (SbBbLabel) {
+                ctx.drawImage(SbBbLabel, playerPositions[id][0] - 50, playerPositions[id][1] - 65)
+              }
               break
             case 'BB':
-              ctx.drawImage(SbBbLabel, playerPositions[id][0] - 50, playerPositions[id][1] - 65)
+              if (SbBbLabel) {
+                ctx.drawImage(SbBbLabel, playerPositions[id][0] - 50, playerPositions[id][1] - 65)
+              }
               break
             case 'Call':
-              ctx.drawImage(
-                CallCheckLabel,
-                playerPositions[id][0] - 50,
-                playerPositions[id][1] - 65,
-              )
+              if (CallCheckLabel) {
+                ctx.drawImage(
+                  CallCheckLabel,
+                  playerPositions[id][0] - 50,
+                  playerPositions[id][1] - 65,
+                )
+              }
               break
             case 'Check':
-              ctx.drawImage(
-                CallCheckLabel,
-                playerPositions[id][0] - 50,
-                playerPositions[id][1] - 65,
-              )
+              if (CallCheckLabel) {
+                ctx.drawImage(
+                  CallCheckLabel,
+                  playerPositions[id][0] - 50,
+                  playerPositions[id][1] - 65,
+                )
+              }
               break
             case 'Bet':
-              ctx.drawImage(BetRaiseLabel, playerPositions[id][0] - 50, playerPositions[id][1] - 65)
+              if (BetRaiseLabel) {
+                ctx.drawImage(
+                  BetRaiseLabel,
+                  playerPositions[id][0] - 50,
+                  playerPositions[id][1] - 65,
+                )
+              }
               break
             case 'Raise':
-              ctx.drawImage(BetRaiseLabel, playerPositions[id][0] - 50, playerPositions[id][1] - 65)
+              if (BetRaiseLabel) {
+                ctx.drawImage(
+                  BetRaiseLabel,
+                  playerPositions[id][0] - 50,
+                  playerPositions[id][1] - 65,
+                )
+              }
               break
             case 'Fold':
-              ctx.drawImage(FoldLabel, playerPositions[id][0] - 50, playerPositions[id][1] - 65)
+              if (FoldLabel) {
+                ctx.drawImage(FoldLabel, playerPositions[id][0] - 50, playerPositions[id][1] - 65)
+              }
               break
             case 'All In':
-              ctx.drawImage(AllInLabel, playerPositions[id][0] - 70, playerPositions[id][1] - 85)
+              if (AllInLabel) {
+                ctx.drawImage(AllInLabel, playerPositions[id][0] - 70, playerPositions[id][1] - 85)
+              }
               break
           }
 
@@ -161,9 +190,11 @@ export const createPot = (table: TGameTable, ctx: CanvasRenderingContext2D) => {
 }
 export const createCurrentUserChip = (seat: TSeat, ctx: CanvasRenderingContext2D) => {
   if (seat.bet !== 0) {
-    ctx.drawImage(UserChip, userChipPositions[0][0], userChipPositions[0][1])
-    ctx.fillStyle = `rgba(255, 255, 255)`
-    ctx.fillText('$ ' + seat.bet, userChipPositions[0][0] + 130, userChipPositions[0][1] + 30)
+    if (UserChip) {
+      ctx.drawImage(UserChip, userChipPositions[0][0], userChipPositions[0][1])
+      ctx.fillStyle = `rgba(255, 255, 255)`
+      ctx.fillText('$ ' + seat.bet, userChipPositions[0][0] + 130, userChipPositions[0][1] + 30)
+    }
   }
 }
 export const createUserChips = (
@@ -181,7 +212,9 @@ export const createUserChips = (
         } else {
           if (seat.bet !== 0) {
             ctx.beginPath()
-            ctx.drawImage(UserChip, userChipPositions[id][0], userChipPositions[id][1])
+            if (UserChip) {
+              ctx.drawImage(UserChip, userChipPositions[id][0], userChipPositions[id][1])
+            }
             ctx.fillStyle = `rgba(255, 255, 255)`
             ctx.fillText(
               '$ ' + seat.bet,
@@ -223,11 +256,13 @@ export const createDealerChip = (
   // chip.src = ChipImage
   // chip.onload = function () {
   if (dealerSeat !== null) {
-    ctx.drawImage(
-      ChipCanvas,
-      dealerChipPositions[dealerSeat][0],
-      dealerChipPositions[dealerSeat][1],
-    )
+    if (ChipCanvas) {
+      ctx.drawImage(
+        ChipCanvas,
+        dealerChipPositions[dealerSeat][0],
+        dealerChipPositions[dealerSeat][1],
+      )
+    }
   }
 }
 // }
@@ -241,7 +276,9 @@ export const createCombinationLabel = (rank = '', ctx: CanvasRenderingContext2D)
     const rankCapitalized = rank[0].toUpperCase() + rank.slice(1)
 
     // Желтая плашка комбинации
-    ctx.drawImage(CombinationLabel, 1160, 1245)
+    if (CombinationLabel) {
+      ctx.drawImage(CombinationLabel, 1160, 1245)
+    }
 
     // Текст комбинации
     ctx.beginPath()
