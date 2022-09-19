@@ -2,16 +2,14 @@ import { Socket } from 'socket.io-client'
 import { TCombination, TGameState, TGameTable, TWsResponse } from './types'
 
 //Sounds
-import {
-  playChipsSound,
-  playWinSound,
-  playAllInSound,
-  playCardsShuffleSound,
-  playFoldSound,
-  playBetSound,
-  playRaiseSound,
-  playCombinationSound
-} from 'pages/table/soundsHelper'
+import chipsSound from 'pages/table/sounds/chips.mp3'
+import winSound from 'pages/table/sounds/win31.mp3'
+import allInSound from 'pages/table/sounds/allIn.mp3'
+import cardsShuffleSound from 'pages/table/sounds/cardshuffle.mp3'
+import foldSound from 'pages/table/sounds/fold.mp3'
+import betSound from 'pages/table/sounds/bet.mp3'
+import raiseSound from 'pages/table/sounds/raise.mp3'
+import combinationSound from 'pages/table/sounds/combination.mp3'
 
 export enum Actions {
   Register = 'register',
@@ -44,11 +42,27 @@ class TableController {
   socket: Socket | null
   gameState: TGameState
   setGameState: Function
+  playChipsSound: HTMLAudioElement
+  playWinSound: HTMLAudioElement
+  playAllInSound: HTMLAudioElement
+  playCardsShuffleSound: HTMLAudioElement
+  playFoldSound: HTMLAudioElement
+  playBetSound: HTMLAudioElement
+  playRaiseSound: HTMLAudioElement
+  playCombinationSound: HTMLAudioElement
 
   constructor(socket: Socket | null, gameState: TGameState, setGameState: Function) {
     this.socket = socket
     this.gameState = gameState
     this.setGameState = setGameState
+    this.playChipsSound = new Audio(chipsSound)
+    this.playWinSound = new Audio(winSound)
+    this.playAllInSound = new Audio(allInSound)
+    this.playCardsShuffleSound = new Audio(cardsShuffleSound)
+    this.playFoldSound = new Audio(foldSound)
+    this.playBetSound = new Audio(betSound)
+    this.playRaiseSound = new Audio(raiseSound)
+    this.playCombinationSound = new Audio(combinationSound)
 
     // Навешиваем слушателей WS соединения
     this.addListeners()
@@ -82,7 +96,7 @@ class TableController {
     this.socket!.emit(Actions.PostBlind, true, (response: TWsResponse) => {
       if (response.success) {
         this.setGameState((state: TGameState) => {
-          playChipsSound()
+          this.playChipsSound.play()
           return { ...state, actionState: '' }
         })
       }
@@ -103,7 +117,7 @@ class TableController {
     this.socket!.emit(Actions.Fold, (response: TWsResponse) => {
       if (response.success) {
         this.setGameState((state: TGameState) => {
-          playFoldSound()
+          this.playFoldSound.play()
           return { ...state, actionState: '' }
         })
       }
@@ -114,7 +128,7 @@ class TableController {
     this.socket!.emit(Actions.Call, (response: TWsResponse) => {
       if (response.success) {
         this.setGameState((state: TGameState) => {
-          playChipsSound()
+          this.playChipsSound.play()
           return { ...state, actionState: '' }
         })
       }
@@ -125,7 +139,7 @@ class TableController {
     this.socket!.emit(Actions.Bet, value, (response: TWsResponse) => {
       if (response.success) {
         this.setGameState((state: TGameState) => {
-          playBetSound()
+          this.playBetSound.play()
           return { ...state, actionState: '' }
         })
       }
@@ -136,7 +150,7 @@ class TableController {
     this.socket!.emit(Actions.Raise, value, (response: TWsResponse) => {
       if (response.success) {
         this.setGameState((state: TGameState) => {
-          playRaiseSound()
+          this.playRaiseSound.play()
           return { ...state, actionState: '' }
         })
       }
@@ -179,7 +193,7 @@ class TableController {
     // Кто-то из оппонентов пошел в All in
     this.socket!.on(Listeners.ActOthersAllIn, () => {
       this.setGameState((state: TGameState) => {
-        playAllInSound()
+        this.playAllInSound.play()
         return { ...state, actionState: Listeners.ActOthersAllIn }
       })
     })
@@ -194,7 +208,7 @@ class TableController {
     // Пришли карты на руки
     this.socket!.on(Listeners.DealingCards, (cards: string[]) => {
       this.setGameState((state: TGameState) => {
-        playCardsShuffleSound()
+        this.playCardsShuffleSound.play()
         return { ...state, myCards: cards }
       })
     })
@@ -209,7 +223,7 @@ class TableController {
     // Раздача окончена
     this.socket!.on(Listeners.EndRound, (cards: string[]) => {
       this.setGameState((state: TGameState) => {
-        playCombinationSound()
+        this.playCombinationSound.play()
         return { ...state, myCards: [] }
       })
     })
@@ -218,7 +232,7 @@ class TableController {
     this.socket!.on(Listeners.YouWin, (amount: number) => {
       // Показываем модалку
       this.setGameState((state: TGameState) => {
-        playWinSound()
+        this.playWinSound.play()
         return { ...state, winModal: { isOpened: true, amount }, playWinSound: true }
       })
 
