@@ -1,5 +1,3 @@
-export type Nullable<T> = T | null
-
 // STORE
 export type TUserInfoData = {
   id: number
