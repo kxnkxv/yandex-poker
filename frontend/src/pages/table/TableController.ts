@@ -10,6 +10,7 @@ import foldSound from 'pages/table/sounds/fold.mp3'
 import betSound from 'pages/table/sounds/bet.mp3'
 import raiseSound from 'pages/table/sounds/raise.mp3'
 import combinationSound from 'pages/table/sounds/combination.mp3'
+import myturnSound from 'pages/table/sounds/myturn.mp3'
 
 export enum Actions {
   Register = 'register',
@@ -50,6 +51,7 @@ class TableController {
   playBetSound: HTMLAudioElement
   playRaiseSound: HTMLAudioElement
   playCombinationSound: HTMLAudioElement
+  playMyturnSound: HTMLAudioElement
 
   constructor(socket: Socket | null, gameState: TGameState, setGameState: Function) {
     this.socket = socket
@@ -63,6 +65,7 @@ class TableController {
     this.playBetSound = new Audio(betSound)
     this.playRaiseSound = new Audio(raiseSound)
     this.playCombinationSound = new Audio(combinationSound)
+    this.playMyturnSound = new Audio(myturnSound)
 
     // Навешиваем слушателей WS соединения
     this.addListeners()
