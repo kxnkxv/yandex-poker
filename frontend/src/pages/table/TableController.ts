@@ -233,7 +233,7 @@ class TableController {
       // Показываем модалку
       this.setGameState((state: TGameState) => {
         this.playWinSound.play()
-        return { ...state, winModal: { isOpened: true, amount }, playWinSound: true }
+        return { ...state, winModal: { isOpened: true, amount }}
       })
 
       // Скрываем через 3.2 сек
