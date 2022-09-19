@@ -1,4 +1,5 @@
 const { merge } = require('webpack-merge')
+const webpack = require('webpack')
 
 const common = require('./webpack.config.common.js')
 
@@ -7,6 +8,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserWebpackPlugin = require('terser-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+process.env.NODE_ENV = 'production';
+const VERSION = require('../package.json').version;
 
 const prodConfig = {
   mode: 'production',
@@ -51,7 +55,35 @@ const prodConfig = {
     },
     emitOnErrors: false,
     minimize: true,
-    minimizer: [new TerserWebpackPlugin(), new CssMinimizerPlugin()],
+    minimizer: [
+      new TerserWebpackPlugin(),
+      new CssMinimizerPlugin(),
+      new HtmlWebpackPlugin({
+        inject: true,
+        filename: 'index.html',
+        favicon: './www/favicon.svg',
+        template: path.resolve(__dirname, '/www/index.html'),
+        chunksSortMode: 'none',
+        version: VERSION,
+        minify: {
+          removeComments: true,
+          collapseWhitespace: true,
+          removeRedundantAttributes: true,
+          useShortDoctype: true,
+          removeEmptyAttributes: true,
+          removeStyleLinkTypeAttributes: true,
+          keepClosingSlash: true,
+          minifyJS: true,
+          minifyCSS: true,
+          minifyURLs: true,
+        },
+      }),
+      new webpack.EnvironmentPlugin({
+        NODE_ENV: 'production',
+        VERSION: VERSION,
+        USE_API_MOCKS: 'false',
+      }),
+    ],
   },
   plugins: [new MiniCssExtractPlugin()],
 }
