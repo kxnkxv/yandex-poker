@@ -1,31 +1,22 @@
 import React, { Component, FC, ReactNode } from 'react'
-
-type Props = {
-  fallback?: React.FC<{ error: State['error']; reset: ErrorBoundary['reset'] }>
-  catchUnhandled?: boolean
-  children?: ReactNode
-}
-
-type State = {
-  error: Nullable<Error>
-}
+import { Props, State } from './types'
 
 const DefaultFallback: FC<{ error: Nullable<Error>; reset?: () => void }> = ({ error, reset }) => {
   return (
     <div>
       <h1>Что то пошло не так</h1>
-      {error?.stack ? (
+      {error?.stack && (
         <pre>
           {error?.message || null}
           {'\n\n'}
           {error?.stack}
         </pre>
-      ) : null}
-      {reset ? (
+      )}
+      {reset && (
         <button type='button' onClick={reset}>
           Try again
         </button>
-      ) : null}
+      )}
     </div>
   )
 }
