@@ -62,7 +62,7 @@ const prodConfig = {
         inject: true,
         filename: 'index.html',
         favicon: './www/favicon.svg',
-        template: path.resolve(__dirname, '/www/index.html'),
+        template: './www/index.html',
         chunksSortMode: 'none',
         version: VERSION,
         minify: {

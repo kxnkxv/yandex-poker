@@ -32,7 +32,7 @@ module.exports = {
         },
       },
       {
-        test: /\.(jpe?g|png|gif|svg|ico)$/,
+        test: /\.(jpe?g|png|gif|svg|ico|mp3)$/,
         type: 'asset/resource',
         generator: {
           filename: 'img/[name][ext]',

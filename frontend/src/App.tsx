@@ -17,7 +17,7 @@ import Account from 'pages/account'
 import AccountEdit from 'pages/account-edit'
 
 // Styles
-import ErrorBoundary from 'Components/error-boundary'
+import ErrorBoundary from 'components/error-boundary'
 import 'styles/Style.css'
 
 // Images

@@ -53,7 +53,7 @@ const Table: FC = () => {
   const previousTableState = usePreviousValue(gameState.table)
 
   //Получаем состояние стола, экшен, id моего сидения, мои карты
-  const { table, actionState, mySeat, myCards, combination, winModal } = gameState
+  const { table, actionState, mySeat, myCards, combination, winModal} = gameState
 
   //При первой отрисовке компонента
   useEffect(() => {

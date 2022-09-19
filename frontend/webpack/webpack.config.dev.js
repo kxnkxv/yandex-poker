@@ -65,7 +65,7 @@ const devConfig = {
   plugins: [new ReactRefreshPlugin(),  new HtmlWebpackPlugin({
     filename: 'index.html',
     favicon: './www/favicon.svg',
-    template:  path.resolve(__dirname,'/www/index.html'),
+    template: './www/index.html',
     inject: true,
     hash: true,
     chunksSortMode: 'none',
