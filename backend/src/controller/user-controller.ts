@@ -11,8 +11,8 @@ try {
     if(!errors.isEmpty()){
         next(ApiError.BadRequest('Validation error',errors.array()))
     }
-    const {email,password,username} = req.body;
-    const userData = await userService.registration(username,password,email)
+    const {email,password,login,first_name,second_name,phone} = req.body;
+    const userData = await userService.registration(login,password,email,first_name,second_name,phone)
     res.cookie('refreshToken',userData.refreshToken,{maxAge:30*24*60*60*1000,httpOnly:true})
     return res.json(userData)
 } catch (error) {
@@ -21,8 +21,8 @@ try {
 }
 async login(req:Request,res:Response,next:NextFunction):Promise<any>{
     try {
-    const {username,password}= req.body;
-    const userData = await userService.login(username,password);
+    const {login,password}= req.body;
+    const userData = await userService.login(login,password);
     res.cookie('refreshToken',userData.refreshToken,{maxAge:30*24*60*60*1000,httpOnly:true})
     return res.json(userData)
     } catch (error) {
@@ -32,10 +32,9 @@ async login(req:Request,res:Response,next:NextFunction):Promise<any>{
 async logout(req:Request,res:Response,next:NextFunction):Promise<any>{
     try {
     const {refreshToken} = req.cookies;
-    const token = await userService.logout(refreshToken)
-    res.clearCookie('refreshToken')
-    // Todo: вернуть статус 200
-    return res.json(token)
+    await userService.logout(refreshToken)
+    res.clearCookie('refreshToken')    
+        return res.status(200).json({success:true})
     } catch (error) {
         next(error)
     }
@@ -50,10 +49,11 @@ async refresh(req:Request,res:Response,next:NextFunction):Promise<any>{
         next(error)
     }
 }
-async getUsers(req:Request,res:Response,next:NextFunction):Promise<any>{
+async getUserOne(req:Request,res:Response,next:NextFunction):Promise<any>{
     try {
-        const users = await userService.getAllUsers()
-   return res.json(users)
+        const {id} = req.params;
+        const user = await userService.getUserOne(id)
+   return res.json(user)
     } catch (error) {
         next(error)
     }

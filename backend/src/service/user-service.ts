@@ -1,14 +1,14 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, User } from '@prisma/client';
 import  argon2  from "argon2"
 import { UserDto } from '../dtos/user-dto';
 import{ tokenService} from'./token-service'
 import { ApiError } from '../exceptions/api-error';
 const prisma = new PrismaClient()
 class UserService {
-async registration(username:string,password:string,email:string){
+async registration(login:string,password:string,email:string,first_name:string,second_name:string,phone:string){
     const candidate = await prisma.user.findUnique({
         where:{
-            username:username,
+            login:login,
         }
     })
     if(candidate){
@@ -17,11 +17,12 @@ async registration(username:string,password:string,email:string){
     const hashedPassword = await argon2.hash(password)
     const user  = await prisma.user.create({
         data:{
-            username:username,
+            login,
             password:hashedPassword,
-            email:email
-           
-            
+            email,
+            first_name,
+            second_name,
+            phone
         }
     })
     const userDto = new UserDto(user)
@@ -30,10 +31,13 @@ async registration(username:string,password:string,email:string){
 
     return {...tokens,user:userDto}
 }
-async login(username:string,password:string){
+async login(login:string,password:string){
+    if(!login || !password){
+        throw  ApiError.BadRequest('')
+    }
 const user = await prisma.user.findUnique({
     where:{
-        username:username
+        login
     }
 })
 
@@ -78,9 +82,15 @@ await tokenService.saveToken(userDto.id,tokens.refreshToken);
 return {...tokens,user:userDto}
 }
 
-async getAllUsers(){
-    const users = await prisma.user.findMany({})
-    return users
+async getUserOne(id:string){
+    const user = await prisma.user.findUnique({
+        where:{
+            id:id
+        }
+       
+    })
+    const userDto = new UserDto(user as User)
+    return userDto
 }
 
 }

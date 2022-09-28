@@ -26,7 +26,7 @@ const logger:Consola = consola
 app.get('/',(req,res)=>{
   res.json({success:true,message:"JWT Authentication"})
 })
-const server =  app.listen(process.env.PORT,()=>{
+const server =  app.listen(process.env.PORT || 5000,()=>{
   logger.success(`Server started on port ${process.env.PORT}`)
 })
 
@@ -436,4 +436,4 @@ io.on('connection', (socket) => {
   })
 })
 
-console.log(`Your server available at http://localhost:${process.env.PORT}/socket.io/`)
+console.log(`Your server available at http://localhost:${process.env.PORT || 5000}/socket.io/`)
