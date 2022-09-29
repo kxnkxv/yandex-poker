@@ -1,7 +1,7 @@
 import { ApiError } from "../exceptions/api-error";
-import { Request,Response,NextFunction } from "express";
+import { Response,NextFunction } from "express";
 import { tokenService } from "../service/token-service";
-import { User } from "@prisma/client";
+
 
 export default function(req:any,res:Response,next:NextFunction){
     try {

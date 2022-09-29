@@ -7,7 +7,7 @@ CREATE TABLE "User" (
     "first_name" TEXT NOT NULL,
     "second_name" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
-    "img_link" TEXT NOT NULL DEFAULT '1',
+    "img_link" TEXT DEFAULT '1',
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
