@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "start": "ts-node ./src/app.ts",
-    "dev": "nodemon ./src/app.ts"
+    "dev": "nodemon ./src/app.ts",
+    "pretty": "prettier --write \"src/**/*.ts\""
   },
   "author": "",
   "license": "ISC",
@@ -31,6 +32,7 @@
     "@types/express": "4.17.14",
     "@types/jsonwebtoken": "8.5.9",
     "nodemon": "2.0.20",
+    "prettier": "2.7.1",
     "prisma": "4.3.1"
   }
 }

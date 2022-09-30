@@ -1,36 +1,32 @@
 import { Server } from 'socket.io'
 import Table from './poker_modules/table'
 import Player from './poker_modules/player'
-import cookieParser from 'cookie-parser';
-import express from 'express';
-import consola,{Consola} from 'consola'
+import cookieParser from 'cookie-parser'
+import express from 'express'
+import consola, { Consola } from 'consola'
 import * as dotenv from 'dotenv'
 import cors from 'cors'
 import * as bodyParser from 'body-parser'
-import {router} from'./routes/index'
-import errorMiddleware from './middleware/error-middleware';
+import { router } from './routes/index'
+import errorMiddleware from './middleware/error-middleware'
 
-
-
-
-const app = express();
+const app = express()
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended:true}))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.use(cors())
-app.use('/api/v1/auth',router)
+app.use('/api/v1/auth', router)
 dotenv.config()
 app.use(errorMiddleware)
-const logger:Consola = consola
+const logger: Consola = consola
 
-app.get('/',(req,res)=>{
-  res.json({success:true,message:"JWT Authentication"})
+app.get('/', (req, res) => {
+  res.json({ success: true, message: 'JWT Authentication' })
 })
 console.log(process.env.PORT)
-const server =  app.listen(process.env.PORT || 5000,()=>{
+const server = app.listen(process.env.PORT || 5000, () => {
   logger.success(`Server started on port ${process.env.PORT}`)
 })
-
 
 //------------------------------WebSocket Play Game--------------------------------------------
 
