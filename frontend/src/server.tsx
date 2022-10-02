@@ -5,7 +5,7 @@ import express, { Request, Response } from 'express'
 import fs from 'fs'
 import path from 'path'
 //import { isServer } from 'utils/is-server/isServer'
-import App from '../App'
+import App from './App'
 
 const app = express()
 

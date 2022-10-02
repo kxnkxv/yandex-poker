@@ -6,8 +6,7 @@ const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserWebpackPlugin = require('terser-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+//const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const CompressionPlugin = require('compression-webpack-plugin')
 
 const prodConfig = {
@@ -55,6 +54,6 @@ const prodConfig = {
     minimize: true,
     minimizer: [new TerserWebpackPlugin(), new CssMinimizerPlugin()],
   },
-  plugins: [new MiniCssExtractPlugin(), new BundleAnalyzerPlugin(), new CompressionPlugin()],
+  plugins: [new MiniCssExtractPlugin(), /*new BundleAnalyzerPlugin(),*/ new CompressionPlugin()],
 }
 module.exports = merge(common, prodConfig)

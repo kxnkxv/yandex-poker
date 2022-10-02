@@ -2,7 +2,7 @@ import { Server } from 'socket.io'
 import Table from './poker_modules/table'
 import Player from './poker_modules/player'
 
-const PORT: number = Number(process.env.PORT) || 3000
+const PORT: number = Number(process.env.PORT) || 4000
 const io = new Server(PORT)
 
 const players: Record<string, Player> = {}

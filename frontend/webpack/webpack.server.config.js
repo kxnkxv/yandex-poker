@@ -10,7 +10,7 @@ const config = {
   name: 'server',
   target: 'node',
   node: { __dirname: false },
-  entry: path.join(SRC_DIR, '/ssr/server'),
+  entry: path.join(SRC_DIR, '/server.tsx'),
   module: {
     rules: [fileLoader.server, cssLoader.server, jsLoader.server],
   },
