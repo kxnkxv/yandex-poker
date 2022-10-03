@@ -1,7 +1,4 @@
 const { merge } = require('webpack-merge')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-const CompressionPlugin = require('compression-webpack-plugin')
-
 const common = require('./webpack.config.common.js')
 
 const path = require('path')
@@ -65,9 +62,7 @@ const devConfig = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new ReactRefreshPlugin(),
-    new BundleAnalyzerPlugin(),
-    new CompressionPlugin(),
+    new ReactRefreshPlugin()
   ],
 }
 module.exports = merge(common, devConfig)
