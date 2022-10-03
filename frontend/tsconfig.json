@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "es2017"],
+    "types": ["node", "jest"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "es5",
+    "jsx": "react",
+    "importHelpers": true,
+    "noUnusedLocals": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "declaration": false,
+    "sourceMap": false,
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "paths": {
+      "components": ["./src/components"],
+      "core": ["./src/core"],
+      "hooks": ["./src/hooks"],
+      "images": ["./src/images"],
+      "pages": ["./src/pages"],
+      "styles": ["./src/styles"],
+      "types": ["./src/types"],
+      "utils": ["./src/utils"],
+      "@/*": ["src/*"],
+      "*": ["./src/*"]
+    },
+    "typeRoots": ["typings/**/*.d.ts", "node_modules/@types", "src/types"]
+  },
+  "include": ["src", "typings/**/*.d.ts", "./node_modules/@types"],
+  "exclude": ["**/*.js"]
+}
