@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
   res.json({ success: true, message: 'JWT Authentication' })
 })
 
-const server = app.listen(process.env.PORT || 5000, () => {
+const server = app.listen(process.env.PORT || 4000, () => {
   logger.success(`Server started on port ${process.env.PORT}`)
 })
 
