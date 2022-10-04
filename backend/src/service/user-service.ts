@@ -3,6 +3,7 @@ import argon2 from 'argon2'
 import { UserDto } from '../dtos/user-dto'
 import { tokenService } from './token-service'
 import { ApiError } from '../exceptions/api-error'
+import { TEditUser } from 'src/controller/user-controller'
 const prisma = new PrismaClient()
 class UserService {
   async registration(
@@ -40,7 +41,7 @@ class UserService {
   }
   async login(login: string, password: string) {
     if (!login || !password) {
-      throw ApiError.BadRequest('')
+      throw ApiError.BadRequest('Values should not be empty!')
     }
     const user = await prisma.user.findUnique({
       where: {
@@ -97,6 +98,28 @@ class UserService {
     })
     const userDto = new UserDto(user as User)
     return userDto
+  }
+  //Продумать ошибки по которым если мы не найдем пользователя
+  async editUser(id: string, user: TEditUser) {
+    const { email, login, first_name, second_name, phone, password, img_link } = user
+    if (!email || !login || !first_name || !second_name || !phone || !password || !img_link) {
+      throw ApiError.BadRequest('Values should not be empty!')
+    }
+    const newUser = await prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        email,
+        login,
+        first_name,
+        second_name,
+        phone,
+        password,
+        img_link,
+      },
+    })
+    return newUser
   }
 }
 
