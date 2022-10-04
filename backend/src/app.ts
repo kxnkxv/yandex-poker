@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.use(cors())
 app.use('/api/v1/auth', router)
-dotenv.config()
+dotenv.config({ path: '.env.example' })
 app.use(errorMiddleware)
 const logger: Consola = consola
 
