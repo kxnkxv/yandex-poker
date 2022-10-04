@@ -6,3 +6,5 @@ declare module '*.svg' {
 }
 
 declare type Nullable<T> = T | null
+
+declare module '*.mp3'

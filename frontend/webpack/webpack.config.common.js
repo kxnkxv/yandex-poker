@@ -1,5 +1,4 @@
 const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: './src/client.tsx',
@@ -32,7 +31,7 @@ module.exports = {
         },
       },
       {
-        test: /\.(jpe?g|png|gif|svg|ico)$/,
+        test: /\.(jpe?g|png|gif|svg|ico|mp3)$/,
         type: 'asset/resource',
         generator: {
           filename: 'img/[name][ext]',
@@ -40,11 +39,4 @@ module.exports = {
       },
     ],
   },
-  plugins:[
-    new HtmlWebpackPlugin({
-      template: './www/index.html',
-      favicon: './www/favicon.svg',
-      filename: 'index.html',
-    }),
-  ]
 }

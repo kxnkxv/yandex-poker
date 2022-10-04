@@ -11,7 +11,15 @@ import { userSelector } from 'core/store/selectors/user'
 
 const Header: FC = () => {
   const user = useSelector(userSelector)
-
+    const toggleFullScreen = () => {
+      if( window.innerHeight == screen.height) {
+          if (document.exitFullscreen) {
+              document.exitFullscreen()
+          }
+      } else {
+          document.body.requestFullscreen()
+      }
+    }
   return (
     <nav>
       <div className='flex flex-wrap justify-between items-center'>
@@ -51,7 +59,7 @@ const Header: FC = () => {
             <button className='p-5'>
               <img src={Settings} className='h-6 sm:h-9' alt='Settings' />
             </button>
-            <button>
+            <button onClick={toggleFullScreen}>
               <img src={FullScreen} className='h-6 sm:h-9' alt='FullScreen' />
             </button>
           </div>

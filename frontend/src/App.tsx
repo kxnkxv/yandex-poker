@@ -2,7 +2,6 @@ import React, { FC } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { store } from 'core/store'
-//import { PersistGate } from 'redux-persist/integration/react'
 import { ToastContainer } from 'react-toastify'
 import PublicRoot from 'components/public-root/PublicRoot'
 import ProtectedRoot from 'components/protected-root/ProtectedRoot'
@@ -15,7 +14,7 @@ import Table from 'pages/table/Table'
 import Tables from 'pages/tables/Tables'
 import Account from 'pages/account'
 import AccountEdit from 'pages/account-edit'
-
+import ErrorBoundary from 'components/error-boundary'
 // Styles
 import 'styles/Style.css'
 
@@ -24,6 +23,7 @@ import 'styles/Style.css'
 import { isServer } from 'utils/is-server/isServer'
 
 const routes = (
+    <ErrorBoundary>
   <Routes>
     {/* 404 Page */}
     <Route path='*' element={<NotFound />} />
@@ -92,13 +92,14 @@ const routes = (
       }
     />
   </Routes>
+    </ErrorBoundary>
 )
 
 const App: FC = (): JSX.Element => {
   return (
     <>
       <Provider store={store}>
-        {isServer ? routes : routes}
+        {routes}
 
         <ToastContainer />
       </Provider>

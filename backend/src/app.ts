@@ -1,9 +1,35 @@
 import { Server } from 'socket.io'
 import Table from './poker_modules/table'
 import Player from './poker_modules/player'
+import cookieParser from 'cookie-parser'
+import express from 'express'
+import consola, { Consola } from 'consola'
+import * as dotenv from 'dotenv'
+import cors from 'cors'
+import * as bodyParser from 'body-parser'
+import { router } from './routes'
+import errorMiddleware from './middleware/error-middleware'
 
-const PORT: number = Number(process.env.PORT) || 4000
-const io = new Server(PORT)
+const app = express()
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cookieParser())
+app.use(cors())
+app.use('/api/v1/auth', router)
+dotenv.config({ path: '.env.example' })
+app.use(errorMiddleware)
+const logger: Consola = consola
+
+app.get('/', (req, res) => {
+  res.json({ success: true, message: 'JWT Authentication' })
+})
+
+const server = app.listen(process.env.PORT || 4000, () => {
+  logger.success(`Server started on port ${process.env.PORT}`)
+})
+
+//------------------------------WebSocket Play Game--------------------------------------------
+const io = new Server(server)
 
 const players: Record<string, Player> = {}
 const tables: Table[] = []
@@ -406,4 +432,4 @@ io.on('connection', (socket) => {
   })
 })
 
-console.log(`Your server available at http://localhost:${PORT}/socket.io/`)
+console.log(`Your server available at http://localhost:${process.env.PORT}/socket.io/`)
