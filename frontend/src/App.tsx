@@ -6,6 +6,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { ToastContainer } from 'react-toastify'
 import PublicRoot from 'components/public-root/PublicRoot'
 import ProtectedRoot from 'components/protected-root/ProtectedRoot'
+import setUpInterceptor from 'utils/axios/interceptor'
 
 // Pages
 import NotFound from 'pages/notFound'
@@ -24,6 +25,7 @@ import 'styles/Style.css'
 // .....
 
 const App: FC = (): JSX.Element => {
+  setUpInterceptor(store)
   return (
     <ErrorBoundary>
       <Provider store={store}>

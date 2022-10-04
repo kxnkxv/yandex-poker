@@ -41,7 +41,7 @@ const Header: FC = () => {
               <div className='flex items-center md:order-3'>
                 <img
                   className='w-16 h-16'
-                  src={Avatars[user.display_name].image}
+                  src={Avatars[user.img_link].image}
                   alt='user photo'
                 />
               </div>

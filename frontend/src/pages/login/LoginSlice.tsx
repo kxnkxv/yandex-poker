@@ -9,7 +9,7 @@ import { TErrorPayload } from 'types/app'
 export const login = createAsyncThunk(
   '@@auth/login',
   ({ login, password }: TSignInForm, { rejectWithValue }) => {
-    return axios.post('auth/signin', { login, password }).catch((err) => {
+    return axios.post('v1/auth/login', { login, password }).catch((err) => {
       return rejectWithValue(err.response.data)
     })
   },
@@ -22,7 +22,7 @@ export const checkAuth = createAsyncThunk('@@auth/user', (_, { rejectWithValue }
 })
 
 export const logout = createAsyncThunk('@@auth/user', (_, { rejectWithValue }) => {
-  return axios.post('auth/user').catch((err) => {
+  return axios.post('v1/auth/logout').catch((err) => {
     return rejectWithValue(err.response.data)
   })
 })
@@ -30,6 +30,8 @@ export const logout = createAsyncThunk('@@auth/user', (_, { rejectWithValue }) =
 const initialState: TAuthInitialState = {
   isPending: false,
   user: null,
+  accessToken: '',
+  refreshToken: '',
 }
 const authSlice = createSlice({
   name: '@@auth',
@@ -43,32 +45,16 @@ const authSlice = createSlice({
         state.isPending = true
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.isPending = false
+        if (action.payload.data) {
+          state.user = action.payload.data?.user
+          state.accessToken = action.payload.data?.accessToken
+          state.refreshToken = action.payload.data?.refreshToken
+        }
       })
       .addCase(login.rejected, (state, action) => {
         state.isPending = false
         const data = action.payload as TErrorPayload
         errorHandler(data.reason)
-      })
-
-      // Check auth
-      .addCase(checkAuth.fulfilled, (state, action) => {
-        if (action.payload.data) {
-          // ToDo требуется рефакторинг
-          // Костыль, нужный для прокидывания аватарок через поле display_name
-          const d_name = action.payload.data.display_name
-          if (typeof d_name === 'string' && d_name.includes('avatar')) {
-            action.payload.data.display_name = d_name.replace('avatar', '')
-          } else {
-            action.payload.data.display_name = 0
-          }
-          // Конец костыля
-
-          state.user = action.payload.data
-        }
-      })
-      .addCase(checkAuth.rejected, (state, action) => {
-        state.user = null
       })
   },
 })

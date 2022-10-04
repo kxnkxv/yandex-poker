@@ -37,13 +37,13 @@ const AccountEdit: FC = () => {
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
 
-  const [currentAvatar, setCurrentAvatar] = useState(user.display_name)
+  const [currentAvatar, setCurrentAvatar] = useState(user.img_link)
 
   const { handleSubmit, control, register, setValue } = useForm({
     defaultValues: {
       // Из-за технических ограничений вынуждены прокидывать id аватарки
-      // через поле display_name, добавив строку 'avatar', чтобы бэкенд не ругался
-      display_name: 'avatar' + currentAvatar,
+      // через поле img_link, добавив строку 'avatar', чтобы бэкенд не ругался
+      img_link: 'avatar' + currentAvatar,
       first_name: user.first_name,
       second_name: user.second_name,
       email: user.email,
@@ -65,7 +65,7 @@ const AccountEdit: FC = () => {
 
   const changeAvatar = (image_id: number) => {
     setCurrentAvatar(image_id)
-    setValue('display_name', 'avatar' + image_id)
+    setValue('img_link', 'avatar' + image_id)
     closeModal()
   }
 
@@ -108,7 +108,7 @@ const AccountEdit: FC = () => {
               {Avatars.map((avatar) => (
                 <div key={avatar.id}>
                   <input
-                    {...register('display_name')}
+                    {...register('img_link')}
                     type='radio'
                     value={avatar.id}
                     className='hidden'

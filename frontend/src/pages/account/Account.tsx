@@ -26,7 +26,7 @@ const Account: FC = () => {
         </div>
         <div className='w-full text-center'>
           <div className='profile-avatar mx-auto mb-5 inline-block'>
-            <img className='h-28 w-28' src={Avatars[user.display_name].image} alt='Username' />
+            <img className='h-28 w-28' src={Avatars[user.img_link].image} alt='Username' />
           </div>
           <div className='mb-5'>
             <h2>

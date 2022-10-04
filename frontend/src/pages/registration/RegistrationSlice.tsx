@@ -6,7 +6,7 @@ import errorHandler from 'utils/error-handler/errorHandler'
 import { TSignUpForm } from './types'
 
 export const registration = createAsyncThunk('@@registration/signup', (request: TSignUpForm) => {
-  return axios.post('auth/signup', request).catch((err) => {
+  return axios.post('v1/auth/registration', request).catch((err) => {
     errorHandler(err.response.data.reason)
     // return rejectWithValue(err.response.data)
   })
