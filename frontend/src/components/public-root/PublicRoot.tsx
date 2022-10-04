@@ -7,6 +7,7 @@ import { TProps } from './types'
 import { TState } from 'types/app'
 import { checkAuth } from 'pages/login/LoginSlice'
 import { AppDispatch } from 'core/store'
+import { isServer } from 'utils/is-server/isServer'
 
 const PublicRoot: FC<TProps> = (props) => {
   const dispatch = useDispatch<AppDispatch>()
@@ -16,7 +17,7 @@ const PublicRoot: FC<TProps> = (props) => {
 
   const auth = useSelector((state: TState) => state.auth)
 
-  if (auth.user) {
+  if (auth.user?.id && !isServer) {
     return <Navigate to='/tables' />
   }
 

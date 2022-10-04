@@ -7,7 +7,8 @@ const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserWebpackPlugin = require('terser-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+//const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const CompressionPlugin = require('compression-webpack-plugin')
 
 process.env.NODE_ENV = 'production';
 const VERSION = require('../package.json').version;
@@ -20,7 +21,7 @@ const prodConfig = {
     filename: 'static/js/[name].[chunkhash].js',
     chunkFilename: 'static/js/[name].[chunkhash].chunk.js',
     assetModuleFilename: 'static/media/[name].[hash:8].[ext]',
-    clean: true,
+    clean: false,
   },
 
   module: {
@@ -85,6 +86,6 @@ const prodConfig = {
       }),
     ],
   },
-  plugins: [new MiniCssExtractPlugin()],
+  plugins: [new MiniCssExtractPlugin(), /*new BundleAnalyzerPlugin(),*/ new CompressionPlugin()],
 }
 module.exports = merge(common, prodConfig)

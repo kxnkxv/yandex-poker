@@ -2,7 +2,7 @@ import consola, { Consola } from 'consola'
 import { Request, Response, NextFunction } from 'express'
 import { ApiError } from '../exceptions/api-error'
 
-export default function (err: Error, req: Request, res: Response, next: NextFunction) {
+export default function (err: Error, req: Request, res: Response) {
   const logger: Consola = consola
   logger.error(err)
   if (err instanceof ApiError) {

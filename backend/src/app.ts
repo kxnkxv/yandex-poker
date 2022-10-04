@@ -7,7 +7,7 @@ import consola, { Consola } from 'consola'
 import * as dotenv from 'dotenv'
 import cors from 'cors'
 import * as bodyParser from 'body-parser'
-import { router } from './routes/index'
+import { router } from './routes'
 import errorMiddleware from './middleware/error-middleware'
 
 const app = express()
@@ -29,7 +29,6 @@ const server = app.listen(process.env.PORT || 4000, () => {
 })
 
 //------------------------------WebSocket Play Game--------------------------------------------
-
 const io = new Server(server)
 
 const players: Record<string, Player> = {}
