@@ -5,6 +5,7 @@ import errorHandler from 'utils/error-handler/errorHandler'
 // Types
 import { TSignInForm, TAuthInitialState } from './types'
 import { TErrorPayload } from 'types/app'
+import config from '@/config'
 
 export const login = createAsyncThunk(
   '@@auth/login',
@@ -16,13 +17,14 @@ export const login = createAsyncThunk(
 )
 
 export const checkAuth = createAsyncThunk('@@auth/user', (_, { rejectWithValue }) => {
-  return axios.get('auth/user').catch((err) => {
-    return rejectWithValue(err.response.data)
+  return axios.get<TAuthInitialState>(`${config.API_URL}/v1/auth/user`).catch((err) => {
+    return rejectWithValue(err.response.data.accessToken)
   })
 })
 
-export const logout = createAsyncThunk('@@auth/user', (_, { rejectWithValue }) => {
+export const logout = createAsyncThunk('@@auth/logout', (_, { rejectWithValue }) => {
   return axios.post('v1/auth/logout').catch((err) => {
+    localStorage.removeItem('token')
     return rejectWithValue(err.response.data)
   })
 })
@@ -52,12 +54,29 @@ const authSlice = createSlice({
           state.user = action.payload.data?.user
           state.accessToken = action.payload.data?.accessToken
           state.refreshToken = action.payload.data?.refreshToken
+          localStorage.setItem('token', JSON.stringify(action.payload.headers))
         }
       })
       .addCase(login.rejected, (state, action) => {
         state.isPending = false
         const data = action.payload as TErrorPayload
         errorHandler(data.reason)
+      })
+
+      // Logout
+      .addCase(logout.pending, (state) => {
+        state.isPending = true
+        localStorage.removeItem('token')
+      })
+      .addCase(logout.fulfilled, (state, action) => {
+        state.user = null
+        state.accessToken = ''
+        state.refreshToken = ''
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.user = null
+        state.accessToken = ''
+        state.refreshToken = ''
       })
   },
 })

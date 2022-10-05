@@ -1,18 +1,15 @@
 import React, { FC } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Avatars from 'pages/account-edit/Avatars' // Mock data
-import useDocumentTitle  from 'hooks/useDocumentTitle'
+import useDocumentTitle from 'hooks/useDocumentTitle'
 
 // Images
 import Back from 'images/back.svg'
 import Edit from 'images/edit.svg'
 import { useDispatch, useSelector } from 'react-redux'
 import { userSelector } from 'core/store/selectors/user'
-import { logout } from './AccountSlice'
+import { logout } from 'pages/login/LoginSlice'
 import { AppDispatch } from '@/core/store'
-import { checkAuth } from '../login/LoginSlice'
-import { SubmitHandler } from 'react-hook-form'
-import { TSignInForm } from '../login/types'
 
 const Account: FC = () => {
   useDocumentTitle('Account')
@@ -20,14 +17,15 @@ const Account: FC = () => {
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
 
-  const onLogout: SubmitHandler<TSignInForm> = () => {
+  const onLogout = () => {
     dispatch(logout())
       .unwrap()
-      .then(() => dispatch(checkAuth()))
       .then(() => {
         navigate('/')
       })
-      .catch(() => {})
+      .catch(() => {
+        navigate('/')
+      })
   }
 
   return (
@@ -66,9 +64,9 @@ const Account: FC = () => {
         </div>
         <div className='inline-grid'>
           <button className='mb-5'>Change password</button>
-          <Link className='text-red' onClick={onLogout} to={'/'}>
+          <a className='text-red cursor-pointer' onClick={() => onLogout()}>
             Sign out
-          </Link>
+          </a>
         </div>
       </div>
     </div>
