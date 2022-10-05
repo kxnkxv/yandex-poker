@@ -14,7 +14,12 @@ const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
-app.use(cors())
+app.use(
+  cors({
+    credentials: true,
+    origin: 'http://localhost:4000',
+  }),
+)
 app.use('/api/v1/auth', router)
 dotenv.config()
 app.use(errorMiddleware)
