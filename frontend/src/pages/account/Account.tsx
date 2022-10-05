@@ -1,17 +1,34 @@
 import React, { FC } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Avatars from 'pages/account-edit/Avatars' // Mock data
 import useDocumentTitle  from 'hooks/useDocumentTitle'
 
 // Images
 import Back from 'images/back.svg'
 import Edit from 'images/edit.svg'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { userSelector } from 'core/store/selectors/user'
+import { logout } from './AccountSlice'
+import { AppDispatch } from '@/core/store'
+import { checkAuth } from '../login/LoginSlice'
+import { SubmitHandler } from 'react-hook-form'
+import { TSignInForm } from '../login/types'
 
 const Account: FC = () => {
   useDocumentTitle('Account')
   const user = useSelector(userSelector)
+  const dispatch = useDispatch<AppDispatch>()
+  const navigate = useNavigate()
+
+  const onLogout: SubmitHandler<TSignInForm> = () => {
+    dispatch(logout())
+      .unwrap()
+      .then(() => dispatch(checkAuth()))
+      .then(() => {
+        navigate('/')
+      })
+      .catch(() => {})
+  }
 
   return (
     <div className='main-wrapper pt-28'>
@@ -49,7 +66,7 @@ const Account: FC = () => {
         </div>
         <div className='inline-grid'>
           <button className='mb-5'>Change password</button>
-          <Link className='text-red' to={'/'}>
+          <Link className='text-red' onClick={onLogout} to={'/'}>
             Sign out
           </Link>
         </div>

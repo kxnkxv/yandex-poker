@@ -43,6 +43,9 @@ const authSlice = createSlice({
       // Login
       .addCase(login.pending, (state) => {
         state.isPending = true
+        state.user = null
+        state.accessToken = ''
+        state.refreshToken = ''
       })
       .addCase(login.fulfilled, (state, action) => {
         if (action.payload.data) {
