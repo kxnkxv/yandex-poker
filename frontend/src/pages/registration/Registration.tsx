@@ -19,7 +19,7 @@ import Button from 'components/ui/button/Button'
 // Types
 import { TSignUpForm } from './types'
 import { useDispatch } from 'react-redux'
-//import { checkAuth } from 'pages/login/LoginSlice'
+import { checkAuth } from 'pages/login/LoginSlice'
 
 const Registration: FC = () => {
   useDocumentTitle('Registration')
@@ -45,7 +45,7 @@ const Registration: FC = () => {
   const onSubmit: SubmitHandler<TSignUpForm> = (data) => {
     dispatch(registration(data))
       .unwrap()
-      //.then(() => dispatch(checkAuth()))
+      .then(() => dispatch(checkAuth()))
       .catch(() => {})
   }
 

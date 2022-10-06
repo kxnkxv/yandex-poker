@@ -7,6 +7,7 @@ import { TSignInForm, TAuthInitialState } from './types'
 import { TErrorPayload } from 'types/app'
 import config from '@/config'
 
+
 export const login = createAsyncThunk(
   '@@auth/login',
   ({ login, password }: TSignInForm, { rejectWithValue }) => {
@@ -32,6 +33,8 @@ export const logout = createAsyncThunk('@@auth/logout', (_, { rejectWithValue })
 
 const initialState: TAuthInitialState = {
   isPending: false,
+  accessToken: '',
+  refreshToken: '',
   user: {
     id: null,
     first_name: '',

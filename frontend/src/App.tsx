@@ -97,6 +97,7 @@ const routes = (
 )
 
 const App: FC = (): JSX.Element => {
+  setUpInterceptor(store)
   return (
     <>
       <Provider store={store}>

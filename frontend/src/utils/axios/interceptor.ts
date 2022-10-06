@@ -21,7 +21,7 @@ const setUpInterceptor = (store: any) => {
         if (error.response.status == 401 && error.config && !error.config._isRetry) {
           originalRequest._isRetry = true
           try {
-            const response = await axios.get<TAuthInitialState>(`${config.API_URL}/v1/auth/refresh`, {
+            const response = await axios.get<TAuthInitialState>(`${config.API_URL}/refresh`, {
               withCredentials: true,
             })
             localStorage.setItem('token', response.data.accessToken)

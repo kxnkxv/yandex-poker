@@ -90,6 +90,7 @@ class UserService {
   }
 
   async getUserOne(id: string) {
+    console.log(id)
     const user = await prisma.user.findUnique({
       where: {
         id: id,
