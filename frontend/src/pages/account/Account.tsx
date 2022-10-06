@@ -14,6 +14,7 @@ import { AppDispatch } from '@/core/store'
 const Account: FC = () => {
   useDocumentTitle('Account')
   const user = useSelector(userSelector)
+  console.log('user', user)
   const dispatch = useDispatch<AppDispatch>()
 
   const onLogout = () => {

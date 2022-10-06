@@ -44,6 +44,7 @@ const initialState: TAuthInitialState = {
     email: '',
     phone: '',
     avatar: '',
+    img_link: ''
   },
 }
 const authSlice = createSlice({

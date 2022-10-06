@@ -38,6 +38,7 @@ const AccountEdit: FC = () => {
   const navigate = useNavigate()
 
   const [currentAvatar, setCurrentAvatar] = useState(user.img_link)
+  console.log(user.img_link)
 
   const { handleSubmit, control, register, setValue } = useForm({
     defaultValues: {
@@ -63,9 +64,9 @@ const AccountEdit: FC = () => {
     setIsModalOpened(false)
   }
 
-  const changeAvatar = (image_id: number) => {
-    setCurrentAvatar(image_id)
-    setValue('img_link', 'avatar' + image_id)
+  const changeAvatar = (img_link_id: number) => {
+    setCurrentAvatar(img_link_id)
+    setValue('img_link', 'avatar' + img_link_id)
     closeModal()
   }
 

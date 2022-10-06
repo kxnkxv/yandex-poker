@@ -7,7 +7,8 @@ import instance from './axios'
 
 const setUpInterceptor = (store: any) => {
   instance.interceptors.request.use((config: any | AxiosRequestConfig) => {
-    config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+    //todo
+    //config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
     return config
   })
 
