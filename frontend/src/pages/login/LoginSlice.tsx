@@ -32,9 +32,16 @@ export const logout = createAsyncThunk('@@auth/logout', (_, { rejectWithValue })
 
 const initialState: TAuthInitialState = {
   isPending: false,
-  user: null,
-  accessToken: '',
-  refreshToken: '',
+  user: {
+    id: null,
+    first_name: '',
+    second_name: '',
+    display_name: '',
+    login: '',
+    email: '',
+    phone: '',
+    avatar: '',
+  },
 }
 const authSlice = createSlice({
   name: '@@auth',

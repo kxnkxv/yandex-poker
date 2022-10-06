@@ -16,9 +16,8 @@ const ProtectedRoot: FC<TProps> = (props) => {
   }, [])
 
   const auth = useSelector((state: TState) => state.auth)
-  const registration = useSelector((state: TState) => state.registration)
 
-  if (auth.user || registration?.newReg) {
+  if (auth.user) {
     return <>{props.children}</>
   }
 

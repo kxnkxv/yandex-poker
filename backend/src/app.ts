@@ -7,7 +7,7 @@ import consola, { Consola } from 'consola'
 import * as dotenv from 'dotenv'
 import cors from 'cors'
 import * as bodyParser from 'body-parser'
-import { router } from './routes/index'
+import { router } from './routes'
 import errorMiddleware from './middleware/error-middleware'
 
 const app = express()
@@ -21,7 +21,7 @@ app.use(
   }),
 )
 app.use('/api/v1/auth', router)
-dotenv.config()
+dotenv.config({ path: '.env.example' })
 app.use(errorMiddleware)
 const logger: Consola = consola
 
@@ -29,12 +29,11 @@ app.get('/', (req, res) => {
   res.json({ success: true, message: 'JWT Authentication' })
 })
 
-const server = app.listen(process.env.PORT || 5000, () => {
+const server = app.listen(process.env.PORT || 4000, () => {
   logger.success(`Server started on port ${process.env.PORT}`)
 })
 
 //------------------------------WebSocket Play Game--------------------------------------------
-
 const io = new Server(server)
 
 const players: Record<string, Player> = {}

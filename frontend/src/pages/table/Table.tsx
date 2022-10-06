@@ -58,7 +58,7 @@ const Table: FC = () => {
   //При первой отрисовке компонента
   useEffect(() => {
     //Устанавливаем WS соединение
-    const socket = io('https://yandex-poker-back.herokuapp.com/', { transports: ['websocket'] })
+    const socket = io('https://localhost:4000/', { transports: ['websocket'] })
 
     //Инициализируем контроллер для управления столом, прокинув туда WS, геттер и сеттер состояния стола
     const tc = new TableController(socket, gameState, setGameState)
