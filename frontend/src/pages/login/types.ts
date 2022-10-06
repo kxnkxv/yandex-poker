@@ -3,7 +3,7 @@ export type TSignInForm = {
   password: string
 }
 
-export type TAuthInitialState = {
+export interface TAuthInitialState {
   isPending: boolean
   user: any
   accessToken: string

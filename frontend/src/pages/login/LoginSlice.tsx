@@ -18,7 +18,8 @@ export const login = createAsyncThunk(
 
 export const checkAuth = createAsyncThunk('@@auth/user', (_, { rejectWithValue }) => {
   return axios.get<TAuthInitialState>(`${config.API_URL}/v1/auth/user`).catch((err) => {
-    return rejectWithValue(err.response.data.accessToken)
+    //localStorage.setItem('token')
+    return rejectWithValue(err.response.data)
   })
 })
 

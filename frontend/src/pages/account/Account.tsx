@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Avatars from 'pages/account-edit/Avatars' // Mock data
 import useDocumentTitle from 'hooks/useDocumentTitle'
 
@@ -15,17 +15,10 @@ const Account: FC = () => {
   useDocumentTitle('Account')
   const user = useSelector(userSelector)
   const dispatch = useDispatch<AppDispatch>()
-  const navigate = useNavigate()
 
   const onLogout = () => {
     dispatch(logout())
       .unwrap()
-      .then(() => {
-        navigate('/')
-      })
-      .catch(() => {
-        navigate('/')
-      })
   }
 
   return (

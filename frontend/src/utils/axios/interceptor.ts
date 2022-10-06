@@ -12,7 +12,7 @@ const setUpInterceptor = (store: any) => {
   })
 
   instance.interceptors.response.use(
-      (config: any | AxiosRequestConfig) => {
+      (config: AxiosRequestConfig) => {
         return config
       }
       ,
@@ -21,10 +21,10 @@ const setUpInterceptor = (store: any) => {
         if (error.response.status == 401 && error.config && !error.config._isRetry) {
           originalRequest._isRetry = true
           try {
-            const response = await axios.get<TAuthInitialState>(`${config.API_URL}/refresh`, {
+            const response = await axios.get<TAuthInitialState>(`${config.API_URL}/v1/auth/refresh`, {
               withCredentials: true,
             })
-            localStorage.setState('token', response.data.accessToken)
+            localStorage.setItem('token', response.data.accessToken)
             return instance.request(originalRequest)
           } catch (e) {
             console.log("NOT AUTHORIZED")
