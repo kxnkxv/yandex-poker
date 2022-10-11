@@ -1,33 +1,50 @@
 import React, { FC } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 // Images
 import Logo from 'images/logo.svg'
-import Settings from 'images/normal.svg'
 import FullScreen from 'images/pressed.svg'
+import ForumIcon from 'images/forumIcon.svg'
+import TableIcon from 'images/tableIcon.svg'
 import Avatars from 'pages/account-edit/Avatars'
 import { userSelector } from 'core/store/selectors/user'
 
 const Header: FC = () => {
   const user = useSelector(userSelector)
-    const toggleFullScreen = () => {
-      if( window.innerHeight == screen.height) {
-          if (document.exitFullscreen) {
-              document.exitFullscreen()
-          }
-      } else {
-          document.body.requestFullscreen()
+  const toggleFullScreen = () => {
+    if (window.innerHeight == screen.height) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen()
       }
+    } else {
+      document.body.requestFullscreen()
     }
+  }
   return (
     <nav>
       <div className='flex flex-wrap justify-between items-center'>
         <div className='flex items-center mb-5'>
           <img src={Logo} className='h-6 sm:h-9' alt='AIG Logo' />
-          <a href='https://github.com/AIG-GAMING' className='flex items-center'>
+          <Link to='/' className='flex items-center'>
             <h4 className='self-center text-xl font-semibold text-white font-futura'>AIG POKER</h4>
-          </a>
+          </Link>
+          <div className='ml-5 px-5'>
+            <NavLink
+              to='/tables'
+              className={({ isActive }) => (isActive ? 'menu-link active' : 'menu-link')}
+            >
+              <img src={TableIcon} className='h-6 sm:h-9' alt='Available tables' /> Available tables
+            </NavLink>
+          </div>
+          <div className='px-5'>
+            <NavLink
+              to='/forum'
+              className={({ isActive }) => (isActive ? 'menu-link active' : 'menu-link')}
+            >
+              <img src={ForumIcon} className='h-6 sm:h-9' alt='Forum' /> Forum
+            </NavLink>
+          </div>
         </div>
         <div className='flex items-center mb-5'>
           <Link to='/account'>
@@ -55,10 +72,8 @@ const Header: FC = () => {
               <h5 className='p-0.5'>$100.00</h5>
             </div>
           </div>
+
           <div>
-            <button className='p-5'>
-              <img src={Settings} className='h-6 sm:h-9' alt='Settings' />
-            </button>
             <button onClick={toggleFullScreen}>
               <img src={FullScreen} className='h-6 sm:h-9' alt='FullScreen' />
             </button>
