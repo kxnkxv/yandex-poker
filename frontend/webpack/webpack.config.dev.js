@@ -1,4 +1,5 @@
 const { merge } = require('webpack-merge')
+const webpack = require('webpack')
 
 const common = require('./webpack.config.common.js')
 
@@ -6,7 +7,7 @@ const path = require('path')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
-const VERSION = require('../package.json').version;
+const VERSION = require('../package.json').version
 
 const devConfig = {
   mode: 'development',
@@ -22,14 +23,14 @@ const devConfig = {
     assetModuleFilename: 'static/media/[name].[hash:8].[ext]',
   },
   devServer: {
+    hot: 'only',
     static: {
       directory: path.resolve(__dirname, '../dist'),
     },
     historyApiFallback: true,
     compress: true,
-    port: 4000,
     open: true,
-    hot: true,
+    port: 3000,
   },
   module: {
     rules: [
@@ -62,14 +63,18 @@ const devConfig = {
     },
     emitOnErrors: false,
   },
-  plugins: [new ReactRefreshPlugin(),  new HtmlWebpackPlugin({
-    filename: 'index.html',
-    favicon: './www/favicon.svg',
-    template: './www/index.html',
-    inject: true,
-    hash: true,
-    chunksSortMode: 'none',
-    version: VERSION,
-  }),],
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      favicon: './www/favicon.svg',
+      template: './www/index.html',
+      inject: true,
+      hash: true,
+      chunksSortMode: 'none',
+      version: VERSION,
+    }),
+    new ReactRefreshPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+  ],
 }
 module.exports = merge(common, devConfig)

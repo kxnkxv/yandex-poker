@@ -5,7 +5,6 @@ export type TSignInForm = {
 
 export interface TAuthInitialState {
   isPending: boolean
+  // Todo:Написать типизацию для юзера
   user: any
-  accessToken: string
-  refreshToken: string
 }

@@ -14,14 +14,11 @@ import { AppDispatch } from '@/core/store'
 const Account: FC = () => {
   useDocumentTitle('Account')
   const user = useSelector(userSelector)
-  console.log('user', user)
   const dispatch = useDispatch<AppDispatch>()
 
   const onLogout = () => {
     dispatch(logout())
-      .unwrap()
   }
-
   return (
     <div className='main-wrapper pt-28'>
       <div className='container mx-auto max-w-md'>
@@ -58,7 +55,7 @@ const Account: FC = () => {
         </div>
         <div className='inline-grid'>
           <button className='mb-5'>Change password</button>
-          <a className='text-red cursor-pointer' onClick={() => onLogout()}>
+          <a className='text-red cursor-pointer' onClick={onLogout}>
             Sign out
           </a>
         </div>

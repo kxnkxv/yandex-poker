@@ -11,15 +11,16 @@ import { userSelector } from 'core/store/selectors/user'
 
 const Header: FC = () => {
   const user = useSelector(userSelector)
-    const toggleFullScreen = () => {
-      if( window.innerHeight == screen.height) {
-          if (document.exitFullscreen) {
-              document.exitFullscreen()
-          }
-      } else {
-          document.body.requestFullscreen()
+  const toggleFullScreen = () => {
+    if (window.innerHeight == screen.height) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen()
       }
+    } else {
+      document.body.requestFullscreen()
     }
+  }
+  console.log(Avatars[user.img_link].image)
   return (
     <nav>
       <div className='flex flex-wrap justify-between items-center'>
@@ -39,12 +40,8 @@ const Header: FC = () => {
                 <h5 className='opacity-70 font-roboto'>@{user.login}</h5>
               </div>
               <div className='flex items-center md:order-3'>
-                {user.display_name && (
-                  <img
-                    className='w-16 h-16'
-                    src={Avatars[user.display_name].image}
-                    alt='user photo'
-                  />
+                {user.img_link && (
+                  <img className='w-16 h-16' src={Avatars[user.img_link].image} alt='user photo' />
                 )}
               </div>
             </div>

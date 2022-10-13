@@ -1,11 +1,10 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import { store } from 'core/store'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from 'core/store'
 import { ToastContainer } from 'react-toastify'
 import PublicRoot from 'components/public-root/PublicRoot'
 import ProtectedRoot from 'components/protected-root/ProtectedRoot'
-import setUpInterceptor from 'utils/axios/interceptor'
 
 // Pages
 import NotFound from 'pages/notFound'
@@ -22,89 +21,93 @@ import 'styles/Style.css'
 // Images
 // .....
 import { isServer } from 'utils/is-server/isServer'
+import { checkAuth } from './pages/login/LoginSlice'
 
 const routes = (
-    <ErrorBoundary>
-  <Routes>
-    {/* 404 Page */}
-    <Route path='*' element={<NotFound />} />
+  <ErrorBoundary>
+    <Routes>
+      {/* 404 Page */}
+      <Route path='*' element={<NotFound />} />
 
-    {/* Login */}
+      {/* Login */}
 
-    <Route
-      path='/'
-      element={
-        <PublicRoot>
-          <Navigate to='/login' />
-        </PublicRoot>
-      }
-    />
-    <Route
-      path='login'
-      element={
-        <PublicRoot>
-          <Login />
-        </PublicRoot>
-      }
-    />
+      <Route
+        path='/'
+        element={
+          <PublicRoot>
+            <Navigate to='/login' />
+          </PublicRoot>
+        }
+      />
+      <Route
+        path='login'
+        element={
+          <PublicRoot>
+            <Login />
+          </PublicRoot>
+        }
+      />
 
-    {/* Registration */}
-    <Route
-      path='register'
-      element={
-        <PublicRoot>
-          <Registration />
-        </PublicRoot>
-      }
-    />
+      {/* Registration */}
+      <Route
+        path='register'
+        element={
+          <PublicRoot>
+            <Registration />
+          </PublicRoot>
+        }
+      />
 
-    {/* Tables */}
-    <Route
-      path='tables'
-      element={
-        <ProtectedRoot>
-          <Tables />
-        </ProtectedRoot>
-      }
-    />
+      {/* Tables */}
+      <Route
+        path='tables'
+        element={
+          <ProtectedRoot>
+            <Tables />
+          </ProtectedRoot>
+        }
+      />
 
-    {/* Table */}
-    <Route
-      path='tables/:tableId'
-      element={<ProtectedRoot>{!isServer && <Table />}</ProtectedRoot>}
-    />
-    {/* Account */}
-    <Route
-      path='account'
-      element={
-        <ProtectedRoot>
-          <Account />
-        </ProtectedRoot>
-      }
-    />
+      {/* Table */}
+      <Route
+        path='tables/:tableId'
+        element={<ProtectedRoot>{!isServer && <Table />}</ProtectedRoot>}
+      />
+      {/* Account */}
+      <Route
+        path='account'
+        element={
+          <ProtectedRoot>
+            <Account />
+          </ProtectedRoot>
+        }
+      />
 
-    {/* Account edit */}
-    <Route
-      path='account/edit'
-      element={
-        <ProtectedRoot>
-          <AccountEdit />
-        </ProtectedRoot>
-      }
-    />
-  </Routes>
-    </ErrorBoundary>
+      {/* Account edit */}
+      <Route
+        path='account/edit'
+        element={
+          <ProtectedRoot>
+            <AccountEdit />
+          </ProtectedRoot>
+        }
+      />
+    </Routes>
+  </ErrorBoundary>
 )
 
 const App: FC = (): JSX.Element => {
-  setUpInterceptor(store)
+  const { isPending } = useSelector((state: RootState) => state.auth)
+  const dispatch = useDispatch<AppDispatch>()
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      dispatch(checkAuth())
+    }
+  }, [])
   return (
     <>
-      <Provider store={store}>
-        {routes}
-
-        <ToastContainer />
-      </Provider>
+      {isPending ? <h1>Loading...</h1> : routes}
+      <ToastContainer />
     </>
   )
 }
