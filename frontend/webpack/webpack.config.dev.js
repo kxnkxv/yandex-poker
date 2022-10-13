@@ -2,11 +2,13 @@ const { merge } = require('webpack-merge')
 
 const common = require('./webpack.config.common.js')
 
+const webpack = require('webpack')
+
 const path = require('path')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
-const VERSION = require('../package.json').version;
+const VERSION = require('../package.json').version
 
 const devConfig = {
   mode: 'development',
@@ -27,7 +29,7 @@ const devConfig = {
     },
     historyApiFallback: true,
     compress: true,
-    port: 4000,
+    port: 3000,
     open: true,
     hot: true,
   },
@@ -62,14 +64,18 @@ const devConfig = {
     },
     emitOnErrors: false,
   },
-  plugins: [new ReactRefreshPlugin(),  new HtmlWebpackPlugin({
-    filename: 'index.html',
-    favicon: './www/favicon.svg',
-    template: './www/index.html',
-    inject: true,
-    hash: true,
-    chunksSortMode: 'none',
-    version: VERSION,
-  }),],
+  plugins: [
+    new ReactRefreshPlugin(),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      favicon: './www/favicon.svg',
+      template: './www/index.html',
+      inject: true,
+      hash: true,
+      chunksSortMode: 'none',
+      version: VERSION,
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+  ],
 }
 module.exports = merge(common, devConfig)
