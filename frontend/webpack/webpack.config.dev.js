@@ -3,6 +3,8 @@ const webpack = require('webpack')
 
 const common = require('./webpack.config.common.js')
 
+const webpack = require('webpack')
+
 const path = require('path')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')

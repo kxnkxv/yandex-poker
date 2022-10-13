@@ -8,7 +8,7 @@ const container = document.getElementById('root') as HTMLElement
 
 const ssrPages = ['/login', '/registration']
 
-const isSsr = ssrPages.includes(window.location.pathname)
+const isSsr = ssrPages.includes(window.location.pathname) && process.env.NODE_ENV === 'production'
 
 const application = (
   <BrowserRouter>

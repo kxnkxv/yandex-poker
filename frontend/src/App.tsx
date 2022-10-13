@@ -22,6 +22,8 @@ import 'styles/Style.css'
 // .....
 import { isServer } from 'utils/is-server/isServer'
 import { checkAuth } from './pages/login/LoginSlice'
+import Forum from 'pages/forum'
+import ForumTopic from 'pages/forum-topic'
 
 const routes = (
   <ErrorBoundary>
@@ -89,6 +91,24 @@ const routes = (
         element={
           <ProtectedRoot>
             <AccountEdit />
+          </ProtectedRoot>
+        }
+      />
+      {/* Forum */}
+      <Route
+        path='forum'
+        element={
+          <ProtectedRoot>
+            <Forum />
+          </ProtectedRoot>
+        }
+      />
+      {/* Forum */}
+      <Route
+        path='forum/:id'
+        element={
+          <ProtectedRoot>
+            <ForumTopic />
           </ProtectedRoot>
         }
       />

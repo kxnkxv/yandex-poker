@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { io } from 'socket.io-client'
 import {
@@ -27,6 +27,7 @@ import { TSeat } from './types'
 import { initialGameState } from './initialGameState'
 import { usePreviousValue } from 'hooks/usePreviousValue'
 import { userSelector } from 'core/store/selectors/user'
+import btnExit from './img/btnExit.svg'
 
 const Table: FC = () => {
   // Устанавливаем заголовок страницы в браузере
@@ -254,6 +255,9 @@ const Table: FC = () => {
 
   return (
     <div>
+      <Link className='btn-exit' to='/tables'>
+        <img src={btnExit} alt='Exit table' title='Exit table' />
+      </Link>
       <div className='table-wrapper'>
         <canvas ref={canvasAvatars} width='2560' height='1320' id='avatars' />
         <canvas ref={canvasTable} width='2560' height='1320' id='table' />
