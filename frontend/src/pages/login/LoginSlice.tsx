@@ -9,7 +9,7 @@ import { registration } from '../registration/RegistrationSlice'
 import $api from 'utils/axios/axios'
 import axios from 'axios'
 import config from '@/config'
-//Todo:Типизировать запросы типами
+// Todo:Типизировать запросы типами
 export const login = createAsyncThunk(
   '@@auth/login',
   ({ login, password }: TSignInForm, { rejectWithValue }) => {
@@ -80,22 +80,25 @@ const authSlice = createSlice({
         state.user = null
       })
       .addCase(logout.rejected, (state, action) => {
+        state.isPending = false
         state.user = null
+      })
+      // Registration
+      .addCase(registration.pending, (state, action) => {
+        state.isPending = true
       })
       .addCase(registration.fulfilled, (state, action) => {
         if (action.payload.data) {
           state.user = action.payload.data?.user
           localStorage.setItem('token', JSON.stringify(action.payload.data.accessToken))
-          state.isPending = true
+          state.isPending = false
         }
-      })
-      .addCase(registration.pending, (state, action) => {
-        state.isPending = true
       })
       .addCase(registration.rejected, (state, action) => {
         state.isPending = false
         console.log('Action Reg Ful Rej', action.payload)
       })
+      // CheckAuth
       .addCase(checkAuth.pending, (state, action) => {
         state.isPending = true
       })

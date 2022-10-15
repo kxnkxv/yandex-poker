@@ -124,6 +124,7 @@ const App: FC = (): JSX.Element => {
       dispatch(checkAuth())
     }
   }, [])
+  console.log('isPending', isPending)
   return (
     <>
       {isPending ? <h1>Loading...</h1> : routes}

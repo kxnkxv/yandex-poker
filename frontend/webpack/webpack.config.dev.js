@@ -2,8 +2,7 @@ const { merge } = require('webpack-merge')
 const webpack = require('webpack')
 
 const common = require('./webpack.config.common.js')
-
-const webpack = require('webpack')
+const WebpackBar = require('webpackbar')
 
 const path = require('path')
 
@@ -77,6 +76,7 @@ const devConfig = {
     }),
     new ReactRefreshPlugin(),
     new webpack.HotModuleReplacementPlugin(),
+    new WebpackBar(),
   ],
 }
 module.exports = merge(common, devConfig)

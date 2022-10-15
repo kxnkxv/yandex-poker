@@ -19,7 +19,7 @@ app.use(cookieParser())
 app.use(
   cors({
     credentials: true,
-    origin: 'http://localhost:3000',
+    origin: process.env.CLIENT_URL,
   }),
 )
 dotenv.config()
@@ -28,12 +28,12 @@ app.use(errorMiddleware)
 const logger: Consola = consola
 
 app.get('/', (req, res) => {
-  res.json({ success: true, message: 'JWT Authentication' })
+  res.json({ success: true, message: 'Pocker Game Start' })
 })
 const server = http.createServer(app)
 const io = new socketio.Server(server, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: process.env.CLIENT_URL,
     methods: ['GET', 'POST'],
   },
 })
