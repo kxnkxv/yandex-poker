@@ -41,7 +41,7 @@ class UserService {
   }
   async login(login: string, password: string) {
     if (!login || !password) {
-      throw ApiError.BadRequest('Values should not be empty!')
+      throw ApiError.BadRequest('Error! The login and password fields must not be empty')
     }
     const user = await prisma.user.findUnique({
       where: {
@@ -63,6 +63,7 @@ class UserService {
 
     return { ...tokens, user: userDto }
   }
+
   async logout(refreshToken: string) {
     const token = await tokenService.removeToken(refreshToken)
     return token

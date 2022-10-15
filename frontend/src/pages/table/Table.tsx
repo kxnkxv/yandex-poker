@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { io } from 'socket.io-client'
 import {
@@ -16,54 +16,55 @@ import TableController from 'pages/table/TableController'
 import { Listeners } from './TableController'
 import { Cards } from 'images/cards'
 
-//Components
+// Components
 import YouWin from 'components/you-win'
 
-//Styles
+// Styles
 import './Table.css'
 
-//Types
+// Types
 import { TSeat } from './types'
 import { initialGameState } from './initialGameState'
 import { usePreviousValue } from 'hooks/usePreviousValue'
 import { userSelector } from 'core/store/selectors/user'
+import btnExit from './img/btnExit.svg'
 
 const Table: FC = () => {
-  //Устанавливаем заголовок страницы в браузере
+  // Устанавливаем заголовок страницы в браузере
   useDocumentTitle('Table')
 
   // Получение id стола
   const { tableId } = useParams()
 
-  //Получаем логин пользователя из redux
+  // Получаем логин пользователя из redux
   const userName = useSelector(userSelector).login
 
-  //Canvas элемент игрового стола
+  // Canvas элемент игрового стола
   const canvasTable = useRef(null)
 
-  //Отдельный canvas элемент для png аватарок с другой частотой перерисовки
+  // Отдельный canvas элемент для png аватарок с другой частотой перерисовки
   const canvasAvatars = useRef(null)
 
-  //Объявление контроллера для управления столом
+  // Объявление контроллера для управления столом
   const [tableController, setTableController] = useState<TableController | null>(null)
 
-  //Объявляем геттер и сеттер состояния иры
+  // Объявляем геттер и сеттер состояния иры
   const [gameState, setGameState] = useState(initialGameState)
 
   const previousTableState = usePreviousValue(gameState.table)
 
-  //Получаем состояние стола, экшен, id моего сидения, мои карты
-  const { table, actionState, mySeat, myCards, combination, winModal} = gameState
+  // Получаем состояние стола, экшен, id моего сидения, мои карты
+  const { table, actionState, mySeat, myCards, combination, winModal } = gameState
 
-  //При первой отрисовке компонента
+  // При первой отрисовке компонента
   useEffect(() => {
-    //Устанавливаем WS соединение
-    const socket = io('https://yandex-poker-back.herokuapp.com/', { transports: ['websocket'] })
+    // Устанавливаем WS соединение
+    const socket = io('http://localhost:4000/', { transports: ['websocket'] })
 
-    //Инициализируем контроллер для управления столом, прокинув туда WS, геттер и сеттер состояния стола
+    // Инициализируем контроллер для управления столом, прокинув туда WS, геттер и сеттер состояния стола
     const tc = new TableController(socket, gameState, setGameState)
 
-    //Добавляем контроллер для управления столом в state
+    // Добавляем контроллер для управления столом в state
     setTableController(() => tc)
 
     // Регистрируем игрока
@@ -73,14 +74,14 @@ const Table: FC = () => {
     tc.enterRoom(Number(tableId))
 
     return () => {
-      //Разрываем WS соединение при размонтировании компонента
+      // Разрываем WS соединение при размонтировании компонента
       tc.disconnect()
     }
   }, [])
 
-  //Перерисовываем стол при изменении состояния игры
+  // Перерисовываем стол при изменении состояния игры
   useEffect(() => {
-    //Canvas Table
+    // Canvas Table
     if (canvasTable && canvasTable.current) {
       const canvasT = canvasTable.current as HTMLCanvasElement
       const ctxT = canvasT.getContext('2d')
@@ -89,30 +90,30 @@ const Table: FC = () => {
         // Сброс canvas при каждой перерисовке
         ctxT.clearRect(0, 0, canvasT.width, canvasT.height)
 
-        //Отрисовываем игроков
+        // Отрисовываем игроков
         createPlayers(table, userName as string, ctxT)
 
-        //Отрисовываем фишку дилера
+        // Отрисовываем фишку дилера
         createDealerChip(table, userName as string, ctxT)
 
-        //Отрисовываем pot
+        // Отрисовываем pot
         createPot(table, ctxT)
 
-        //Отрисовываем фишки
+        // Отрисовываем фишки
         createUserChips(table, userName as string, ctxT)
 
-        //Отрисовываем плашку с информацией о собранной комбинации
+        // Отрисовываем плашку с информацией о собранной комбинации
         createCombinationLabel(combination.rank, ctxT)
       }
     }
 
-    //Canvas avatars
+    // Canvas avatars
     if (canvasAvatars && canvasAvatars.current) {
       const canvasA = canvasAvatars.current as HTMLCanvasElement
       const ctxA = canvasA.getContext('2d')
 
       if (ctxA) {
-        //Отрисовываем аватарки
+        // Отрисовываем аватарки
         createAvatars(previousTableState, table, userName as string, ctxA)
       }
     }
@@ -128,7 +129,7 @@ const Table: FC = () => {
     }
   })
 
-  //Обработчики действий во время игры
+  // Обработчики действий во время игры
   const handleSit = (seat: number, tableId: number, chips: number) =>
     tableController!.sitOnTheTable(seat, tableId, chips)
   const handlePostBlind = () => tableController!.postBlind()
@@ -137,38 +138,38 @@ const Table: FC = () => {
   const handleCall = () => tableController!.call()
   const handleRaise = (value: number) => {
     tableController!.raise(value)
-    //Сбрасываем величину ставки
+    // Сбрасываем величину ставки
     setBetValue(0)
   }
   const handleBet = (value: number) => {
     tableController!.bet(value)
-    //Сбрасываем величину ставки
+    // Сбрасываем величину ставки
     setBetValue(0)
   }
 
-  //Расчет величины Call
+  // Расчет величины Call
   const callAmount = () => {
     if (
-      mySeat === null /*|| table.seats[mySeat] === 'undefined'*/ ||
+      mySeat === null /* || table.seats[mySeat] === 'undefined'*/ ||
       table.seats[mySeat] === null
     ) {
       return 0
     }
 
-    let callAmount = table.biggestBet - table.seats[mySeat].bet
+    const callAmount = table.biggestBet - table.seats[mySeat].bet
     return callAmount > table.seats[mySeat].chipsInPlay
       ? table.seats[mySeat].chipsInPlay
       : callAmount
   }
 
-  //Расчет минимальной возможной ставки в текущий момент
+  // Расчет минимальной возможной ставки в текущий момент
   const minBetAmount = () => {
-    if (mySeat === null /*|| table.seats[mySeat] === 'undefined'*/ || table.seats[mySeat] === null)
+    if (mySeat === null /* || table.seats[mySeat] === 'undefined'*/ || table.seats[mySeat] === null)
       return 0
 
     if (actionState === Listeners.ActBettedPot) {
-      //ОБЯЗАТЕЛЬНО ПРОТЕСТИТЬ
-      let proposedBet = table!.biggestBet + table!.bigBlind!
+      // ОБЯЗАТЕЛЬНО ПРОТЕСТИТЬ
+      const proposedBet = table!.biggestBet + table!.bigBlind!
       return table.seats[mySeat].chipsInPlay < proposedBet
         ? table.seats[mySeat].chipsInPlay
         : proposedBet
@@ -179,9 +180,9 @@ const Table: FC = () => {
     }
   }
 
-  //Расчет максимальной возможной ставки в текущий момент
+  // Расчет максимальной возможной ставки в текущий момент
   const maxBetAmount = () => {
-    if (mySeat === null /*|| table.seats[mySeat] === 'undefined'*/ || table.seats[mySeat] === null)
+    if (mySeat === null /* || table.seats[mySeat] === 'undefined'*/ || table.seats[mySeat] === null)
       return 0
 
     return actionState === Listeners.ActBettedPot
@@ -189,14 +190,14 @@ const Table: FC = () => {
       : table.seats[mySeat].chipsInPlay
   }
 
-  //Управление ставкой (слайдер)
+  // Управление ставкой (слайдер)
   const [betValue, setBetValue] = useState<number>(0)
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
     setBetValue(newValue as number)
   }
 
-  //Условие для кнопки FOLD
+  // Условие для кнопки FOLD
   const showFoldButton = () => {
     return (
       actionState === Listeners.ActNotBettedPot ||
@@ -205,7 +206,7 @@ const Table: FC = () => {
     )
   }
 
-  //Условие для кнопки CHECK
+  // Условие для кнопки CHECK
   const showCheckButton = () => {
     if (mySeat !== null) {
       if (table.seats[mySeat]) {
@@ -217,7 +218,7 @@ const Table: FC = () => {
     }
   }
 
-  //Условие для кнопки CALL
+  // Условие для кнопки CALL
   const showCallButton = () => {
     if (mySeat !== null) {
       return (
@@ -228,7 +229,7 @@ const Table: FC = () => {
     }
   }
 
-  //Условие для кнопки BET
+  // Условие для кнопки BET
   const showBetButton = () => {
     if (mySeat !== null) {
       return (
@@ -239,7 +240,7 @@ const Table: FC = () => {
     }
   }
 
-  //Условие для кнопки RAISE
+  // Условие для кнопки RAISE
   const showRaiseButton = () => {
     if (mySeat !== null) {
       return (
@@ -254,10 +255,13 @@ const Table: FC = () => {
 
   return (
     <div>
+      <Link className='btn-exit' to='/tables'>
+        <img src={btnExit} alt='Exit table' title='Exit table' />
+      </Link>
       <div className='table-wrapper'>
         <canvas ref={canvasAvatars} width='2560' height='1320' id='avatars' />
         <canvas ref={canvasTable} width='2560' height='1320' id='table' />
-        {/*Seats*/}
+        {/* Seats*/}
         {seats.map(
           (seat) =>
             !isOnTheTable &&
@@ -274,7 +278,7 @@ const Table: FC = () => {
             ),
         )}
 
-        {/*Table cards*/}
+        {/* Table cards*/}
         <div className='table-cards'>
           {table.board.length > 0 &&
             table.board.map(
@@ -292,7 +296,7 @@ const Table: FC = () => {
             )}
         </div>
 
-        {/*My cards*/}
+        {/* My cards*/}
         <div className='my-cards'>
           {myCards.length > 0 &&
             myCards.map(

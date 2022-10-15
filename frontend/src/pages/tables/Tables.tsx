@@ -20,7 +20,6 @@ const Tables: FC = (props) => {
   const createTable = () => {
     console.log('created')
   }
-
   /* const openModal = () => {
     setIsModalOpened(true)
   } */

@@ -1,5 +1,4 @@
 const { merge } = require('webpack-merge')
-const webpack = require('webpack')
 
 const common = require('./webpack.config.common.js')
 
@@ -8,9 +7,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserWebpackPlugin = require('terser-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+//const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const CompressionPlugin = require('compression-webpack-plugin')
 
-process.env.NODE_ENV = 'production';
-const VERSION = require('../package.json').version;
+//process.env.NODE_ENV = 'production'
+const VERSION = require('../package.json').version
 
 const prodConfig = {
   mode: 'production',
@@ -20,7 +21,7 @@ const prodConfig = {
     filename: 'static/js/[name].[chunkhash].js',
     chunkFilename: 'static/js/[name].[chunkhash].chunk.js',
     assetModuleFilename: 'static/media/[name].[hash:8].[ext]',
-    clean: true,
+    clean: false,
   },
 
   module: {
@@ -78,13 +79,8 @@ const prodConfig = {
           minifyURLs: true,
         },
       }),
-      new webpack.EnvironmentPlugin({
-        NODE_ENV: 'production',
-        VERSION: VERSION,
-        USE_API_MOCKS: 'false',
-      }),
     ],
   },
-  plugins: [new MiniCssExtractPlugin()],
+  plugins: [new MiniCssExtractPlugin(), /*new BundleAnalyzerPlugin(),*/ new CompressionPlugin()],
 }
 module.exports = merge(common, prodConfig)

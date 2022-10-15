@@ -3,3 +3,4 @@ dist/
 /package-lock.json
 back/
 node_modules
+.env
