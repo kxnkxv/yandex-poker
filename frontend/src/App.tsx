@@ -1,7 +1,7 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import { store } from 'core/store'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from 'core/store'
 import { ToastContainer } from 'react-toastify'
 import PublicRoot from 'components/public-root/PublicRoot'
 import ProtectedRoot from 'components/protected-root/ProtectedRoot'
@@ -21,6 +21,7 @@ import 'styles/Style.css'
 // Images
 // .....
 import { isServer } from 'utils/is-server/isServer'
+import { checkAuth } from './pages/login/LoginSlice'
 import Forum from 'pages/forum'
 import ForumTopic from 'pages/forum-topic'
 
@@ -116,13 +117,18 @@ const routes = (
 )
 
 const App: FC = (): JSX.Element => {
+  const { isPending } = useSelector((state: RootState) => state.auth)
+  const dispatch = useDispatch<AppDispatch>()
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      dispatch(checkAuth())
+    }
+  }, [])
+  console.log('isPending', isPending)
   return (
     <>
-      <Provider store={store}>
-        {routes}
-
-        <ToastContainer />
-      </Provider>
+      {isPending ? <h1>Loading...</h1> : routes}
+      <ToastContainer />
     </>
   )
 }

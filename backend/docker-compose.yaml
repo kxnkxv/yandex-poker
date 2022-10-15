@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  db_poker_game:
+    container_name: db_poker_game
+    env_file:
+      - db_variables.env
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./data:/var/lib/postgressql/data
+    image: postgres:15-alpine3.16

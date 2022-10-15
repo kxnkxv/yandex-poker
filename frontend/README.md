@@ -1,11 +1,9 @@
-Online Poker app for Yandex.Practicum
-==============================
-
+# Online Poker app for Yandex.Practicum
 
 ![img.png](https://oviland.ru/storage/ya-poker.png)
 
-Setup
------
+## Setup
+
 Clone the repo:
 
     git clone https://github.com/AIG-GAMING/Poker.git
@@ -27,6 +25,17 @@ Backend:
 Open file backend
 npm install
 Run server:
-npm  start - start server 
+npm start - start server
 Develop:
-npm run dev  - developer mode start
+npm run dev - developer mode start
+
+Docker db:
+run docker container
+docker compose up
+create .env file backend
+write
+DATABASE_URL="postgresql://admin:root12@localhost:5432/poker_game_user?schema=public"
+PORT=4000
+JWT_ACCESS_SECRET=jwt-secret-key
+JWT_REFRESH_SECRET=jwt-refresh-secret-key
+CLIENT_URL=http://localhost:3000

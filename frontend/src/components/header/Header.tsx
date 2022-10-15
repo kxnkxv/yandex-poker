@@ -56,12 +56,8 @@ const Header: FC = () => {
                 <h5 className='opacity-70 font-roboto'>@{user.login}</h5>
               </div>
               <div className='flex items-center md:order-3'>
-                {user.display_name && (
-                  <img
-                    className='w-16 h-16'
-                    src={Avatars[user.display_name].image}
-                    alt='user photo'
-                  />
+                {user.img_link && (
+                  <img className='w-16 h-16' src={Avatars[user.img_link].image} alt='user photo' />
                 )}
               </div>
             </div>

@@ -3,7 +3,8 @@ export type TSignInForm = {
   password: string
 }
 
-export type TAuthInitialState = {
+export interface TAuthInitialState {
   isPending: boolean
+  // Todo:Написать типизацию для юзера
   user: any
 }

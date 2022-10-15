@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { useDispatch } from 'react-redux'
 import { useForm, SubmitHandler, Controller, useFormState } from 'react-hook-form'
 import { loginValidation, passwordValidation } from 'utils/validation/validation'
-import { checkAuth, login } from 'pages/login/LoginSlice'
+import { login } from 'pages/login/LoginSlice'
 import { Link } from 'react-router-dom'
 import { AppDispatch } from 'core/store'
 import useDocumentTitle from 'hooks/useDocumentTitle'
@@ -33,9 +33,6 @@ const Login: FC = () => {
 
   const onSubmit: SubmitHandler<TSignInForm> = (data) => {
     dispatch(login(data))
-      .unwrap()
-      .then(() => dispatch(checkAuth()))
-      .catch(() => {})
   }
 
   return (

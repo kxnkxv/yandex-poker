@@ -68,6 +68,7 @@ class UserController {
   async getUserOne(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
       const { id } = req.params
+      console.log(id)
       const user = await userService.getUserOne(id)
       return res.json(user)
     } catch (error) {
