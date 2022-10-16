@@ -7,13 +7,14 @@ import { TSignInForm, TAuthInitialState } from './types'
 import { TErrorPayload } from 'types/app'
 import { registration } from '../registration/RegistrationSlice'
 import $api from 'utils/axios/axios'
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import config from '@/config'
+import { editUser } from '../account-edit/AccountEditSlice'
 // Todo:Типизировать запросы типами
 export const login = createAsyncThunk(
   '@@auth/login',
   ({ login, password }: TSignInForm, { rejectWithValue }) => {
-    return $api.post('v1/auth/login', { login, password }).catch((err) => {
+    return $api.post<AxiosResponse<{id:string}>>('v1/auth/login', { login, password }).catch((err) => {
       return rejectWithValue(err.response.data)
     })
   },
@@ -112,6 +113,16 @@ const authSlice = createSlice({
       .addCase(checkAuth.rejected, (state, action) => {
         state.isPending = false
         state.user = null
+      })
+      .addCase(editUser.pending, (state, action) => {
+        state.isPending = true
+      })
+      .addCase(editUser.fulfilled, (state, action) => {
+        state.isPending = false
+        state.user = action.payload.data
+      })
+      .addCase(editUser.rejected, (state, action) => {
+        state.isPending = false
       })
   },
 })

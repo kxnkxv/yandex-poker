@@ -4,8 +4,11 @@ import { validationResult } from 'express-validator'
 import { ApiError } from '../exceptions/api-error'
 import { User } from '@prisma/client'
 import { UserDto } from '../dtos/user-dto'
-
-export type TEditUser = Omit<User, 'id'>
+import jwt from 'jsonwebtoken'
+interface UserIDJwtPayload extends jwt.JwtPayload {
+  id: string
+  login: string
+}
 class UserController {
   // Todo: добавить типы не забыть
   async registration(req: Request, res: Response, next: NextFunction): Promise<any> {
@@ -75,7 +78,6 @@ class UserController {
   async getUserOne(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
       const { id } = req.params
-      console.log(id)
       const user = await userService.getUserOne(id)
       return res.json(user)
     } catch (error) {
@@ -84,18 +86,13 @@ class UserController {
   }
   async editUser(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
-      const { id } = req.params
-      const { email, login, first_name, second_name, phone, img_link, password } = req.body
-      const user: TEditUser = {
-        email,
-        login,
-        first_name,
-        second_name,
-        phone,
-        img_link,
-        password,
+      const tokenHeader = req.headers.authorization
+      if (!tokenHeader) {
+        return next(ApiError.UnauthorizedError())
       }
-      const userData = await userService.editUser(id, user)
+      const token = tokenHeader?.split(' ')[1]
+      const userId = <UserIDJwtPayload>jwt.verify(token, process.env.JWT_ACCESS_SECRET as string)
+      const userData = await userService.editUser({ ...req.body, id: userId.id })
       const newUserDto = new UserDto(userData)
       return res.status(200).json(newUserDto)
     } catch (error) {
