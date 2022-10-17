@@ -1,8 +1,7 @@
 import React, { FC } from 'react'
-import './Loader.css'
-import { TLoaderProps } from './types'
+import './loader.css'
 
-const Loader: FC<TLoaderProps> = (props) => {
+const Loader: FC = (props) => {
   return (
     <div className='spinner-border ${className}' role='status'>
       <span className='sr-only'>Loading...</span>

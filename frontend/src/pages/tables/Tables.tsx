@@ -39,7 +39,7 @@ const Tables: FC = (props) => {
                 <h1>Available tables</h1>
               </div>
               <div>
-                <Button>Create a table</Button>
+                <Button pending={true}>Create a table</Button>
               </div>
             </div>
             <Modal title='Create table' open={isModalOpened} closeHandle={closeModal}>
