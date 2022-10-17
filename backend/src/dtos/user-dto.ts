@@ -7,7 +7,7 @@ export class UserDto {
   first_name: string
   second_name: string
   phone: string
-  img_link: string | null
+  img_link: number | null
 
   constructor(model: User) {
     this.email = model.email

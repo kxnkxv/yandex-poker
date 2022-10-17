@@ -121,6 +121,10 @@ class UserService {
     })
     return newUser
   }
+  async getAllUsers() {
+    const users = await prisma.user.findMany({})
+    return users
+  }
 }
 
 export const userService = new UserService()

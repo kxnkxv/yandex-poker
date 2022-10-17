@@ -3,49 +3,49 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import errorHandler from 'utils/error-handler/errorHandler'
 
 // Types
-import { TSignInForm, TAuthInitialState } from './types'
-import { TErrorPayload } from 'types/app'
+import { TSignInForm, TAuthInitialState, TAuthResponse } from './types'
+import { TErrorPayload, TUserInfoData } from 'types/app'
 import { registration } from '../registration/RegistrationSlice'
 import $api from 'utils/axios/axios'
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 import config from '@/config'
 import { editUser } from '../account-edit/AccountEditSlice'
-// Todo:Типизировать запросы типами
+
 export const login = createAsyncThunk(
   '@@auth/login',
   ({ login, password }: TSignInForm, { rejectWithValue }) => {
-    return $api.post<AxiosResponse<{id:string}>>('v1/auth/login', { login, password }).catch((err) => {
+    return $api.post<TAuthResponse>('v1/auth/login', { login, password }).catch((err) => {
       return rejectWithValue(err.response.data)
     })
   },
 )
 
 export const checkAuth = createAsyncThunk('@@auth/user', (_, { rejectWithValue }) => {
-  return axios.get(`${config.API_URL}/v1/auth/refresh`, { withCredentials: true }).catch((err) => {
-    return rejectWithValue(err.response.data)
-  })
+  return axios
+    .get<TAuthResponse>(`${config.API_URL}/v1/auth/refresh`, { withCredentials: true })
+    .catch((err) => {
+      return rejectWithValue(err.response.data)
+    })
 })
 
 export const logout = createAsyncThunk('@@auth/logout', (_, { rejectWithValue }) => {
-  return $api.post('v1/auth/logout').catch((err) => {
+  return $api.post<{ success: boolean }>('v1/auth/logout').catch((err) => {
     localStorage.removeItem('token')
     return rejectWithValue(err.response.data)
   })
 })
-
+const initialUser: TUserInfoData = {
+  id: '',
+  first_name: '',
+  second_name: '',
+  login: '',
+  email: '',
+  phone: '',
+  img_link: 1,
+}
 const initialState: TAuthInitialState = {
   isPending: false,
-  user: {
-    id: '',
-    first_name: '',
-    second_name: '',
-    display_name: '',
-    login: '',
-    email: '',
-    phone: '',
-    avatar: '',
-    img_link: '',
-  },
+  user: initialUser,
 }
 const authSlice = createSlice({
   name: '@@auth',
@@ -78,11 +78,11 @@ const authSlice = createSlice({
       .addCase(logout.fulfilled, (state, action) => {
         state.isPending = false
         localStorage.removeItem('token')
-        state.user = null
+        state.user = initialUser
       })
       .addCase(logout.rejected, (state, action) => {
         state.isPending = false
-        state.user = null
+        state.user = initialUser
       })
       // Registration
       .addCase(registration.pending, (state, action) => {
@@ -112,7 +112,7 @@ const authSlice = createSlice({
       })
       .addCase(checkAuth.rejected, (state, action) => {
         state.isPending = false
-        state.user = null
+        state.user = initialUser
       })
       .addCase(editUser.pending, (state, action) => {
         state.isPending = true

@@ -67,7 +67,7 @@ const AccountEdit: FC = () => {
     console.log('img_link_id', img_link_id)
     setCurrentAvatar(img_link_id)
     console.log('currentAvatar', currentAvatar)
-    setValue('img_link', String(img_link_id))
+    setValue('img_link', img_link_id)
     closeModal()
   }
 

@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from 'express'
 import { userService } from '../service/user-service'
 import { validationResult } from 'express-validator'
 import { ApiError } from '../exceptions/api-error'
-import { User } from '@prisma/client'
 import { UserDto } from '../dtos/user-dto'
 import jwt from 'jsonwebtoken'
 interface UserIDJwtPayload extends jwt.JwtPayload {
@@ -30,7 +29,7 @@ class UserController {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       })
-      return res.json(userData)
+      return res.status(200).json(userData)
     } catch (error) {
       next(error)
     }
@@ -47,7 +46,7 @@ class UserController {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       })
-      return res.json(userData)
+      return res.status(200).json(userData)
     } catch (error) {
       next(error)
     }
@@ -70,7 +69,7 @@ class UserController {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       })
-      return res.json(userData)
+      return res.status(200).json(userData)
     } catch (error) {
       next(error)
     }
@@ -79,7 +78,7 @@ class UserController {
     try {
       const { id } = req.params
       const user = await userService.getUserOne(id)
-      return res.json(user)
+      return res.status(200).json(user)
     } catch (error) {
       next(error)
     }
@@ -95,6 +94,14 @@ class UserController {
       const userData = await userService.editUser({ ...req.body, id: userId.id })
       const newUserDto = new UserDto(userData)
       return res.status(200).json(newUserDto)
+    } catch (error) {
+      next(error)
+    }
+  }
+  async getUserAll(req: Request, res: Response, next: NextFunction): Promise<any> {
+    try {
+      const users = await userService.getAllUsers()
+      return res.status(200).json(users)
     } catch (error) {
       next(error)
     }

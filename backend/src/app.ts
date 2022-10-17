@@ -82,7 +82,6 @@ io.on('connection', (socket) => {
 
   //Запрос на регистрацию игрока
   socket.on('register', function (newScreenName, callback) {
-    console.log('socket', newScreenName)
     // If a new screen name is posted
     if (typeof newScreenName !== 'undefined') {
       newScreenName = newScreenName.trim()
