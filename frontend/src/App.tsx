@@ -23,76 +23,76 @@ import 'styles/Style.css'
 import { isServer } from 'utils/is-server/isServer'
 
 const routes = (
-    <ErrorBoundary>
-  <Routes>
-    {/* 404 Page */}
-    <Route path='*' element={<NotFound />} />
+  <ErrorBoundary>
+    <Routes>
+      {/* 404 Page */}
+      <Route path='*' element={<NotFound />} />
 
-    {/* Login */}
+      {/* Login */}
 
-    <Route
-      path='/'
-      element={
-        <PublicRoot>
-          <Navigate to='/login' />
-        </PublicRoot>
-      }
-    />
-    <Route
-      path='login'
-      element={
-        <PublicRoot>
-          <Login />
-        </PublicRoot>
-      }
-    />
+      <Route
+        path='/'
+        element={
+          <PublicRoot>
+            <Navigate to='/login' />
+          </PublicRoot>
+        }
+      />
+      <Route
+        path='login'
+        element={
+          <PublicRoot>
+            <Login />
+          </PublicRoot>
+        }
+      />
 
-    {/* Registration */}
-    <Route
-      path='register'
-      element={
-        <PublicRoot>
-          <Registration />
-        </PublicRoot>
-      }
-    />
+      {/* Registration */}
+      <Route
+        path='register'
+        element={
+          <PublicRoot>
+            <Registration />
+          </PublicRoot>
+        }
+      />
 
-    {/* Tables */}
-    <Route
-      path='tables'
-      element={
-        <ProtectedRoot>
-          <Tables />
-        </ProtectedRoot>
-      }
-    />
+      {/* Tables */}
+      <Route
+        path='tables'
+        element={
+          <ProtectedRoot>
+            <Tables />
+          </ProtectedRoot>
+        }
+      />
 
-    {/* Table */}
-    <Route
-      path='tables/:tableId'
-      element={<ProtectedRoot>{!isServer && <Table />}</ProtectedRoot>}
-    />
-    {/* Account */}
-    <Route
-      path='account'
-      element={
-        <ProtectedRoot>
-          <Account />
-        </ProtectedRoot>
-      }
-    />
+      {/* Table */}
+      <Route
+        path='tables/:tableId'
+        element={<ProtectedRoot>{!isServer && <Table />}</ProtectedRoot>}
+      />
+      {/* Account */}
+      <Route
+        path='account'
+        element={
+          <ProtectedRoot>
+            <Account />
+          </ProtectedRoot>
+        }
+      />
 
-    {/* Account edit */}
-    <Route
-      path='account/edit'
-      element={
-        <ProtectedRoot>
-          <AccountEdit />
-        </ProtectedRoot>
-      }
-    />
-  </Routes>
-    </ErrorBoundary>
+      {/* Account edit */}
+      <Route
+        path='account/edit'
+        element={
+          <ProtectedRoot>
+            <AccountEdit />
+          </ProtectedRoot>
+        }
+      />
+    </Routes>
+  </ErrorBoundary>
 )
 
 const App: FC = (): JSX.Element => {
@@ -100,7 +100,6 @@ const App: FC = (): JSX.Element => {
     <>
       <Provider store={store}>
         {routes}
-
         <ToastContainer />
       </Provider>
     </>
