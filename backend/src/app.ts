@@ -1,4 +1,5 @@
-import { Server } from 'socket.io'
+import * as http from 'http'
+import * as socketio from 'socket.io'
 import Table from './poker_modules/table'
 import Player from './poker_modules/player'
 import cookieParser from 'cookie-parser'
@@ -11,25 +12,33 @@ import { router } from './routes'
 import errorMiddleware from './middleware/error-middleware'
 
 const app = express()
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
-app.use(cors())
+app.use(
+  cors({
+    credentials: true,
+    origin: process.env.CLIENT_URL,
+  }),
+)
+dotenv.config()
 app.use('/api/v1/auth', router)
-dotenv.config({ path: '.env.example' })
 app.use(errorMiddleware)
 const logger: Consola = consola
 
 app.get('/', (req, res) => {
-  res.json({ success: true, message: 'JWT Authentication' })
+  res.json({ success: true, message: 'Pocker Game Start' })
 })
-
-const server = app.listen(process.env.PORT || 4000, () => {
-  logger.success(`Server started on port ${process.env.PORT}`)
+const server = http.createServer(app)
+const io = new socketio.Server(server, {
+  cors: {
+    origin: process.env.CLIENT_URL,
+    methods: ['GET', 'POST'],
+  },
 })
 
 //------------------------------WebSocket Play Game--------------------------------------------
-const io = new Server(server)
 
 const players: Record<string, Player> = {}
 const tables: Table[] = []
@@ -67,11 +76,13 @@ tables[3] = new Table(
 )
 
 io.on('connection', (socket) => {
+  console.log('user connecting', socket)
   //Возвращаем состояние стола при первом подключении WS
   socket.emit('table-data', tables[1].public)
 
   //Запрос на регистрацию игрока
   socket.on('register', function (newScreenName, callback) {
+    console.log('socket', newScreenName)
     // If a new screen name is posted
     if (typeof newScreenName !== 'undefined') {
       newScreenName = newScreenName.trim()
@@ -433,3 +444,6 @@ io.on('connection', (socket) => {
 })
 
 console.log(`Your server available at http://localhost:${process.env.PORT}/socket.io/`)
+server.listen(process.env.PORT || 4000, () => {
+  logger.success(`Server started on port ${process.env.PORT}`)
+})

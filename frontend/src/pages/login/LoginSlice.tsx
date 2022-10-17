@@ -1,28 +1,33 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'utils/axios/axios'
 import errorHandler from 'utils/error-handler/errorHandler'
 
 // Types
 import { TSignInForm, TAuthInitialState } from './types'
 import { TErrorPayload } from 'types/app'
-
+import { registration } from '../registration/RegistrationSlice'
+import $api from 'utils/axios/axios'
+import axios from 'axios'
+import config from '@/config'
+// Todo:Типизировать запросы типами
 export const login = createAsyncThunk(
   '@@auth/login',
   ({ login, password }: TSignInForm, { rejectWithValue }) => {
-    return axios.post('auth/signin', { login, password }).catch((err) => {
+    return $api.post('v1/auth/login', { login, password }).catch((err) => {
       return rejectWithValue(err.response.data)
     })
   },
 )
 
 export const checkAuth = createAsyncThunk('@@auth/user', (_, { rejectWithValue }) => {
-  return axios.get('auth/user').catch((err) => {
+  return axios.get(`${config.API_URL}/v1/auth/refresh`, { withCredentials: true }).catch((err) => {
     return rejectWithValue(err.response.data)
   })
 })
 
-export const logout = createAsyncThunk('@@auth/user', (_, { rejectWithValue }) => {
-  return axios.post('auth/user').catch((err) => {
+export const logout = createAsyncThunk('@@auth/logout', (_, { rejectWithValue }) => {
+  return $api.post('v1/auth/logout').catch((err) => {
+    localStorage.removeItem('token')
     return rejectWithValue(err.response.data)
   })
 })
@@ -30,7 +35,7 @@ export const logout = createAsyncThunk('@@auth/user', (_, { rejectWithValue }) =
 const initialState: TAuthInitialState = {
   isPending: false,
   user: {
-    id: null,
+    id: '',
     first_name: '',
     second_name: '',
     display_name: '',
@@ -38,6 +43,7 @@ const initialState: TAuthInitialState = {
     email: '',
     phone: '',
     avatar: '',
+    img_link: '',
   },
 }
 const authSlice = createSlice({
@@ -52,7 +58,11 @@ const authSlice = createSlice({
         state.isPending = true
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.isPending = false
+        if (action.payload.data) {
+          state.isPending = false
+          state.user = action.payload.data?.user
+          localStorage.setItem('token', JSON.stringify(action.payload.data.accessToken))
+        }
       })
       .addCase(login.rejected, (state, action) => {
         state.isPending = false
@@ -60,23 +70,47 @@ const authSlice = createSlice({
         errorHandler(data.reason)
       })
 
-      // Check auth
+      // Logout
+      .addCase(logout.pending, (state) => {
+        state.isPending = true
+      })
+      .addCase(logout.fulfilled, (state, action) => {
+        state.isPending = false
+        localStorage.removeItem('token')
+        state.user = null
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.isPending = false
+        state.user = null
+      })
+      // Registration
+      .addCase(registration.pending, (state, action) => {
+        state.isPending = true
+      })
+      .addCase(registration.fulfilled, (state, action) => {
+        if (action.payload.data) {
+          state.user = action.payload.data?.user
+          localStorage.setItem('token', JSON.stringify(action.payload.data.accessToken))
+          state.isPending = false
+        }
+      })
+      .addCase(registration.rejected, (state, action) => {
+        state.isPending = false
+        console.log('Action Reg Ful Rej', action.payload)
+      })
+      // CheckAuth
+      .addCase(checkAuth.pending, (state, action) => {
+        state.isPending = true
+      })
       .addCase(checkAuth.fulfilled, (state, action) => {
         if (action.payload.data) {
-          // ToDo требуется рефакторинг
-          // Костыль, нужный для прокидывания аватарок через поле display_name
-          const d_name = action.payload.data.display_name
-          if (typeof d_name === 'string' && d_name.includes('avatar')) {
-            action.payload.data.display_name = d_name.replace('avatar', '')
-          } else {
-            action.payload.data.display_name = 0
-          }
-          // Конец костыля
-
-          state.user = action.payload.data
+          state.user = action.payload.data?.user
+          localStorage.setItem('token', JSON.stringify(action.payload.data.accessToken))
+          state.isPending = false
         }
       })
       .addCase(checkAuth.rejected, (state, action) => {
+        state.isPending = false
         state.user = null
       })
   },

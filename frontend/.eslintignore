@@ -1,6 +1,7 @@
 /node_modules
 /dist
 /webpack
+/webpack.config.js
 /postcss.config.js
 /server.js
 /tailwind.config.js

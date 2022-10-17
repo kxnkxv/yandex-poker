@@ -1,7 +1,7 @@
 import { Socket } from 'socket.io-client'
 import { TCombination, TGameState, TGameTable, TWsResponse } from './types'
 
-//Sounds
+// Sounds
 import chipsSound from 'pages/table/sounds/chips.mp3'
 import winSound from 'pages/table/sounds/win31.mp3'
 import allInSound from 'pages/table/sounds/allIn.mp3'
@@ -73,6 +73,7 @@ class TableController {
 
   // ACTIONS
   register(userName: string) {
+    console.log('userName', userName)
     this.socket!.emit(Actions.Register, userName, (response: TWsResponse) => {
       console.log(response)
     })
@@ -236,7 +237,7 @@ class TableController {
       // Показываем модалку
       this.setGameState((state: TGameState) => {
         this.playWinSound.play()
-        return { ...state, winModal: { isOpened: true, amount }}
+        return { ...state, winModal: { isOpened: true, amount } }
       })
 
       // Скрываем через 3.2 сек
