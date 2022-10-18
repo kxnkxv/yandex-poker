@@ -4,11 +4,10 @@ import React, { FC } from 'react'
 // Types
 import { TProps } from './types'
 
-const Button: FC<TProps> = (props) => {
-  const pending = props.pending
+const Button: FC<TProps> = ({ pending = false , children }) => {
   return (
     <button className='btn-red' disabled={pending}>
-      {pending ? <Loader /> : props.children}
+      {pending ? <Loader /> : children}
     </button>
   )
 }
