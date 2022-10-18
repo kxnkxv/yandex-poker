@@ -18,6 +18,7 @@ model User {
   second_name String
   phone String
   img_link Int?  @default(1)
+  balance Int? @default(1000)
   Token    Token?
 }
 

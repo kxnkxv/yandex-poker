@@ -122,7 +122,17 @@ class UserService {
     return newUser
   }
   async getAllUsers() {
-    const users = await prisma.user.findMany({})
+    const users = await prisma.user.findMany({
+      select: {
+        email: true,
+        login: true,
+        first_name: true,
+        second_name: true,
+        phone: true,
+        img_link: true,
+        balance:true
+      },
+    })
     return users
   }
 }
