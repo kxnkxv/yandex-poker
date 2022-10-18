@@ -32,7 +32,7 @@ const ForumTopic: FC = () => {
     mode: 'onBlur',
   })
 
-  const { errors } = useFormState({
+  const { errors, isSubmitting } = useFormState({
     control,
   })
 
@@ -92,7 +92,7 @@ const ForumTopic: FC = () => {
                     />
                   </div>
                   <div className='mb-5'>
-                    <Button>Send</Button>
+                    <Button pending={isSubmitting}>Send</Button>
                   </div>
                 </div>
               </form>

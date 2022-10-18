@@ -24,6 +24,7 @@ import { isServer } from 'utils/is-server/isServer'
 import { checkAuth } from './pages/login/LoginSlice'
 import Forum from 'pages/forum'
 import ForumTopic from 'pages/forum-topic'
+import Loader from 'components/loader/Loader'
 
 const routes = (
   <ErrorBoundary>
@@ -127,7 +128,7 @@ const App: FC = (): JSX.Element => {
   console.log('isPending', isPending)
   return (
     <>
-      {isPending ? <h1>Loading...</h1> : routes}
+      {isPending ? <Loader/> : routes}
       <ToastContainer />
     </>
   )

@@ -27,7 +27,7 @@ const Login: FC = () => {
     mode: 'onBlur',
   })
 
-  const { errors } = useFormState({
+  const { errors, isSubmitting } = useFormState({
     control,
   })
 
@@ -71,7 +71,7 @@ const Login: FC = () => {
             </div>
           </div>
           <div className='mb-5'>
-            <Button>Login</Button>
+            <Button pending={isSubmitting}>Login</Button>
           </div>
           <div className='text-center mb-5'>
             <Link to='/register' className='text-white underline'>

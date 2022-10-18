@@ -38,9 +38,6 @@ const Tables: FC = (props) => {
               <div>
                 <h1>Available tables</h1>
               </div>
-              <div>
-                <Button>Create a table</Button>
-              </div>
             </div>
             <Modal title='Create table' open={isModalOpened} closeHandle={closeModal}>
               <div className='grid gap-1 mb-5 grid-cols-1'>
