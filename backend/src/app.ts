@@ -12,7 +12,7 @@ import { router } from './routes'
 import errorMiddleware from './middleware/error-middleware'
 
 const app = express()
-
+dotenv.config()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
@@ -22,7 +22,7 @@ app.use(
     origin: process.env.CLIENT_URL,
   }),
 )
-dotenv.config()
+
 app.use('/api/v1/auth', router)
 app.use(errorMiddleware)
 const logger: Consola = consola
