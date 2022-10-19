@@ -47,7 +47,10 @@ CLIENT_URL=http://localhost:3000
 в docker будет написано что вы сконнектились с базой 
 после коннекта с базой открываете новый терминал
 вводите команду npx prisma migrate dev - эта команда подтянет таблицы которые указаны в схеме prisma
- как прошел migrate  введите команду npx prisma studio и там будет ваши таблицы
+ как прошел migrate  введите команду npx prisma studio и там будут таблицы которые указаны в схеме
+ 
+ остановить  docker - docker-compose stop
+ остановить и удалить образ docker -  docker compose down
 
 
 
