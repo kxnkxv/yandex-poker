@@ -25,7 +25,6 @@ import './AccountEdit.css'
 import { TAccountEditData } from './types'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from 'core/store'
-import { checkAuth } from 'pages/login/LoginSlice'
 import callbackHandler from 'utils/callback-handler/callbackHandler'
 import { userSelector } from 'core/store/selectors/user'
 
@@ -38,13 +37,13 @@ const AccountEdit: FC = () => {
   const navigate = useNavigate()
 
   const [currentAvatar, setCurrentAvatar] = useState(user.img_link)
-  console.log(user.img_link)
+  console.log('User edit', user, currentAvatar)
 
-  const { handleSubmit, control, register, setValue } = useForm({
+  const { handleSubmit, control, register, setValue, getValues } = useForm({
     defaultValues: {
       // Из-за технических ограничений вынуждены прокидывать id аватарки
       // через поле img_link, добавив строку 'avatar', чтобы бэкенд не ругался
-      img_link: 'avatar' + currentAvatar,
+      img_link: Number(currentAvatar),
       first_name: user.first_name,
       second_name: user.second_name,
       email: user.email,
@@ -65,8 +64,10 @@ const AccountEdit: FC = () => {
   }
 
   const changeAvatar = (img_link_id: number) => {
+    console.log('img_link_id', img_link_id)
     setCurrentAvatar(img_link_id)
-    setValue('img_link', 'avatar' + img_link_id)
+    console.log('currentAvatar', currentAvatar)
+    setValue('img_link', img_link_id)
     closeModal()
   }
 
@@ -75,9 +76,10 @@ const AccountEdit: FC = () => {
   })
 
   const onSubmit: SubmitHandler<TAccountEditData> = (data: TAccountEditData) => {
-    dispatch(editUser(data))
+    console.log('Get Values', getValues())
+    console.log('data', data)
+    dispatch(editUser({ ...data, img_link: Number(data.img_link) }))
       .unwrap()
-      .then(() => dispatch(checkAuth()))
       .then(() => {
         callbackHandler('Information updated')
         navigate('/account')
