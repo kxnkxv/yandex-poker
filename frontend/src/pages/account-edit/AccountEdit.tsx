@@ -37,13 +37,13 @@ const AccountEdit: FC = () => {
   const navigate = useNavigate()
 
   const [currentAvatar, setCurrentAvatar] = useState(user.img_link)
-  console.log(user.img_link)
+  console.log('User edit', user, currentAvatar)
 
-  const { handleSubmit, control, register, setValue } = useForm({
+  const { handleSubmit, control, register, setValue, getValues } = useForm({
     defaultValues: {
       // Из-за технических ограничений вынуждены прокидывать id аватарки
       // через поле img_link, добавив строку 'avatar', чтобы бэкенд не ругался
-      img_link: currentAvatar,
+      img_link: Number(currentAvatar),
       first_name: user.first_name,
       second_name: user.second_name,
       email: user.email,
@@ -76,8 +76,9 @@ const AccountEdit: FC = () => {
   })
 
   const onSubmit: SubmitHandler<TAccountEditData> = (data: TAccountEditData) => {
+    console.log('Get Values', getValues())
     console.log('data', data)
-    dispatch(editUser(data))
+    dispatch(editUser({ ...data, img_link: Number(data.img_link) }))
       .unwrap()
       .then(() => {
         callbackHandler('Information updated')
