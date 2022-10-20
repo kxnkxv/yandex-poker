@@ -125,10 +125,9 @@ const App: FC = (): JSX.Element => {
       dispatch(checkAuth())
     }
   }, [])
-  console.log('isPending', isPending)
   return (
     <>
-      {isPending ? <Loader/> : routes}
+      {isPending ? <Loader /> : routes}
       <ToastContainer />
     </>
   )

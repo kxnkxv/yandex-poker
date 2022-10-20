@@ -68,7 +68,7 @@ const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.isPending = false
         const data = action.payload as TErrorPayload
-        errorHandler(data.reason)
+        errorHandler(data.message)
       })
 
       // Logout
@@ -97,7 +97,8 @@ const authSlice = createSlice({
       })
       .addCase(registration.rejected, (state, action) => {
         state.isPending = false
-        console.log('Action Reg Ful Rej', action.payload)
+        const data = action.payload as TErrorPayload
+        errorHandler(data.message)
       })
       // CheckAuth
       .addCase(checkAuth.pending, (state, action) => {
@@ -123,6 +124,8 @@ const authSlice = createSlice({
       })
       .addCase(editUser.rejected, (state, action) => {
         state.isPending = false
+        const data = action.payload as TErrorPayload
+        errorHandler(data.message)
       })
   },
 })

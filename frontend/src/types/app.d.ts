@@ -21,5 +21,5 @@ export type TState = {
 
 // HTTP REQUESTS
 export type TErrorPayload = {
-  reason?: string
+  message?: string
 }

@@ -12,7 +12,6 @@ const ProtectedRoot: FC<TProps> = (props) => {
   const auth = useSelector((state: TState) => state.auth)
 
   if (auth.user?.id) {
-    console.log('Auth user', auth.user)
     return <>{props.children}</>
   }
 
