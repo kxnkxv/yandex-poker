@@ -22,5 +22,5 @@ jobs:
         run: ssh-keyscan -H ${{ secrets.SSH_HOST }}  >> ~/.ssh/known_hosts
 
       - name: Deploy with rsync
-        run: rsync -avz -e "ssh" ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/
+        run: rsync -avz -e "ssh" --rsync-path="sudo rsync" rsync ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/
 
