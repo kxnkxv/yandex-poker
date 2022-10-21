@@ -17,5 +17,5 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       # Setup key
-      - run: cd backend
-      - run: npm i
+      - run: ssh ionetek@178.154.227.250
+      - run: ls
