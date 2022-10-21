@@ -32,6 +32,7 @@ jobs:
             git clone https://github.com/AIG-GAMING/Poker.git -b develop
             cd Poker
             cd frontend
+            sudo apt autoremove --purge nodejs npm node
             npm -v
             npm i
             npm run start
