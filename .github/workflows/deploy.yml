@@ -28,9 +28,11 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            rm -r *
+            rm -rf Poker
             git clone https://github.com/AIG-GAMING/Poker.git -b develop
-            cd Poker/frontend
+            cd Poker
+            cd frontend
+            npm -v
             npm i
             npm run start
 
