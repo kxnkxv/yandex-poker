@@ -29,11 +29,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             rm -rf Poker
-            git clone https://github.com/AIG-GAMING/Poker.git -b develop
-            cd Poker
-            cd frontend
-            sudo apt autoremove --purge nodejs npm node
-            npm -v
-            npm i
-            npm run start
+            curl -fsSL https://get.docker.com -o get-docker.sh
+            DRY_RUN=1 sh ./get-docker.sh
+            sudo sh get-docker.sh
 
