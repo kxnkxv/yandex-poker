@@ -22,7 +22,7 @@ console.log('CLIENT URL:', process.env.CLIENT_URL);
 app.use(
   cors({
     credentials: true,
-    origin: false,
+    origin: process.env.CLIENT_URL,
   }),
 )
 
@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
 const server = http.createServer(app)
 const io = new socketio.Server(server, {
   cors: {
-    origin: false,
+    origin: process.env.CLIENT_URL,
     methods: ['GET', 'POST'],
   },
 })

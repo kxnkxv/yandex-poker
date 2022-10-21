@@ -70,7 +70,7 @@ jobs:
             'PORT=${{ secrets.BACKEND_PORT }}' \
             'JWT_ACCESS_SECRET=jwt-secret-key' \
             'JWT_REFRESH_SECRET=jwt-refresh-secret-key' \
-            'CLIENT_URL="http://${{ secrets.SSH_HOST }}:${{ secrets.FRONTEND_PORT }}"' \
+            'CLIENT_URL=http://${{ secrets.SSH_HOST }}:${{ secrets.FRONTEND_PORT }}' \
             >.env
 
             cd ..
@@ -79,5 +79,6 @@ jobs:
             docker compose down
 
             #Запускаем сборку
+            docker-compose rm -f
             docker compose up --build -d
 
