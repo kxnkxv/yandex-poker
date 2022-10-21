@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "ts-node ./src/app.ts",
+    "start": "prisma migrate dev && ts-node ./src/app.ts",
     "dev": "nodemon ./src/app.ts",
     "pretty": "prettier --write \"src/**/*.ts\""
   },
