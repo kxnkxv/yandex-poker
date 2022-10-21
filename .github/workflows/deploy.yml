@@ -43,6 +43,8 @@ jobs:
             touch .env
             printf '%s\n' 'PORT=${{ secrets.FRONTEND_PORT }}' 'BACKEND_HOST="http://${{ secrets.SSH_HOST }}:${{ secrets.BACKEND_PORT }}/"' >.env
 
+            cd ..
+
             docker compose down
             docker compose up --build -d
 
