@@ -29,4 +29,5 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             rm -r *
+            git clone https://github.com/AIG-GAMING/Poker.git -b develop
 
