@@ -6,8 +6,8 @@
   "scripts": {
     "clean": "rimraf dist",
     "test": "jest --watch",
-    "start": "npm run clean && cross-env NODE_ENV=production webpack && node ./index.js",
-    "dev": "npm run clean && cross-env NODE_ENV=development webpack serve && node ./index.js ",
+    "start": "npm run clean && cross-env NODE_ENV=production webpack --mode production && node ./index.js",
+    "dev": "concurrently \"npm run clean && cross-env NODE_ENV=development webpack-dev-server --hot --mode development\" && \"node ./index.js\"",
     "build": "npm run clean && cross-env NODE_ENV=production webpack --mode production",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx,json}",
     "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx,json}'"
@@ -91,6 +91,7 @@
     "@typescript-eslint/parser": "5.32.0",
     "autoprefixer": "10.4.8",
     "babel-loader": "8.2.5",
+    "concurrently": "7.4.0",
     "css-loader": "6.7.1",
     "eslint": "8.21.0",
     "eslint-config-prettier": "8.5.0",

@@ -1,5 +1,6 @@
 version: '3.7'
 services:
+  # БАЗА ДАННЫХ
   db:
     image: "postgres"
     container_name: db
@@ -10,6 +11,7 @@ services:
       POSTGRES_PASSWORD: "postgres"
       POSTGRES_DB: "mydb"
 
+  # БЭКЕНД
   backend:
     build: backend
     container_name: backend
@@ -17,23 +19,17 @@ services:
       - "4000:4000"
     depends_on:
       - db
-    environment:
-      DATABASE_URL: "postgresql://postgres:postgres@db:5432/mydb?schema=public"
-      PORT: 4000
-      JWT_ACCESS_SECRET: "jwt-secret-key"
-      JWT_REFRESH_SECRET: "jwt-refresh-secret-key"
-      CLIENT_URL: "http://localhost:3000"
+    env_file:
+      - backend/.env
 
+  # ФРОНТЕНД
   frontend:
     build: frontend
     ports:
-      - "3000:3000"
+      - "80:3000"
     depends_on:
       - backend
-    #environment:
-      #DATABASE_URL: "postgresql://postgres:postgres@db:5432/mydb?schema=public"
-      #PORT: 4000
-      #JWT_ACCESS_SECRET: "jwt-secret-key"
-      #JWT_REFRESH_SECRET: "jwt-refresh-secret-key"
-      #CLIENT_URL: "http://localhost:3000"
+    env_file:
+      - frontend/.env
+
 

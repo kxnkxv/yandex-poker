@@ -37,15 +37,47 @@ jobs:
             docker -v
             git clone https://github.com/AIG-GAMING/Poker.git -b 74-yandex-cloud-deploy
             cd Poker
+
+            #КОНФИГУРИРУЕМ FRONTEND
             cd frontend
 
-            #Генерируем .env для Frontend
+            #Удаляем демонстрационный .env файл
             rm .env
+
+            #Создаем прод .env файл
             touch .env
-            printf '%s\n' 'PORT=${{ secrets.FRONTEND_PORT }}' 'BACKEND_HOST="http://${{ secrets.SSH_HOST }}:${{ secrets.BACKEND_PORT }}/"' >.env
+
+            #Наполняем прод .env файл
+            printf '%s\n' \
+            'PORT=${{ secrets.FRONTEND_PORT }}' \
+            'BACKEND_HOST="http://${{ secrets.SSH_HOST }}:${{ secrets.BACKEND_PORT }}/"' \
+            >.env
 
             cd ..
 
+            #КОНФИГУРИРУЕМ BACKEND
+            cd backend
+
+            #Удаляем демонстрационный .env файл
+            rm .env
+
+            #Создаем прод .env файл
+            touch .env
+
+            #Наполняем прод .env файл
+            printf '%s\n' \
+            'DATABASE_URL="postgresql://postgres:postgres@db:5432/mydb?schema=public"' \
+            'PORT=${{ secrets.BACKEND_PORT }}' \
+            'JWT_ACCESS_SECRET=jwt-secret-key' \
+            'JWT_REFRESH_SECRET=jwt-refresh-secret-key' \
+            'CLIENT_URL="http://${{ secrets.SSH_HOST }}"' \
+            >.env
+
+            cd ..
+
+            #Сбрасываем запущенные контейнеры
             docker compose down
+
+            #Запускаем сборку
             docker compose up --build -d
 
