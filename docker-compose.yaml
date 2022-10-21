@@ -10,8 +10,9 @@ services:
       POSTGRES_PASSWORD: "postgres"
       POSTGRES_DB: "mydb"
 
-  server:
-    build: .
+  backend:
+    build: backend
+    container_name: backend
     ports:
       - "4000:4000"
     depends_on:
@@ -22,4 +23,17 @@ services:
       JWT_ACCESS_SECRET: "jwt-secret-key"
       JWT_REFRESH_SECRET: "jwt-refresh-secret-key"
       CLIENT_URL: "http://localhost:3000"
+
+  frontend:
+    build: frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    #environment:
+      #DATABASE_URL: "postgresql://postgres:postgres@db:5432/mydb?schema=public"
+      #PORT: 4000
+      #JWT_ACCESS_SECRET: "jwt-secret-key"
+      #JWT_REFRESH_SECRET: "jwt-refresh-secret-key"
+      #CLIENT_URL: "http://localhost:3000"
 

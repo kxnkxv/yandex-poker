@@ -36,7 +36,13 @@ jobs:
             docker -v
             git clone https://github.com/AIG-GAMING/Poker.git -b 74-yandex-cloud-deploy
             cd Poker
-            cd backend
+            cd frontend
+
+            #Генерируем .env для Frontend
+            rm .env
+            touch .env
+            printf '%s\n' 'PORT=3000' 'BACKEND_HOST="http://localhost:4000/"' >.env
+
             docker compose down
-            docker compose up --build
+            docker compose up --build -d
 
