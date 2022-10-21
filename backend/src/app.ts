@@ -16,6 +16,9 @@ dotenv.config()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
+
+console.log('CLIENT URL:', process.env.CLIENT_URL);
+
 app.use(
   cors({
     credentials: true,
