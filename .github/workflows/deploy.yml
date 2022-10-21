@@ -8,14 +8,22 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
+
+      - run: npm install
+      - run: npm run build
+
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
         with:
-          node-version: ${{ matrix.node-version }}
-      # Setup key
-      - run: ssh ionetek@178.154.227.250
-      - run: ls
+          key: ${{ secrets.SSH_KEY }}
+          known_hosts: unnecessary
+
+      - name: Adding Known Hosts
+        run: ssh-keyscan -H ${{ secrets.SSH_HOST }}  >> ~/.ssh/known_hosts
+
+      - name: Deploy with rsync
+        run: rsync -avz -e "ssh ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/
+
