@@ -30,4 +30,7 @@ jobs:
           script: |
             rm -r *
             git clone https://github.com/AIG-GAMING/Poker.git -b develop
+            cd Poker/frontend
+            npm i
+            npm run start
 
