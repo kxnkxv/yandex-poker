@@ -41,7 +41,7 @@ jobs:
             #Генерируем .env для Frontend
             rm .env
             touch .env
-            printf '%s\n' 'PORT=7777' 'BACKEND_HOST="http://localhost:8888/"' >.env
+            printf '%s\n' 'PORT=${{ secrets.FRONTEND_PORT }}' 'BACKEND_HOST="http://${{ secrets.SSH_HOST }}:${{ secrets.BACKEND_PORT }}/"' >.env
 
             #docker compose down
             #docker compose up --build -d
