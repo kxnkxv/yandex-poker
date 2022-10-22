@@ -19,18 +19,12 @@ app.use(cookieParser())
 
 console.log('CLIENT URL:', process.env.CLIENT_URL);
 
-/*app.use(
+app.use(
   cors({
     credentials: true,
-    origin: [ process.env.CLIENT_URL, 'https://aigpoker.ru/'],
+    origin: 'https://aigpoker.ru',
   }),
-)*/
-
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+)
 
 
 
@@ -45,7 +39,7 @@ app.get('/', (req, res) => {
 const server = http.createServer(app)
 const io = new socketio.Server(server, {
   cors: {
-    origin: '*',
+    origin: 'https://aigpoker.ru',
     methods: ['GET', 'POST'],
   },
 })
