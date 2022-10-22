@@ -30,15 +30,7 @@ let allowedOrigins = [process.env.CLIENT_URL,'https://aigpoker.ru'];
 
 app.use(cors({
 
-  origin: function(origin, callback){
-
-    if(allowedOrigins.indexOf(origin) === -1){
-
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-
-      return callback(new Error(msg), false);
-
-    }
+  origin: function(_, callback){
 
     return callback(null, true);
 
