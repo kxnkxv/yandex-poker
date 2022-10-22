@@ -26,16 +26,11 @@ console.log('CLIENT URL:', process.env.CLIENT_URL);
   }),
 )*/
 
-let allowedOrigins = [process.env.CLIENT_URL,'https://aigpoker.ru'];
-
-app.use(cors({
-
-  origin: function(_, callback){
-
-    return callback(null, true);
-
-  }
-}));
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 
 
