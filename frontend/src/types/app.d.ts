@@ -1,14 +1,14 @@
 // STORE
-export type TUserInfoData = {
-  id: number
+export type TUserInfoData = TUser
+export type TUser = {
+  id: string
   first_name: string
   second_name: string
-  img_link: string
-  avatar: string | null
+  img_link: number
   email: string
   login: string
   phone: string
-} | null
+}
 
 export type TState = {
   auth: {

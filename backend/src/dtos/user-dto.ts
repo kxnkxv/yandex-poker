@@ -7,7 +7,8 @@ export class UserDto {
   first_name: string
   second_name: string
   phone: string
-  img_link: string | null
+  img_link: number | null
+  balance:number | null
 
   constructor(model: User) {
     this.email = model.email
@@ -16,6 +17,7 @@ export class UserDto {
     this.first_name = model.first_name
     this.second_name = model.second_name
     this.phone = model.phone
-    //this.img_link = model.img_link
+    this.img_link = model.img_link
+    this.balance = model.balance
   }
 }

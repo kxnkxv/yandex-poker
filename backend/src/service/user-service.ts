@@ -33,7 +33,7 @@ class UserService {
       },
     })
     const userDto = new UserDto(user)
-    const tokens = await tokenService.generateTokens({ ...userDto })
+    const tokens = await tokenService.generateTokens({ id: userDto.id, login: userDto.login })
     await tokenService.saveToken(userDto.id, tokens.refreshToken)
 
     return { ...tokens, user: userDto }
@@ -42,22 +42,23 @@ class UserService {
     if (!login || !password) {
       throw ApiError.BadRequest('Error! The login and password fields must not be empty')
     }
+
     const user = await prisma.user.findUnique({
       where: {
         login,
       },
     })
-
     if (!user) {
       throw ApiError.BadRequest('User not found')
     }
     const isPassEquals = await argon2.verify(user.password, password)
+
     if (!isPassEquals) {
       throw ApiError.BadRequest('Invalid password')
     }
     const userDto = new UserDto(user)
 
-    const tokens = await tokenService.generateTokens({ ...userDto })
+    const tokens = await tokenService.generateTokens({ id: userDto.id, login: userDto.login })
     await tokenService.saveToken(userDto.id, tokens.refreshToken)
 
     return { ...tokens, user: userDto }
@@ -85,7 +86,7 @@ class UserService {
       throw ApiError.BadRequest('Error update token')
     }
     const userDto = new UserDto(user)
-    const tokens = await tokenService.generateTokens({ ...userDto })
+    const tokens = await tokenService.generateTokens({ id: userDto.id, login: userDto.login })
     await tokenService.saveToken(userDto.id, tokens.refreshToken)
     return { ...tokens, user: userDto }
   }
@@ -98,6 +99,41 @@ class UserService {
     })
     const userDto = new UserDto(user as User)
     return userDto
+  }
+  //Продумать ошибки по которым если мы не найдем пользователя
+  async editUser(user: User) {
+    const { email, login, first_name, second_name, phone, img_link, id } = user
+    if (!email || !login || !first_name || !second_name || !phone || !img_link) {
+      throw ApiError.BadRequest('Values should not be empty!')
+    }
+    const newUser = await prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        email,
+        login,
+        first_name,
+        second_name,
+        phone,
+        img_link,
+      },
+    })
+    return newUser
+  }
+  async getAllUsers() {
+    const users = await prisma.user.findMany({
+      select: {
+        email: true,
+        login: true,
+        first_name: true,
+        second_name: true,
+        phone: true,
+        img_link: true,
+        balance:true
+      },
+    })
+    return users
   }
 }
 
