@@ -120,7 +120,6 @@ const App: FC = (): JSX.Element => {
         <>
             <Provider store={store}>
                 {routes}
-
                 <ToastContainer />
             </Provider>
         </>
