@@ -31,6 +31,7 @@ app.use(errorMiddleware)
 const logger: Consola = consola
 
 app.get('/', (req, res) => {
+  console.log('REQUEST ORIGIN', req.get('origin'));
   res.json({ success: true, message: 'Pocker Game Start' })
 })
 const server = http.createServer(app)
