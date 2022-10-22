@@ -78,7 +78,9 @@ jobs:
             #Сбрасываем запущенные контейнеры
             docker compose down
 
-            #Запускаем сборку
+            #Удаляем старую сборку
             docker-compose rm -f
+
+            #Запускаем новую сборку
             docker compose up --build -d
 
