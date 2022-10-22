@@ -19,12 +19,34 @@ app.use(cookieParser())
 
 console.log('CLIENT URL:', process.env.CLIENT_URL);
 
-app.use(
+/*app.use(
   cors({
     credentials: true,
     origin: [ process.env.CLIENT_URL, 'https://aigpoker.ru/'],
   }),
-)
+)*/
+
+let allowedOrigins = [process.env.CLIENT_URL,'https://aigpoker.ru'];
+
+app.use(cors({
+
+  origin: function(origin, callback){
+
+    if(allowedOrigins.indexOf(origin) === -1){
+
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+
+      return callback(new Error(msg), false);
+
+    }
+
+    return callback(null, true);
+
+  }
+}));
+
+
+
 
 app.use('/api/v1/auth', router)
 app.use(errorMiddleware)
