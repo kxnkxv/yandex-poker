@@ -50,7 +50,7 @@ jobs:
             #Наполняем прод .env файл
             printf '%s\n' \
             'PORT=${{ secrets.FRONTEND_PORT }}' \
-            'BACKEND_HOST="http://${{ secrets.SSH_HOST }}:${{ secrets.BACKEND_PORT }}/"' \
+            'BACKEND_HOST=http://${{ secrets.SSH_HOST }}:${{ secrets.BACKEND_PORT }}/' \
             >.env
 
             cd ..
