@@ -9,6 +9,7 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 //const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const CompressionPlugin = require('compression-webpack-plugin')
+const Dotenv = require('dotenv-webpack')
 
 //process.env.NODE_ENV = 'production'
 const VERSION = require('../package.json').version
@@ -81,6 +82,13 @@ const prodConfig = {
       }),
     ],
   },
-  plugins: [new MiniCssExtractPlugin(), /*new BundleAnalyzerPlugin(),*/ new CompressionPlugin()],
+  plugins: [
+      new MiniCssExtractPlugin(),
+    /*new BundleAnalyzerPlugin(),*/
+    new CompressionPlugin(),
+    new Dotenv({
+      path: path.resolve(__dirname, '../.env')
+    })
+  ],
 }
 module.exports = merge(common, prodConfig)
