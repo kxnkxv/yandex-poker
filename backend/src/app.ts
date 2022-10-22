@@ -19,27 +19,26 @@ app.use(cookieParser())
 
 console.log('CLIENT URL:', process.env.CLIENT_URL);
 
-app.use(
+/*app.use(
   cors({
     credentials: true,
     origin: process.env.CLIENT_URL,
   }),
-)
+)*/
 
 app.use('/api/v1/auth', router)
 app.use(errorMiddleware)
 const logger: Consola = consola
 
 app.get('/', (req, res) => {
-  console.log('REQUEST ORIGIN', req.get('origin'));
   res.json({ success: true, message: 'Pocker Game Start' })
 })
 const server = http.createServer(app)
 const io = new socketio.Server(server, {
-  cors: {
+  /*cors: {
     origin: process.env.CLIENT_URL,
     methods: ['GET', 'POST'],
-  },
+  },*/
 })
 
 //------------------------------WebSocket Play Game--------------------------------------------
