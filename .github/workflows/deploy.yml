@@ -30,7 +30,7 @@ jobs:
           script: |
             rm -rf Poker
 
-            #Команды ниже нужно выполнить 1 раз после покупки сервера
+            #Команды ниже нужно выполнить 1 раз после покупки сервера (Установка Docker)
             #curl -fsSL https://get.docker.com -o get-docker.sh
             #DRY_RUN=1 sh ./get-docker.sh
             #sudo sh get-docker.sh
