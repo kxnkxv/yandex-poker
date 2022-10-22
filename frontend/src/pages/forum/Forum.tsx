@@ -1,13 +1,27 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import useDocumentTitle from 'hooks/useDocumentTitle'
 
 // Components
 import HearderMenu from 'components/header/Header'
 import Arrow from 'images/arrow.svg'
 import { Link } from 'react-router-dom'
+import Modal from 'components/ui/modal/Modal'
+import Input from 'components/ui/input'
+import Button from '@/components/ui/button'
 
 const Forum: FC = () => {
   useDocumentTitle('Forum')
+
+  const [isModalOpened, setIsModalOpened] = useState(false)
+
+  const openModal = () => {
+    setIsModalOpened(true)
+    console.log('hello')
+  }
+
+  const closeModal = () => {
+    setIsModalOpened(false)
+  }
 
   return (
     <div className='p-5 w-full'>
@@ -68,7 +82,22 @@ const Forum: FC = () => {
             </tbody>
           </table>
         </div>
-        <div className='inline-block'>sdsdf</div>
+        <div className='inline-block'>
+          <Button onClick={openModal}>Create topic</Button>
+        </div>
+
+        <Modal title='Create a new topic' open={isModalOpened} closeHandle={closeModal}>
+          <div className='grid gap-5 mb-5'>
+            <div>
+              <Input className='form-control' label='Topic name' />
+            </div>
+            <textarea className='rounded' placeholder='Topic text'></textarea>
+            <div className='grid grid-cols-2 gap-5'>
+              <button className='btn-green'>Create</button>
+              <Button onClick={closeModal}>Cancel</Button>
+            </div>
+          </div>
+        </Modal>
       </div>
     </div>
   )
