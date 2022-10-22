@@ -19,12 +19,12 @@ app.use(cookieParser())
 
 console.log('CLIENT URL:', process.env.CLIENT_URL);
 
-/*app.use(
+app.use(
   cors({
     credentials: true,
-    origin: '*',
+    origin: [ process.env.CLIENT_URL, 'https://aigpoker.ru/'],
   }),
-)*/
+)
 
 app.use('/api/v1/auth', router)
 app.use(errorMiddleware)
@@ -35,10 +35,10 @@ app.get('/', (req, res) => {
 })
 const server = http.createServer(app)
 const io = new socketio.Server(server, {
-  /*cors: {
+  cors: {
     origin: '*',
     methods: ['GET', 'POST'],
-  },*/
+  },
 })
 
 //------------------------------WebSocket Play Game--------------------------------------------
