@@ -53,6 +53,7 @@ jobs:
             echo "${{ secrets.SSL_FULL_CHAIN }}" > cert.pem
 
             cd ..
+            cd ..
 
             #КОНФИГУРИРУЕМ FRONTEND
             cd frontend
@@ -87,7 +88,7 @@ jobs:
             'PORT=${{ secrets.BACKEND_PORT }}' \
             'JWT_ACCESS_SECRET=jwt-secret-key' \
             'JWT_REFRESH_SECRET=jwt-refresh-secret-key' \
-            'CLIENT_URL=http://${{ secrets.FRONTEND_URL }}' \
+            'CLIENT_URL=${{ secrets.FRONTEND_URL }}' \
             >.env
 
             cd ..
