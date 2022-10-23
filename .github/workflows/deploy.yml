@@ -68,6 +68,7 @@ jobs:
             printf '%s\n' \
             'PORT=${{ secrets.FRONTEND_PORT }}' \
             'BACKEND_HOST=${{ secrets.BACKEND_URL }}:${{ secrets.BACKEND_PORT }}' \
+            'YANDEX_CLIENT_ID=${{ secrets.YANDEX_CLIENT_ID }}' \
             >.env
 
             cd ..

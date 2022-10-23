@@ -30,6 +30,7 @@ const showPrerenderedPage = (req: Request, res: Response) => {
 
 app.get('/login', showPrerenderedPage)
 app.get('/registration', showPrerenderedPage)
+
 app.get('*', (req: Request, res: Response) => {
   console.log('CSR', req.url)
   res.sendFile(__dirname + '/index.html')

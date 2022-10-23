@@ -14,6 +14,13 @@ import Button from 'components/ui/button/Button'
 // Types
 import { TSignInForm } from './types'
 
+//Images
+import YandexLogo from 'images/yandexLogo.svg'
+
+const clientID = process.env.YANDEX_CLIEND_ID
+
+console.log(clientID)
+
 const Login: FC = () => {
   useDocumentTitle('Login')
 
@@ -26,6 +33,32 @@ const Login: FC = () => {
     },
     mode: 'onBlur',
   })
+
+  //OAuth
+
+  let hash = window.location.hash.substr(1)
+
+  if (hash) {
+    let hashData = hash.split('&').reduce(function (res: any, item) {
+      let parts = item.split('=')
+      res[parts[0]] = parts[1]
+      return res
+    }, {})
+
+    const yandexLoginUrl = `https://login.yandex.ru/info`
+    fetch(yandexLoginUrl, {
+      method: 'get',
+      headers: new Headers({
+        Authorization: 'OAuth ' + hashData.access_token,
+      }),
+    })
+      .then((response) => {
+        console.log(response.json())
+      })
+      .catch(() => {
+        console.log('Ошибка авторизации')
+      })
+  }
 
   const { errors, isSubmitting } = useFormState({
     control,
@@ -72,6 +105,12 @@ const Login: FC = () => {
           </div>
           <div className='mb-5'>
             <Button pending={isSubmitting}>Login</Button>
+          </div>
+          <div className='text-center'>
+            Login with
+            <a href={`https://oauth.yandex.ru/authorize?response_type=token&client_id=${clientID}`}>
+              <img src={YandexLogo} className='m-auto mb-5' />
+            </a>
           </div>
           <div className='text-center mb-5'>
             <Link to='/register' className='text-white underline'>
