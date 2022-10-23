@@ -16,12 +16,13 @@ services:
     build: backend
     container_name: backend
     restart: always
+    env_file:
+      - backend/.env
     ports:
       - "8443:8443"
     depends_on:
       - data_base
-    env_file:
-      - backend/.env
+
 
   # ФРОНТЕНД
   frontend:

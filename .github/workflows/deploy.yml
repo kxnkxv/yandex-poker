@@ -40,6 +40,20 @@ jobs:
             git clone https://github.com/AIG-GAMING/Poker.git -b 74-yandex-cloud-deploy
             cd Poker
 
+            #ДОБАВЛЯЕМ СЕРТИФИКАТ И КЛЮЧ ДЛЯ SSL
+            cd backend
+            cd src
+
+            #Создаем и наполняем key.pem
+            touch key.pem
+            echo ${{ secrets.SSL_PRIVATE_KEY }} > key.pem
+
+            #Создаем и наполняем cert.pem
+            touch cert.pem
+            echo ${{ secrets.SSL_FULL_CHAIN }} > cert.pem
+
+            cd ..
+
             #КОНФИГУРИРУЕМ FRONTEND
             cd frontend
 
@@ -52,7 +66,7 @@ jobs:
             #Наполняем прод .env файл
             printf '%s\n' \
             'PORT=${{ secrets.FRONTEND_PORT }}' \
-            'BACKEND_HOST=http://${{ secrets.SSH_HOST }}:${{ secrets.BACKEND_PORT }}' \
+            'BACKEND_URL=http://${{ secrets.BACKEND_URL }}:${{ secrets.BACKEND_PORT }}' \
             >.env
 
             cd ..
@@ -70,10 +84,11 @@ jobs:
             printf '%s\n' \
             'DATABASE_URL="postgresql://postgres:postgres@data_base:5432/mydb?schema=public"' \
             'PORT=${{ secrets.BACKEND_PORT }}' \
-            'SSL_PORT=${{ secrets.BACKEND_SSL_PORT }}' \
             'JWT_ACCESS_SECRET=jwt-secret-key' \
             'JWT_REFRESH_SECRET=jwt-refresh-secret-key' \
-            'CLIENT_URL=http://${{ secrets.SSH_HOST }}' \
+            'CLIENT_URL=http://${{ secrets.FRONTEND_URL }}' \
+            'SSL_FULL_CHAINL="${{ secrets.SSL_FULL_CHAIN }}"' \
+            'SSL_PRIVATE_KEY="${{ secrets.SSL_PRIVATE_KEY }}"' \
             >.env
 
             cd ..

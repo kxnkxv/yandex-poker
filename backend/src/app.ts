@@ -22,15 +22,9 @@ app.use(cookieParser())
 app.use(
   cors({
     credentials: true,
-    origin: 'http://aigpoker.ru',
+    origin: process.env.CLIENT_URL,
   }),
 )
-
-
-
-
-
-
 
 app.use('/api/v1/auth', router)
 app.use(errorMiddleware)
@@ -39,16 +33,33 @@ const logger: Consola = consola
 app.get('/', (req, res) => {
   res.json({ success: true, message: 'Pocker Game Start' })
 })
-const httpServer = http.createServer(app)
 
-const httpsServer = https.createServer({
-  cert: fs.readFileSync(__dirname + '/cert/fullchain.pem'),
-  key: fs.readFileSync(__dirname + '/cert/privatekey.pem')
-}, app)
+let server;
 
-const io = new socketio.Server(httpServer, {
+try {
+  //Проверяем существование ключей шифрования для SSL
+  if (fs.existsSync(__dirname + '/cert.pem') && fs.existsSync(__dirname + '/key.pem')) {
+
+    //Конфигурируем HTTPS сервер
+    console.log('🔒 Конфишурируем HTTPS сервер');
+    server = https.createServer({
+      cert: fs.readFileSync(__dirname + '/cert.pem'),
+      key: fs.readFileSync(__dirname + '/key.pem')
+    }, app)
+
+  }
+} catch(err) {
+  //Конфигурируем HTTP сервер
+  console.log('🔓 Конфишурируем HTTP сервер');
+  server = http.createServer(app)
+}
+
+
+
+
+const io = new socketio.Server(server, {
   cors: {
-    origin: 'http://aigpoker.ru',
+    origin: process.env.CLIENT_URL,
     methods: ['GET', 'POST'],
   },
 })
@@ -457,12 +468,7 @@ io.on('connection', (socket) => {
   })
 })
 
-console.log(`Your server available at http://localhost:${process.env.PORT}/socket.io/`)
-
-httpServer.listen(process.env.PORT || 4000, () => {
-  logger.success(`Server started on port ${process.env.PORT}`)
+server.listen(process.env.PORT, () => {
+  logger.success(`✅ Server started on port ${process.env.PORT}`)
 })
 
-httpsServer.listen(process.env.SSL_PORT, () => {
-  logger.success(`Server started on port ${process.env.PORT}`)
-})
