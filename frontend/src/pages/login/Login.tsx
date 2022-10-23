@@ -44,14 +44,11 @@ const Login: FC = () => {
         return res
       }, {})
 
-      fetch('https://login.yandex.ru/info', {
-        method: 'get',
-        headers: new Headers({
-          Authorization: 'OAuth ' + hashData.access_token,
-        }),
-      })
-        .then((response) => {
-          console.log(response.json())
+      fetch(`https://login.yandex.ru/info?oauth_token=${hashData.access_token}`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('✅ Получены данные пользователя')
+          console.log(data)
         })
         .catch(() => {
           console.log('Ошибка авторизации. Необходим SSL сертификат')
