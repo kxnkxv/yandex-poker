@@ -33,28 +33,29 @@ const Login: FC = () => {
   })
 
   //OAuth
+  if (window) {
+    let hash = window.location.hash.substr(1)
 
-  let hash = window.location.hash.substr(1)
+    if (hash) {
+      let hashData = hash.split('&').reduce(function (res: any, item) {
+        let parts = item.split('=')
+        res[parts[0]] = parts[1]
+        return res
+      }, {})
 
-  if (hash) {
-    let hashData = hash.split('&').reduce(function (res: any, item) {
-      let parts = item.split('=')
-      res[parts[0]] = parts[1]
-      return res
-    }, {})
-
-    fetch('https://login.yandex.ru/info', {
-      method: 'get',
-      headers: new Headers({
-        Authorization: 'OAuth ' + hashData.access_token,
-      }),
-    })
-      .then((response) => {
-        console.log(response.json())
+      fetch('https://login.yandex.ru/info', {
+        method: 'get',
+        headers: new Headers({
+          Authorization: 'OAuth ' + hashData.access_token,
+        }),
       })
-      .catch(() => {
-        console.log('Ошибка авторизации. Необходим SSL сертификат')
-      })
+        .then((response) => {
+          console.log(response.json())
+        })
+        .catch(() => {
+          console.log('Ошибка авторизации. Необходим SSL сертификат')
+        })
+    }
   }
 
   const { errors, isSubmitting } = useFormState({
