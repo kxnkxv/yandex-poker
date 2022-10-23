@@ -81,8 +81,8 @@ jobs:
             docker compose down
 
             #Удаляем старую сборку
-            docker compose rm -f
+            #docker compose rm -f
 
             #Запускаем новую сборку
-            docker compose up --build
+            #docker compose up --build
 
