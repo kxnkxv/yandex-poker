@@ -19,6 +19,8 @@
   --color-white: #ffffff;
   --color-red: #be2e2e;
   --color-crimson: #7d2121;
+  --color-green: #62bd71;
+  --color-dark-green: #3a9048;
   --color-purple: #49499e;
   --color-light-blue: #55556d;
 }
@@ -137,14 +139,14 @@ h2,
   margin-right: 10px;
 }
 .table-list {
-  border-spacing: 0  15px;
+  border-spacing: 0 15px;
   border-collapse: separate;
 }
-.table-list tr td, .table-list tr th {
+.table-list tr td,
+.table-list tr th {
   padding: 10px;
   margin-bottom: 10px;
 }
-
 
 @layer components {
   .form-control {
@@ -155,6 +157,10 @@ h2,
   }
   .btn-red {
     @apply focus:outline-none text-white bg-red hover:bg-crimson focus:ring-4 focus:ring-crimson font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 w-full;
+  }
+  .btn-green {
+    @apply focus:outline-none text-white bg-green hover:bg-dark-green
+    focus:ring-4 focus:ring-dark-green font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 w-full;
   }
   .btn-secondary {
     @apply bg-light-blue rounded text-sm px-3 h-9 inline-flex items-center whitespace-nowrap;
