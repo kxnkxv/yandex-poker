@@ -68,7 +68,6 @@ jobs:
             printf '%s\n' \
             'PORT=${{ secrets.FRONTEND_PORT }}' \
             'BACKEND_HOST=${{ secrets.BACKEND_URL }}:${{ secrets.BACKEND_PORT }}' \
-            'NEW_STRING=NEW_VALUE' \
             >.env
 
             cd ..
