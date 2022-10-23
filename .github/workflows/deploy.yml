@@ -87,8 +87,6 @@ jobs:
             'JWT_ACCESS_SECRET=jwt-secret-key' \
             'JWT_REFRESH_SECRET=jwt-refresh-secret-key' \
             'CLIENT_URL=http://${{ secrets.FRONTEND_URL }}' \
-            'SSL_FULL_CHAINL="${{ secrets.SSL_FULL_CHAIN }}"' \
-            'SSL_PRIVATE_KEY="${{ secrets.SSL_PRIVATE_KEY }}"' \
             >.env
 
             cd ..
