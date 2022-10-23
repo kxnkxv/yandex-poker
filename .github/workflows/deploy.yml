@@ -46,11 +46,11 @@ jobs:
 
             #Создаем и наполняем key.pem
             touch key.pem
-            echo ${{ secrets.SSL_PRIVATE_KEY }} > key.pem
+            echo "${{ secrets.SSL_PRIVATE_KEY }}" > key.pem
 
             #Создаем и наполняем cert.pem
             touch cert.pem
-            echo ${{ secrets.SSL_FULL_CHAIN }} > cert.pem
+            echo "${{ secrets.SSL_FULL_CHAIN }}" > cert.pem
 
             cd ..
 
