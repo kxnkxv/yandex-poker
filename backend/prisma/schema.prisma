@@ -39,13 +39,13 @@ model Topic {
   name        String
   description String?
   createDate  DateTime  @default(now())
-  Comment     Comment[]
+  comment     Comment[]
 }
 
 model Comment {
   id       String   @id @default(uuid())
-  Topic    Topic?   @relation(fields: [topicId], references: [id])
-  topicId  String?
+  Topic    Topic    @relation(fields: [topicId], references: [id])
+  topicId  String
   text     String
   date     DateTime @default(now())
   author   User     @relation(fields: [authorId], references: [id])

@@ -76,7 +76,6 @@ tables[3] = new Table(
 )
 
 io.on('connection', (socket) => {
-  console.log('user connecting', socket)
   //Возвращаем состояние стола при первом подключении WS
   socket.emit('table-data', tables[1].public)
 

@@ -9,8 +9,7 @@ interface UserIDJwtPayload extends jwt.JwtPayload {
   login: string
 }
 class UserController {
-  // Todo: добавить типы не забыть
-  async registration(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async registration(req: Request, res: Response, next: NextFunction) {
     try {
       const errors = validationResult(req)
       if (!errors.isEmpty()) {
@@ -34,7 +33,7 @@ class UserController {
       next(error)
     }
   }
-  async login(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async login(req: Request, res: Response, next: NextFunction) {
     try {
       const errors = validationResult(req)
       if (!errors.isEmpty()) {
@@ -51,7 +50,7 @@ class UserController {
       next(error)
     }
   }
-  async logout(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async logout(req: Request, res: Response, next: NextFunction) {
     try {
       const { refreshToken } = req.cookies
       await userService.logout(refreshToken)
@@ -61,7 +60,7 @@ class UserController {
       next(error)
     }
   }
-  async refresh(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async refresh(req: Request, res: Response, next: NextFunction) {
     try {
       const { refreshToken } = req.cookies
       const userData = await userService.refresh(refreshToken)
@@ -74,7 +73,7 @@ class UserController {
       next(error)
     }
   }
-  async getUserOne(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async getUserOne(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params
       const user = await userService.getUserOne(id)
@@ -83,7 +82,7 @@ class UserController {
       next(error)
     }
   }
-  async editUser(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async editUser(req: Request, res: Response, next: NextFunction) {
     try {
       const tokenHeader = req.headers.authorization
       if (!tokenHeader) {
@@ -98,7 +97,7 @@ class UserController {
       next(error)
     }
   }
-  async getUserAll(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async getUserAll(req: Request, res: Response, next: NextFunction) {
     try {
       const users = await userService.getAllUsers()
       return res.status(200).json(users)
