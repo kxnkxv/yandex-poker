@@ -1,4 +1,3 @@
-import * as http from 'http'
 import * as socketio from 'socket.io'
 import Table from './poker_modules/table'
 import Player from './poker_modules/player'
@@ -10,6 +9,9 @@ import cors from 'cors'
 import * as bodyParser from 'body-parser'
 import { router } from './routes'
 import errorMiddleware from './middleware/error-middleware'
+import * as fs from 'fs'
+import https from 'https'
+import http from 'http'
 
 const app = express()
 dotenv.config()
@@ -37,8 +39,14 @@ const logger: Consola = consola
 app.get('/', (req, res) => {
   res.json({ success: true, message: 'Pocker Game Start' })
 })
-const server = http.createServer(app)
-const io = new socketio.Server(server, {
+const httpServer = http.createServer(app)
+
+const httpsServer = https.createServer({
+  key: fs.readFileSync('/cert/privkey.pem'),
+  cert: fs.readFileSync('/cert/fullchain.pem'),
+}, app)
+
+const io = new socketio.Server(httpServer, {
   cors: {
     origin: 'http://aigpoker.ru',
     methods: ['GET', 'POST'],
@@ -450,6 +458,11 @@ io.on('connection', (socket) => {
 })
 
 console.log(`Your server available at http://localhost:${process.env.PORT}/socket.io/`)
-server.listen(process.env.PORT || 4000, () => {
+
+httpServer.listen(process.env.PORT || 4000, () => {
+  logger.success(`Server started on port ${process.env.PORT}`)
+})
+
+httpsServer.listen(process.env.SSL_PORT, () => {
   logger.success(`Server started on port ${process.env.PORT}`)
 })
