@@ -1,9 +1,9 @@
 version: '3.7'
 services:
   # БАЗА ДАННЫХ
-  db:
+  data_base:
     image: "postgres"
-    container_name: db
+    container_name: data_base
     ports:
       - "5432:5432"
     environment:
@@ -19,7 +19,7 @@ services:
     ports:
       - "4000:4000"
     depends_on:
-      - db
+      - data_base
     env_file:
       - backend/.env
 
