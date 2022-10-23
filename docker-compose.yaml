@@ -17,7 +17,7 @@ services:
     container_name: backend
     restart: always
     ports:
-      - "4000:4000"
+      - "400:4000"
     depends_on:
       - db
     env_file:
