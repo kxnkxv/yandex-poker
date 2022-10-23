@@ -16,6 +16,7 @@ import { TSignInForm } from './types'
 
 //Images
 import YandexLogo from 'images/yandexLogo.svg'
+import { isServer } from 'utils/is-server/isServer'
 
 const clientID = process.env.YANDEX_CLIENT_ID
 
@@ -33,7 +34,7 @@ const Login: FC = () => {
   })
 
   //OAuth
-  if (window) {
+  if (!isServer) {
     let hash = window.location.hash.substr(1)
 
     if (hash) {
