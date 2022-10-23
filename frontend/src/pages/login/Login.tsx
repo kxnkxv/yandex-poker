@@ -17,9 +17,7 @@ import { TSignInForm } from './types'
 //Images
 import YandexLogo from 'images/yandexLogo.svg'
 
-const clientID = process.env.YANDEX_CLIEND_ID
-
-console.log(clientID)
+const clientID = process.env.YANDEX_CLIENT_ID
 
 const Login: FC = () => {
   useDocumentTitle('Login')
@@ -45,8 +43,7 @@ const Login: FC = () => {
       return res
     }, {})
 
-    const yandexLoginUrl = `https://login.yandex.ru/info`
-    fetch(yandexLoginUrl, {
+    fetch('https://login.yandex.ru/info', {
       method: 'get',
       headers: new Headers({
         Authorization: 'OAuth ' + hashData.access_token,
@@ -56,7 +53,7 @@ const Login: FC = () => {
         console.log(response.json())
       })
       .catch(() => {
-        console.log('Ошибка авторизации')
+        console.log('Ошибка авторизации. Необходим SSL сертификат')
       })
   }
 
