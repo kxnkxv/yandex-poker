@@ -42,8 +42,8 @@ app.get('/', (req, res) => {
 const httpServer = http.createServer(app)
 
 const httpsServer = https.createServer({
-  key: fs.readFileSync('/cert/privkey.pem'),
-  cert: fs.readFileSync('/cert/fullchain.pem'),
+  key: fs.readFileSync('./cert/privatekey.pem'),
+  cert: fs.readFileSync('./cert/fullchain.pem'),
 }, app)
 
 const io = new socketio.Server(httpServer, {
