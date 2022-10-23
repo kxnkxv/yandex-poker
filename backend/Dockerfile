@@ -7,7 +7,7 @@ COPY package*.json ./
 
 RUN npm install
 COPY . .
-EXPOSE 4000
+EXPOSE 444
 
 RUN npx prisma generate
 CMD [ "npm", "run", "start" ]
