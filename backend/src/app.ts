@@ -20,7 +20,7 @@ app.use(cookieParser())
 app.use(
   cors({
     credentials: true,
-    origin: 'https://aigpoker.ru',
+    origin: 'http://aigpoker.ru',
   }),
 )
 
@@ -40,7 +40,7 @@ app.get('/', (req, res) => {
 const server = http.createServer(app)
 const io = new socketio.Server(server, {
   cors: {
-    origin: 'https://aigpoker.ru',
+    origin: 'http://aigpoker.ru',
     methods: ['GET', 'POST'],
   },
 })
