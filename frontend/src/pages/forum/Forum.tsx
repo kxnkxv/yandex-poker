@@ -8,25 +8,30 @@ import { Link } from 'react-router-dom'
 import Modal from 'components/ui/modal/Modal'
 import Input from 'components/ui/input'
 import Button from '@/components/ui/button'
-import { Controller, useForm, useFormState } from 'react-hook-form'
+import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from 'core/store'
-import { checkAuth, login } from 'pages/login/LoginSlice'
+import { createTopic } from './ForumSlice'
 
 const Forum: FC = () => {
   useDocumentTitle('Forum')
   const dispatch = useDispatch<AppDispatch>()
-  const { handleSubmit, control } = useForm({})
+  const { handleSubmit, control } = useForm({
+    defaultValues: {
+      name: '',
+      description: '',
+    },
+    mode: 'onBlur',
+  })
 
-  const { isSubmitting } = useFormState({
+  const { errors, isSubmitting } = useFormState({
     control,
   })
 
-  const onSubmit = (data: any) => {
-    dispatch(login(data))
-      .unwrap()
-      .then(() => dispatch(checkAuth()))
-      .catch(() => {})
+  const onSubmit: SubmitHandler<{ name: string; description: string }> = (data) => {
+    dispatch(createTopic(data)).then(() => {
+      setIsModalOpened(false)
+    })
   }
 
   const [isModalOpened, setIsModalOpened] = useState(false)
@@ -100,32 +105,70 @@ const Forum: FC = () => {
           </table>
         </div>
         <div className='inline-block'>
-          <Button className='btn-red' onClick={openModal}>Create topic</Button>
+          <Button className='btn-red' onClick={openModal}>
+            Create topic
+          </Button>
         </div>
 
         <Modal title='Create a new topic' open={isModalOpened} closeHandle={closeModal}>
-        <form onSubmit={handleSubmit(onSubmit)} data-testid='form-login'>
-          <div className='grid gap-5 mb-5'>
-            <div>
-              <Controller
-                control={control}
-                name='login'
-                render={({ field }) => (
-                  <Input {...field} className='form-control' label='Topic name' />
-                )}
-              />
+            <div className='grid gap-5 mb-5'>
+              <div>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Controller
+                  control={control}
+                  name='name'
+                  rules={{
+                    required: 'The field is required',
+                    validate: (value: string) => {
+                      if (!value.trim()) {
+                        return 'The field must not contain a space'
+                      }
+                    },
+                  }}
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      className='form-control'
+                      label='Topic name'
+                      error={errors.name}
+                    />
+                  )}
+                />
+                <div>
+                  <Controller
+                    control={control}
+                    name='description'
+                    rules={{
+                      validate: (value: string) => {
+                        if (!value.trim()) {
+                          return 'The field must not contain a space'
+                        }
+                      },
+                    }}
+                    render={({ field }) => (
+                      <>
+                        <label className='form-label'>Description:</label>
+                        <textarea
+                          {...field}
+                          className='form-control'
+                          rows={5}
+                          style={{ resize: 'none' }}
+                          ref={field.ref}
+                        />
+
+                      </>
+                    )}
+                  />
+                </div>
+                <div className='grid grid-cols-2 gap-5 mb-5'>
+                  <Button className='btn-green' pending={isSubmitting}>
+                    Create
+                  </Button>
+                  <Button className='btn-red' onClick={closeModal}>Cancel</Button>
+                </div>
+              </form>
+              </div>
             </div>
-            <textarea className='rounded' placeholder='Topic text'></textarea>
-            <div className='grid grid-cols-2 gap-5'>
-              <Button className='btn-green' pending={isSubmitting}>
-                Create
-              </Button>
-              <Button className='btn-red' onClick={closeModal}>
-                Cancel
-              </Button>
-            </div>
-            </div>
-            </form>
         </Modal>
       </div>
     </div>
