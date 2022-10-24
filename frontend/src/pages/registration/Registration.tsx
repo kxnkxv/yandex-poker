@@ -37,7 +37,7 @@ const Registration: FC = () => {
     mode: 'onBlur',
   })
 
-  const { errors } = useFormState({
+  const { errors, isSubmitting } = useFormState({
     control,
   })
 
@@ -141,7 +141,7 @@ const Registration: FC = () => {
               )}
             />
           </div>
-          <Button>Register</Button>
+          <Button className='btn-red' pending={isSubmitting}>Register</Button>
           <div className='text-center mb-5'>
             <Link to='/' className='text-white underline'>
               I have an account

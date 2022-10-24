@@ -92,7 +92,7 @@ const ForumTopic: FC = () => {
                     />
                   </div>
                   <div className='mb-5'>
-                    <Button pending={isSubmitting}>Send</Button>
+                    <Button className='btn-red' pending={isSubmitting}>Send</Button>
                   </div>
                 </div>
               </form>

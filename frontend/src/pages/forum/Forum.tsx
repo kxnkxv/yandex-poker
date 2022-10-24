@@ -8,9 +8,26 @@ import { Link } from 'react-router-dom'
 import Modal from 'components/ui/modal/Modal'
 import Input from 'components/ui/input'
 import Button from '@/components/ui/button'
+import { Controller, useForm, useFormState } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from 'core/store'
+import { checkAuth, login } from 'pages/login/LoginSlice'
 
 const Forum: FC = () => {
   useDocumentTitle('Forum')
+  const dispatch = useDispatch<AppDispatch>()
+  const { handleSubmit, control } = useForm({})
+
+  const { isSubmitting } = useFormState({
+    control,
+  })
+
+  const onSubmit = (data: any) => {
+    dispatch(login(data))
+      .unwrap()
+      .then(() => dispatch(checkAuth()))
+      .catch(() => {})
+  }
 
   const [isModalOpened, setIsModalOpened] = useState(false)
 
@@ -83,20 +100,32 @@ const Forum: FC = () => {
           </table>
         </div>
         <div className='inline-block'>
-          <Button onClick={openModal}>Create topic</Button>
+          <Button className='btn-red' onClick={openModal}>Create topic</Button>
         </div>
 
         <Modal title='Create a new topic' open={isModalOpened} closeHandle={closeModal}>
+        <form onSubmit={handleSubmit(onSubmit)} data-testid='form-login'>
           <div className='grid gap-5 mb-5'>
             <div>
-              <Input className='form-control' label='Topic name' />
+              <Controller
+                control={control}
+                name='login'
+                render={({ field }) => (
+                  <Input {...field} className='form-control' label='Topic name' />
+                )}
+              />
             </div>
             <textarea className='rounded' placeholder='Topic text'></textarea>
             <div className='grid grid-cols-2 gap-5'>
-              <button className='btn-green'>Create</button>
-              <Button onClick={closeModal}>Cancel</Button>
+              <Button className='btn-green' pending={isSubmitting}>
+                Create
+              </Button>
+              <Button className='btn-red' onClick={closeModal}>
+                Cancel
+              </Button>
             </div>
-          </div>
+            </div>
+            </form>
         </Modal>
       </div>
     </div>
