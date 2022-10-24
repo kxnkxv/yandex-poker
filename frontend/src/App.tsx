@@ -128,7 +128,7 @@ const App: FC = (): JSX.Element => {
   console.log('isPending', isPending)
   return (
     <>
-      {isPending ? <Loader/> : routes}
+      {isPending ? (<div className='absolute top-1/2 left-1/2'><Loader/> </div>) : routes}
       <ToastContainer />
     </>
   )
