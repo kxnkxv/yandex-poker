@@ -134,7 +134,7 @@ const Forum: FC = () => {
                     />
                   )}
                 />
-                <div>
+                <div className='mb-5'>
                   <Controller
                     control={control}
                     name='description'
@@ -160,8 +160,8 @@ const Forum: FC = () => {
                     )}
                   />
                 </div>
-                <div className='grid grid-cols-2 gap-5 mb-5'>
-                  <Button className='btn-green' pending={isSubmitting}>
+                <div className='grid grid-cols-2 gap-5'>
+                  <Button className='btn-light-blue' pending={isSubmitting}>
                     Create
                   </Button>
                   <Button className='btn-red' onClick={closeModal}>Cancel</Button>
