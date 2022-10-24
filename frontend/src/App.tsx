@@ -106,7 +106,7 @@ const routes = (
       />
       {/* Forum */}
       <Route
-        path='forum/:id'
+        path='forum/:topicId'
         element={
           <ProtectedRoot>
             <ForumTopic />

@@ -20,13 +20,32 @@ class ForumService {
         name: true,
         description: true,
         createDate: true,
+        _count: {
+          select: {
+            comment: true,
+          },
+        },
       },
     })
-    const count = topics.length
-    return { ...topics, countTopics: count }
+    return topics
   }
-  async createMessage(message: any) {
-    const { text, authorId, topicId } = message
+  async getTopic(topicId: string) {
+    const topic = await prisma.topic.findUnique({
+      where: {
+        id: topicId,
+      },
+    })
+    return topic
+  }
+  async createMessage({
+    text,
+    authorId,
+    topicId,
+  }: {
+    text: string
+    authorId: string
+    topicId: string
+  }) {
     const createdMessage = await prisma.comment.create({
       data: {
         text,

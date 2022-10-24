@@ -38,10 +38,17 @@ router.post(
 router.post('/logout', userController.logout)
 router.get('/refresh', userController.refresh)
 router.put('/user/profile', authMiddleware, userController.editUser)
-router.get('/user/:id', authMiddleware, userController.getUserOne)
+router.get('/user', authMiddleware, userController.getUserOne)
 router.get('/users', authMiddleware, userController.getUserAll)
-router.post('/topic', authMiddleware, forumController.createTopic)
+router.post(
+  '/topic',
+  body('name').trim(),
+  body('description').trim(),
+  authMiddleware,
+  forumController.createTopic,
+)
 router.get('/topics', authMiddleware, forumController.getTopics)
-router.post('/topic/:topicId/message', authMiddleware, forumController.createMessage)
+router.get('/topic/:topicId', authMiddleware, forumController.getTopic)
+router.post('/topic/:topicId/message', body('text'), authMiddleware, forumController.createMessage)
 router.get('/topic/:topicId/messages', authMiddleware, forumController.getMessages)
 router.delete('/message/:messageId', authMiddleware, forumController.deleteMessage)

@@ -4,10 +4,6 @@ import { validationResult } from 'express-validator'
 import { ApiError } from '../exceptions/api-error'
 import { UserDto } from '../dtos/user-dto'
 import jwt from 'jsonwebtoken'
-interface UserIDJwtPayload extends jwt.JwtPayload {
-  id: string
-  login: string
-}
 class UserController {
   async registration(req: Request, res: Response, next: NextFunction) {
     try {
@@ -75,7 +71,7 @@ class UserController {
   }
   async getUserOne(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.params
+      const { id } = req.userTokens
       const user = await userService.getUserOne(id)
       return res.status(200).json(user)
     } catch (error) {
@@ -84,13 +80,8 @@ class UserController {
   }
   async editUser(req: Request, res: Response, next: NextFunction) {
     try {
-      const tokenHeader = req.headers.authorization
-      if (!tokenHeader) {
-        return next(ApiError.UnauthorizedError())
-      }
-      const token = tokenHeader?.split(' ')[1]
-      const userId = <UserIDJwtPayload>jwt.verify(token, process.env.JWT_ACCESS_SECRET as string)
-      const userData = await userService.editUser({ ...req.body, id: userId.id })
+      const { id } = req.userTokens
+      const userData = await userService.editUser({ ...req.body, id })
       const newUserDto = new UserDto(userData)
       return res.status(200).json(newUserDto)
     } catch (error) {

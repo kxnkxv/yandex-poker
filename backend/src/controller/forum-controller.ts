@@ -1,14 +1,14 @@
-import { Topic } from '@prisma/client'
+import { Topic, User } from '@prisma/client'
 import { NextFunction, Request, Response } from 'express'
 import { forumService } from '../service/forum-service'
-
 class ForumController {
   //Создаем темы для форума
   async createTopic(req: Request, res: Response, next: NextFunction) {
     try {
-      const { name, description, authorId } = req.body
-      const data = await forumService.createTopic(name, description, authorId)
-      return res.status(200).json(data)
+      const { id } = req.userTokens
+      const { name, description } = req.body
+      const data = await forumService.createTopic(name, description, id)
+      return res.status(200).json({ ...data, commentCount: 0 })
     } catch (error) {
       next(error)
     }
@@ -17,7 +17,24 @@ class ForumController {
   async getTopics(req: Request, res: Response, next: NextFunction) {
     try {
       const data = await forumService.getTopics()
-      return res.status(200).json(data)
+      const topics = data.map((d) => ({
+        id: d.id,
+        name: d.name,
+        description: d.description,
+        createDate: d.createDate,
+        commentCount: d._count.comment,
+      }))
+      return res.status(200).json(topics)
+    } catch (error) {
+      next(error)
+    }
+  }
+  //Возвращаем тему форума
+  async getTopic(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { topicId } = req.params
+      const topic = await forumService.getTopic(topicId)
+      return res.status(200).json(topic)
     } catch (error) {
       next(error)
     }
@@ -25,8 +42,10 @@ class ForumController {
   //Добовляем новое сообщение к выбранной теме
   async createMessage(req: Request, res: Response, next: NextFunction) {
     try {
-      const message = { ...req.body, ...req.params }
-      const data = await forumService.createMessage(message)
+      const { id } = req.userTokens
+      const { text } = req.body
+      const { topicId } = req.params
+      const data = await forumService.createMessage({ text, authorId: id, topicId })
       return res.status(200).json(data)
     } catch (error) {
       next(error)

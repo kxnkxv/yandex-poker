@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { PrismaClient } from '@prisma/client'
+import { UserIDJwtPayload } from 'types/express'
 
 const prisma = new PrismaClient()
 class TokenService {
@@ -17,7 +18,7 @@ class TokenService {
   }
   validateAccessToken(token: string) {
     try {
-      const userData = jwt.verify(token, process.env.JWT_ACCESS_SECRET as string)
+      const userData = <UserIDJwtPayload>jwt.verify(token, process.env.JWT_ACCESS_SECRET as string)
       return userData
     } catch (error) {
       return null
@@ -25,7 +26,7 @@ class TokenService {
   }
   validateRefreshToken(token: string) {
     try {
-      const userData = jwt.verify(token, process.env.JWT_REFRESH_SECRET as string)
+      const userData = <UserIDJwtPayload>jwt.verify(token, process.env.JWT_REFRESH_SECRET as string)
       return userData
     } catch (error) {
       return null

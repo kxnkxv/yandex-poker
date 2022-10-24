@@ -16,7 +16,7 @@ export default function (req: any, res: Response, next: NextFunction) {
     if (!userData) {
       return next(ApiError.UnauthorizedError())
     }
-    req.User = userData
+    req.userTokens = userData
     next()
   } catch (error) {
     return next(ApiError.UnauthorizedError())
