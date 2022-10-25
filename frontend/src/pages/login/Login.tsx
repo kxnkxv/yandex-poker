@@ -71,7 +71,7 @@ const Login: FC = () => {
             </div>
           </div>
           <div className='mb-5'>
-            <Button pending={isSubmitting}>Login</Button>
+            <Button className='btn-red' pending={isSubmitting}>Login</Button>
           </div>
           <div className='text-center mb-5'>
             <Link to='/register' className='text-white underline'>

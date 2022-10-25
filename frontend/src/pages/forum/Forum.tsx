@@ -98,7 +98,9 @@ const Forum: FC = () => {
           </table>
         </div>
         <div className='inline-block'>
-          <Button onClick={openModal}>Create topic</Button>
+          <Button className='btn-red' onClick={openModal}>
+            Create topic
+          </Button>
         </div>
 
         <Modal title='Create a new topic' open={isModalOpened} closeHandle={closeModal}>
@@ -154,10 +156,12 @@ const Forum: FC = () => {
                   />
                 </div>
                 <div className='grid grid-cols-2 gap-5'>
-                  <Button className='btn-green' pending={isSubmitting}>
+                  <Button className='btn-light-blue' pending={isSubmitting}>
                     Create
                   </Button>
-                  <Button onClick={closeModal}>Cancel</Button>
+                  <Button className='btn-red' onClick={closeModal}>
+                    Cancel
+                  </Button>
                 </div>
               </form>
             </div>
