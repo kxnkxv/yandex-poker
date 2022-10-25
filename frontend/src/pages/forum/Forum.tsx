@@ -78,7 +78,7 @@ const Forum: FC = () => {
             <tbody>
               {isPending ? (
                 <Loader />
-              ) : topicsList !== null ? (
+              ) : topicsList.length !== 0 ? (
                 topicsList?.map((topic) => (
                   <tr
                     key={topic.id}
