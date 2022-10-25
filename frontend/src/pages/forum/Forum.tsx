@@ -10,13 +10,13 @@ import Input from 'components/ui/input'
 import Button from '@/components/ui/button'
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { createTopic, getTopics } from './ForumSlice'
 import { AppDispatch, RootState } from '@/core/store'
+import { createTopic, getTopics } from './TopicSlice'
 
 const Forum: FC = () => {
   useDocumentTitle('Forum')
   const dispatch = useDispatch<AppDispatch>()
-  const topicsList = useSelector((state: RootState) => state.topic.topic)
+  const topicsList = useSelector((state: RootState) => state.topic.topics)
 
   const { handleSubmit, control, reset } = useForm({
     defaultValues: {

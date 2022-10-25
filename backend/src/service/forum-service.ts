@@ -34,6 +34,7 @@ class ForumService {
       where: {
         id: topicId,
       },
+      include: { author: { select: { img_link: true, login: true } } },
     })
     return topic
   }

@@ -18,22 +18,26 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from 'core/store'
 import Back from 'images/back.svg'
 import { Link, useParams } from 'react-router-dom'
-import { createMessage, getMessages, getTopic } from '../forum/ForumSlice'
+import { getTopic } from '../forum/TopicSlice'
+import { createMessage, getMessages, resetMessage } from './commentTopicSlice'
 
 const ForumTopic: FC = () => {
   useDocumentTitle('Forum')
   const { topicId } = useParams()
   const dispatch = useDispatch<AppDispatch>()
-  const topic = useSelector((state: RootState) => state.topic.topic)
-  const user = useSelector((state: RootState) => state.auth.user)
-  const messages = useSelector((state: RootState) => state.topic.message)
-
   useEffect(() => {
     if (topicId) {
       dispatch(getTopic({ topicId }))
       dispatch(getMessages({ topicId }))
     }
+    return () => {
+      dispatch(resetMessage())
+    }
   }, [])
+  const topic = useSelector((state: RootState) => state.topic.topic)
+  const user = useSelector((state: RootState) => state.auth.user)
+  const messages = useSelector((state: RootState) => state.comment.messages)
+
   const { handleSubmit, control, reset } = useForm({
     defaultValues: {
       text: '',
@@ -62,20 +66,20 @@ const ForumTopic: FC = () => {
               <Link className='btn-nav mr-5' to='/forum'>
                 <img src={Back} alt='Back' />
               </Link>
-              {topic !== null ? topic[0].name : 'No data available'}
+              {topic !== null ? topic.name : 'No data available'}
             </h1>
           </div>
           <div className='topic-messages'>
             <div className='topic-message'>
               <div className='topic-avatar'>
-                <img src={Avatars[user.img_link].image} width={50} />
+                <img src={Avatars[topic ? topic.author.img_link : 1].image} width={50} />
               </div>
               <div className='topic-text'>
                 <b>Admin</b>
-                <p className='mb-5'>{topic !== null ? topic[0].description : ''}</p>
+                <p className='mb-5'>{topic !== null ? topic.description : ''}</p>
               </div>
               <div className='topic-date'>
-                {topic !== null ? topic[0].createDate.split('T')[0] : ''}
+                {topic !== null ? topic.createDate.split('T')[0] : ''}
               </div>
             </div>
 
