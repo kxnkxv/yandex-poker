@@ -12,11 +12,12 @@ import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-for
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '@/core/store'
 import { createTopic, getTopics } from './TopicSlice'
+import Loader from '@/components/loader/Loader'
 
 const Forum: FC = () => {
   useDocumentTitle('Forum')
   const dispatch = useDispatch<AppDispatch>()
-  const topicsList = useSelector((state: RootState) => state.topic.topics)
+  const { topics: topicsList, isPending } = useSelector((state: RootState) => state.topic)
 
   const { handleSubmit, control, reset } = useForm({
     defaultValues: {
@@ -28,9 +29,11 @@ const Forum: FC = () => {
   const { errors, isSubmitting } = useFormState({
     control,
   })
+
   useEffect(() => {
     dispatch(getTopics())
   }, [])
+
   const [isModalOpened, setIsModalOpened] = useState(false)
 
   const openModal = () => {
@@ -73,7 +76,9 @@ const Forum: FC = () => {
               </tr>
             </thead>
             <tbody>
-              {topicsList !== null ? (
+              {isPending ? (
+                <Loader />
+              ) : topicsList !== null ? (
                 topicsList?.map((topic) => (
                   <tr
                     key={topic.id}

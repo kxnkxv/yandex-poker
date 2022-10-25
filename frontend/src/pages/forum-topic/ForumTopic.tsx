@@ -20,6 +20,7 @@ import Back from 'images/back.svg'
 import { Link, useParams } from 'react-router-dom'
 import { getTopic } from '../forum/TopicSlice'
 import { createMessage, getMessages, resetMessage } from './commentTopicSlice'
+import Loader from '@/components/loader/Loader'
 
 const ForumTopic: FC = () => {
   useDocumentTitle('Forum')
@@ -36,7 +37,7 @@ const ForumTopic: FC = () => {
   }, [])
   const topic = useSelector((state: RootState) => state.topic.topic)
   const user = useSelector((state: RootState) => state.auth.user)
-  const messages = useSelector((state: RootState) => state.comment.messages)
+  const { messages, isPending } = useSelector((state: RootState) => state.comment)
 
   const { handleSubmit, control, reset } = useForm({
     defaultValues: {
@@ -112,7 +113,9 @@ const ForumTopic: FC = () => {
                     />
                   </div>
                   <div className='mb-5'>
-                    <Button className='btn-red' pending={isSubmitting}>Send</Button>
+                    <Button className='btn-red' pending={isSubmitting}>
+                      Send
+                    </Button>
                   </div>
                 </div>
               </form>
@@ -122,7 +125,9 @@ const ForumTopic: FC = () => {
               <div className='mb-5'>
                 <b>Comments:</b>
               </div>
-              {messages.length !== 0 ? (
+              {isPending ? (
+                <Loader />
+              ) : messages.length !== 0 ? (
                 messages.map((message) => (
                   <div className='topic-message' key={message.id}>
                     <div className='topic-avatar'>

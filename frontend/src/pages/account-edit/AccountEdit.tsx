@@ -14,7 +14,6 @@ import { editUser } from './AccountEditSlice'
 // Components
 import Input from 'components/ui/input/Input'
 import Modal from 'components/ui/modal/Modal'
-import Button from 'components/ui/button/Button'
 
 // Images
 import backArrowIcon from './img/backArrowIcon.svg'
@@ -25,7 +24,7 @@ import './AccountEdit.css'
 // Types
 import { TAccountEditData } from './types'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from 'core/store'
+import { AppDispatch } from 'core/store'
 import callbackHandler from 'utils/callback-handler/callbackHandler'
 import { userSelector } from 'core/store/selectors/user'
 import Button from '@/components/ui/button/Button'
@@ -34,7 +33,6 @@ const AccountEdit: FC = () => {
   useDocumentTitle('Edit account')
 
   const user = useSelector(userSelector)
-  const loading = useSelector((state: RootState) => state.auth.isPending)
 
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
