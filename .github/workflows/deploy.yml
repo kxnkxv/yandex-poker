@@ -96,8 +96,8 @@ jobs:
             #Сбрасываем запущенные контейнеры
             docker compose down
 
-            #Удаляем старую сборку
-            docker compose rm -f
+            #Удаляем старые image, vulumes, containers
+            docker system prune -a
 
             #Запускаем новую сборку
             docker compose up --build -d
