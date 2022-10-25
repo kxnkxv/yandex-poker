@@ -3,8 +3,11 @@ import './loader.css'
 
 const Loader: FC = (props) => {
   return (
-    <div className='spinner-border ${className}' role='status'>
-      <span className='sr-only'>Loading...</span>
+    <div>
+      <div className='spinner-border ${className}' role='status'>
+        <span className='sr-only'>Loading</span>
+      </div>
+      <span className='mb-5 ml-2'>Loading...</span>
     </div>
   )
 }
