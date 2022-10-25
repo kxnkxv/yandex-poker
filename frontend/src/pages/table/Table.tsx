@@ -59,9 +59,9 @@ const Table: FC = () => {
   // При первой отрисовке компонента
   useEffect(() => {
     // Устанавливаем WS соединение
-    const BACKEND_HOST : string = process.env.BACKEND_HOST || 'http://localhost:4000/';
-    console.log('BACKEND_HOST', BACKEND_HOST);
-    const socket = io( BACKEND_HOST , { transports: ['websocket'] })
+    const BACKEND_HOST: string = process.env.BACKEND_HOST || 'http://localhost:4000/'
+    console.log('BACKEND_HOST', BACKEND_HOST)
+    const socket = io(BACKEND_HOST, { transports: ['websocket'] })
 
     // Инициализируем контроллер для управления столом, прокинув туда WS, геттер и сеттер состояния стола
     const tc = new TableController(socket, gameState, setGameState)

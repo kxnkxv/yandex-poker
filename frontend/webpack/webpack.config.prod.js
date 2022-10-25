@@ -83,12 +83,12 @@ const prodConfig = {
     ],
   },
   plugins: [
-      new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin(),
     /*new BundleAnalyzerPlugin(),*/
     new CompressionPlugin(),
     new Dotenv({
-      path: path.resolve(__dirname, '../.env')
-    })
+      path: path.resolve(__dirname, '../.env'),
+    }),
   ],
 }
 module.exports = merge(common, prodConfig)

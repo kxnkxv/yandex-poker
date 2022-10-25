@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Gilroy-Black";
-  src: url("fonts/gilroy-black.eot"); /* IE 9 Compatibility Mode */
-  src: url("fonts/gilroy-black.eot?#iefix") format("embedded-opentype"),
-    /* IE < 9 */ url("fonts/gilroy-black.woff2") format("woff2"),
-    /* Super Modern Browsers */ url("fonts/gilroy-black.woff") format("woff"),
-    /* Firefox >= 3.6, any other modern browser */ url("fonts/gilroy-black.ttf") format("truetype"),
-    /* Safari, Android, iOS */ url("fonts/gilroy-black.svg") format("svg"); /* Chrome < 4, Legacy iOS */
+  font-family: 'Gilroy-Black';
+  src: url('fonts/gilroy-black.eot'); /* IE 9 Compatibility Mode */
+  src: url('fonts/gilroy-black.eot?#iefix') format('embedded-opentype'),
+    /* IE < 9 */ url('fonts/gilroy-black.woff2') format('woff2'),
+    /* Super Modern Browsers */ url('fonts/gilroy-black.woff') format('woff'),
+    /* Firefox >= 3.6, any other modern browser */ url('fonts/gilroy-black.ttf') format('truetype'),
+    /* Safari, Android, iOS */ url('fonts/gilroy-black.svg') format('svg'); /* Chrome < 4, Legacy iOS */
 }
 :root {
   --color-dark-blue: #232333;
@@ -40,7 +40,7 @@ body::backdrop {
 h1,
 .h1 {
   height: 39px;
-  font-family: "Gilroy-Black";
+  font-family: 'Gilroy-Black';
   font-style: normal;
   font-weight: 800;
   font-size: 32px;
@@ -49,7 +49,7 @@ h1,
 }
 h2,
 .h2 {
-  font-family: "Gilroy-Black";
+  font-family: 'Gilroy-Black';
   font-style: normal;
   font-weight: 800;
   font-size: 24px;
@@ -58,7 +58,7 @@ h2,
 }
 .form-link {
   height: 16px;
-  font-family: "Roboto Condensed";
+  font-family: 'Roboto Condensed';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -137,15 +137,16 @@ h2,
   margin-right: 10px;
 }
 .table-list {
-  border-spacing: 0  15px;
+  border-spacing: 0 15px;
   border-collapse: separate;
 }
-.table-list tr td, .table-list tr th {
+.table-list tr td,
+.table-list tr th {
   padding: 10px;
   margin-bottom: 10px;
 }
 
-iframe[title="yandex-hidden-frame"] {
+iframe[title='yandex-hidden-frame'] {
   display: none;
 }
 

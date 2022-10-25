@@ -11,16 +11,16 @@ const ssrPages = ['/login', '/registration']
 const isSsr = ssrPages.includes(window.location.pathname) && process.env.NODE_ENV === 'production'
 
 const application = (
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
 )
 
 if (isSsr) {
-    //Для страниц с ssr
-    hydrateRoot(container, application)
+  //Для страниц с ssr
+  hydrateRoot(container, application)
 } else {
-    //Для страниц без ssr
-    const root = createRoot(container)
-    root.render(application)
+  //Для страниц без ssr
+  const root = createRoot(container)
+  root.render(application)
 }
