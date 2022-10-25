@@ -2,8 +2,6 @@ import React, { FC, useEffect } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from 'core/store'
-import { Provider } from 'react-redux'
-import { store } from 'core/store'
 import { ToastContainer } from 'react-toastify'
 import PublicRoot from 'components/public-root/PublicRoot'
 import ProtectedRoot from 'components/protected-root/ProtectedRoot'
@@ -120,24 +118,24 @@ const routes = (
 )
 
 const App: FC = (): JSX.Element => {
-  let { isPending } = useSelector((state: RootState) => state.auth)
-  const dispatch = useDispatch<AppDispatch>()
-  useEffect(() => {
-    if (localStorage.getItem('token') && !isServer) {
-      dispatch(checkAuth())
-    }
-  }, [])
+  let isPending = false
 
   if (!isServer) {
+    isPending = useSelector((state: RootState) => state.auth.isPending)
+    const dispatch = useDispatch<AppDispatch>()
+    useEffect(() => {
+      if (localStorage.getItem('token') && !isServer) {
+        dispatch(checkAuth())
+      }
+    }, [])
+
     isPending = false
   }
 
   return (
     <>
-      <Provider store={store}>
-        {isPending ? <Loader /> : routes}
-        <ToastContainer />
-      </Provider>
+      {isPending ? <Loader /> : routes}
+      <ToastContainer />
     </>
   )
 }
