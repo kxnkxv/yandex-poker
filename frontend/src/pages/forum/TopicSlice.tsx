@@ -12,12 +12,12 @@ export type TTopic = {
 }
 
 const initialState: {
-  topics: null | TTopic[]
+  topics: TTopic[]
   topic: null | TTopic
   isPending: boolean
 } = {
   topic: null,
-  topics: null,
+  topics: [],
   isPending: false,
 }
 export const createTopic = createAsyncThunk(
@@ -57,7 +57,7 @@ const topicSlice = createSlice({
     })
     builder.addCase(createTopic.fulfilled, (state, action) => {
       state.isPending = false
-      if (state.topics !== null) {
+      if (state.topics.length !== 0) {
         state.topics.push(action.payload.data)
       } else {
         state.topics = [action.payload.data]

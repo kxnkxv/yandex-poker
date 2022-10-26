@@ -49,7 +49,7 @@ export const commentTopicSlice = createSlice({
       state.isPending = true
     })
     builder.addCase(createMessage.fulfilled, (state, action) => {
-      if (state.messages !== null) {
+      if (state.messages.length !== 0) {
         state.messages.push(action.payload.data)
       } else {
         state.messages = [action.payload.data]
