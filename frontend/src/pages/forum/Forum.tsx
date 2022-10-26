@@ -7,12 +7,12 @@ import Arrow from 'images/arrow.svg'
 import { Link } from 'react-router-dom'
 import Modal from 'components/ui/modal/Modal'
 import Input from 'components/ui/input'
-import Button from '@/components/ui/button'
+import Button from 'components/ui/button'
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from '@/core/store'
+import { AppDispatch, RootState } from 'core/store'
 import { createTopic, getTopics } from './TopicSlice'
-import Loader from '@/components/loader/Loader'
+import Loader from 'components/loader/Loader'
 
 const Forum: FC = () => {
   useDocumentTitle('Forum')
@@ -96,7 +96,7 @@ const Forum: FC = () => {
                 ))
               ) : (
                 <>
-                  <h1>Hi friend👋. Do you want to create a topic? Then hit the button.</h1>
+                  <h2>Hi friend👋. Do you want to create a topic? Then hit the button.</h2>
                 </>
               )}
             </tbody>

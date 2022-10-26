@@ -149,10 +149,10 @@ const ForumTopic: FC = () => {
                 ))
               ) : (
                 <>
-                  <h1>
+                  <h2>
                     Hi friend👋. There are no messages in this thread. If you want to create a
                     message, click on
-                  </h1>
+                  </h2>
                 </>
               )}
             </div>

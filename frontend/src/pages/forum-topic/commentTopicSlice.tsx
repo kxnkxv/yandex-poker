@@ -1,14 +1,6 @@
 import $api from '@/utils/axios/axios'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-
-export type TMessage = {
-  author: { login: string; img_link: number }
-  authorId: string
-  date: string
-  id: string
-  text: string
-  topicId: string
-}
+import { TMessage } from './types'
 
 const initialState: {
   messages: TMessage[]

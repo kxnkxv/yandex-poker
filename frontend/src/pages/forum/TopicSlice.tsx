@@ -1,15 +1,6 @@
 import $api from '@/utils/axios/axios'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-
-export type TTopic = {
-  authorId?: string
-  commentCount: number
-  author: { login: string; img_link: number }
-  createDate: string
-  description: string | null
-  id: string
-  name: string
-}
+import { TTopic } from './types'
 
 const initialState: {
   topics: TTopic[]
