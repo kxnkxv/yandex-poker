@@ -24,7 +24,7 @@ import './AccountEdit.css'
 // Types
 import { TAccountEditData } from './types'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch } from 'core/store'
+import { AppDispatch, RootState } from 'core/store'
 import callbackHandler from 'utils/callback-handler/callbackHandler'
 import { userSelector } from 'core/store/selectors/user'
 import Button from '@/components/ui/button/Button'
@@ -68,8 +68,9 @@ const AccountEdit: FC = () => {
     setValue('img_link', img_link_id)
     closeModal()
   }
+  const { isPending } = useSelector((state: RootState) => state.auth)
 
-  const { errors, isSubmitting } = useFormState({
+  const { errors } = useFormState({
     control,
   })
 
@@ -200,7 +201,7 @@ const AccountEdit: FC = () => {
             </div>
           </div>
           <div className='text-center'>
-            <Button pending={isSubmitting} className='btn-red'>
+            <Button pending={isPending} className='btn-red'>
               Confirm
             </Button>
           </div>

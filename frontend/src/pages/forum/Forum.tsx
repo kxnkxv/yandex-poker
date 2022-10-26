@@ -26,7 +26,7 @@ const Forum: FC = () => {
     },
     mode: 'onBlur',
   })
-  const { errors, isSubmitting } = useFormState({
+  const { errors } = useFormState({
     control,
   })
 
@@ -103,7 +103,7 @@ const Forum: FC = () => {
           </table>
         </div>
         <div className='inline-block'>
-          <Button className='btn-red' onClick={openModal}>
+          <Button pending={isPending} className='btn-red' onClick={openModal}>
             Create topic
           </Button>
         </div>
@@ -160,8 +160,8 @@ const Forum: FC = () => {
                     )}
                   />
                 </div>
-                <div className='grid grid-cols-2 gap-5'>
-                  <Button className='btn-light-blue' pending={isSubmitting}>
+                <div className='grid grid-cols-2 gap-5 mt-5'>
+                  <Button className='btn-light-blue' pending={isPending}>
                     Create
                   </Button>
                   <Button className='btn-red' onClick={closeModal}>

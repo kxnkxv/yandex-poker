@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from 'core/store'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from 'core/store'
 import { ToastContainer } from 'react-toastify'
 import PublicRoot from 'components/public-root/PublicRoot'
 import ProtectedRoot from 'components/protected-root/ProtectedRoot'
@@ -24,7 +24,6 @@ import { isServer } from 'utils/is-server/isServer'
 import { checkAuth } from './pages/login/LoginSlice'
 import Forum from 'pages/forum'
 import ForumTopic from 'pages/forum-topic'
-import Loader from 'components/loader/Loader'
 
 const routes = (
   <ErrorBoundary>
@@ -118,7 +117,6 @@ const routes = (
 )
 
 const App: FC = (): JSX.Element => {
-  const { isPending } = useSelector((state: RootState) => state.auth)
   const dispatch = useDispatch<AppDispatch>()
   useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -127,13 +125,7 @@ const App: FC = (): JSX.Element => {
   }, [])
   return (
     <>
-      {isPending ? (
-        <div className='absolute top-1/2 left-1/2'>
-          <Loader />{' '}
-        </div>
-      ) : (
-        routes
-      )}
+      {routes}
       <ToastContainer />
     </>
   )
