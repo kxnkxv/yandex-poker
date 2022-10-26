@@ -1,4 +1,4 @@
-import $api from '@/utils/axios/axios'
+import $api from 'utils/axios/axios'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 export type TTopic = {

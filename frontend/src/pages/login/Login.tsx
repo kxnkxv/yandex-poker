@@ -1,10 +1,10 @@
 import React, { FC } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useForm, SubmitHandler, Controller, useFormState } from 'react-hook-form'
 import { loginValidation, passwordValidation } from 'utils/validation/validation'
 import { login } from 'pages/login/LoginSlice'
 import { Link } from 'react-router-dom'
-import { AppDispatch } from 'core/store'
+import { AppDispatch, RootState } from 'core/store'
 import useDocumentTitle from 'hooks/useDocumentTitle'
 
 // Components
@@ -27,9 +27,11 @@ const Login: FC = () => {
     mode: 'onBlur',
   })
 
-  const { errors, isSubmitting } = useFormState({
+  const { errors } = useFormState({
     control,
   })
+
+  const { isPending } = useSelector((state: RootState) => state.auth)
 
   const onSubmit: SubmitHandler<TSignInForm> = (data) => {
     dispatch(login(data))
@@ -71,7 +73,7 @@ const Login: FC = () => {
             </div>
           </div>
           <div className='mb-5'>
-            <Button className='btn-red' pending={isSubmitting}>Login</Button>
+            <Button className='btn-red' pending={isPending}>Login</Button>
           </div>
           <div className='text-center mb-5'>
             <Link to='/register' className='text-white underline'>

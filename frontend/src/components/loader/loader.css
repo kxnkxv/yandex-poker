@@ -1,22 +1,13 @@
 .spinner-border {
   display: inline-block;
-  width: 2rem;
-  height: 2rem;
+  width: 1.7rem;
+  height: 1.7rem;
   vertical-align: text-bottom;
   border: 0.25em solid currentcolor;
   border-right-color: transparent;
   border-radius: 50%;
   animation: spinner-border 0.75s linear infinite;
 }
-
-.spinner-border-xs {
-  width: 1.3rem;
-  height: 1.3rem;
-  border: 0.2em solid currentcolor;
-  border-right-color: transparent;
-  border-radius: 50%;
-}
-
 .sr-only {
   position: absolute;
   width: 1px;
