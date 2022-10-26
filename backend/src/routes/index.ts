@@ -37,6 +37,7 @@ router.post(
 )
 router.post('/logout', userController.logout)
 router.get('/refresh', userController.refresh)
+router.post('/registration/oauth/:systemName', userController.registrationOauth)
 router.put('/user/profile', authMiddleware, userController.editUser)
 router.get('/user', authMiddleware, userController.getUserOne)
 router.get('/users', authMiddleware, userController.getUserAll)

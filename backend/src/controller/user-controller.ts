@@ -5,6 +5,29 @@ import { ApiError } from '../exceptions/api-error'
 import { UserDto } from '../dtos/user-dto'
 import jwt from 'jsonwebtoken'
 class UserController {
+  async registrationOauth(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { login, first_name, last_name, default_email, default_phone, id } = req.body
+      const { systemName } = req.params
+      const dataOauth = {
+        login,
+        first_name,
+        last_name,
+        default_email,
+        default_phone,
+        systemName,
+        id,
+      }
+      const userData = await userService.registrationOauth(dataOauth)
+      res.cookie('refreshToken', userData!.refreshToken, {
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+      })
+      return res.status(200).json({ user: userData.user, accessToken: userData.accessToken })
+    } catch (error) {
+      next(error)
+    }
+  }
   async registration(req: Request, res: Response, next: NextFunction) {
     try {
       const errors = validationResult(req)
@@ -24,7 +47,7 @@ class UserController {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       })
-      return res.status(200).json(userData)
+      return res.status(200).json({ user: userData.user, accessToken: userData.accessToken })
     } catch (error) {
       next(error)
     }
@@ -41,7 +64,7 @@ class UserController {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       })
-      return res.status(200).json(userData)
+      return res.status(200).json({ user: userData.user, accessToken: userData.accessToken })
     } catch (error) {
       next(error)
     }
@@ -64,7 +87,7 @@ class UserController {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       })
-      return res.status(200).json(userData)
+      return res.status(200).json({ user: userData.user, accessToken: userData.accessToken })
     } catch (error) {
       next(error)
     }

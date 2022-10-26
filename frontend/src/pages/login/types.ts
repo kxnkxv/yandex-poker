@@ -6,7 +6,6 @@ export type TSignInForm = {
 }
 export interface TAuthResponse {
   accessToken: string
-  refreshToken: string
   user: TUser
 }
 export interface TAuthInitialState {
