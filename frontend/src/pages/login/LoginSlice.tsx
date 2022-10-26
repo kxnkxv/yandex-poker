@@ -11,6 +11,14 @@ import axios from 'axios'
 import config from '@/config'
 import { editUser } from '../account-edit/AccountEditSlice'
 
+export const registrationOauth = createAsyncThunk(
+  '@@auth/registrationOauth',
+  ({ data, systemName }: { data: any; systemName: string }, { rejectWithValue }) => {
+    return $api.post(`v1/auth/registration/oauth/${systemName}`, { ...data }).catch((err) => {
+      return rejectWithValue(err.response.data)
+    })
+  },
+)
 export const login = createAsyncThunk(
   '@@auth/login',
   ({ login, password }: TSignInForm, { rejectWithValue }) => {
@@ -126,6 +134,19 @@ const authSlice = createSlice({
         state.isPending = false
         const data = action.payload as TErrorPayload
         errorHandler(data.message)
+      })
+      .addCase(registrationOauth.pending, (state, action) => {
+        state.isPending = true
+      })
+      .addCase(registrationOauth.fulfilled, (state, action) => {
+        state.isPending = false
+        if (action.payload.data) {
+          state.user = action.payload.data?.user
+          localStorage.setItem('token', JSON.stringify(action.payload.data.accessToken))
+        }
+      })
+      .addCase(registrationOauth.rejected, (state, action) => {
+        state.isPending = false
       })
   },
 })
