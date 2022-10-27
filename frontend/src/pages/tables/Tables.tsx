@@ -20,7 +20,6 @@ const Tables: FC = (props) => {
   const createTable = () => {
     console.log('created')
   }
-
   /* const openModal = () => {
     setIsModalOpened(true)
   } */
@@ -38,9 +37,6 @@ const Tables: FC = (props) => {
             <div className='flex justify-between mb-5'>
               <div>
                 <h1>Available tables</h1>
-              </div>
-              <div>
-                <Button>Create a table</Button>
               </div>
             </div>
             <Modal title='Create table' open={isModalOpened} closeHandle={closeModal}>

@@ -4,15 +4,12 @@ import React, { FC } from 'react'
 import Arrow from 'images/arrow.svg'
 import { Link } from 'react-router-dom'
 
-// Styles
-import './TableList.css'
-
 const TablesList: FC = () => {
   return (
     <div>
       <table className='w-full table-auto table-list'>
         <thead>
-          <tr className='bg-blue uppercase h-10 border-2 border-dark-blue text-left '>
+          <tr className='bg-blue h-10 border-2 border-dark-blue text-left '>
             <th />
             <th>
               Table name

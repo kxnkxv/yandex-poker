@@ -1,11 +1,11 @@
-import React, { FC } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import { store, persistor } from 'core/store'
-import { PersistGate } from 'redux-persist/integration/react'
+import React, { FC, useEffect } from 'react'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from 'core/store'
 import { ToastContainer } from 'react-toastify'
 import PublicRoot from 'components/public-root/PublicRoot'
 import ProtectedRoot from 'components/protected-root/ProtectedRoot'
+import Loader from 'components/loader/Loader'
 
 // Pages
 import NotFound from 'pages/notFound'
@@ -15,89 +15,134 @@ import Table from 'pages/table/Table'
 import Tables from 'pages/tables/Tables'
 import Account from 'pages/account'
 import AccountEdit from 'pages/account-edit'
-
-// Styles
 import ErrorBoundary from 'components/error-boundary'
+// Styles
 import 'styles/Style.css'
 
 // Images
 // .....
+import { isServer } from 'utils/is-server/isServer'
+import { checkAuth } from 'pages/login/LoginSlice'
+import Forum from 'pages/forum'
+import ForumTopic from 'pages/forum-topic'
+
+const routes = (
+  <ErrorBoundary>
+    <Routes>
+      {/* 404 Page */}
+      <Route path='*' element={<NotFound />} />
+
+      {/* Login */}
+
+      <Route
+        path='/'
+        element={
+          <PublicRoot>
+            <Navigate to='/login' />
+          </PublicRoot>
+        }
+      />
+      <Route
+        path='login'
+        element={
+          <PublicRoot>
+            <Login />
+          </PublicRoot>
+        }
+      />
+
+      {/* Registration */}
+      <Route
+        path='register'
+        element={
+          <PublicRoot>
+            <Registration />
+          </PublicRoot>
+        }
+      />
+
+      {/* Tables */}
+      <Route
+        path='tables'
+        element={
+          <ProtectedRoot>
+            <Tables />
+          </ProtectedRoot>
+        }
+      />
+
+      {/* Table */}
+      <Route
+        path='tables/:tableId'
+        element={<ProtectedRoot>{!isServer && <Table />}</ProtectedRoot>}
+      />
+      {/* Account */}
+      <Route
+        path='account'
+        element={
+          <ProtectedRoot>
+            <Account />
+          </ProtectedRoot>
+        }
+      />
+
+      {/* Account edit */}
+      <Route
+        path='account/edit'
+        element={
+          <ProtectedRoot>
+            <AccountEdit />
+          </ProtectedRoot>
+        }
+      />
+      {/* Forum */}
+      <Route
+        path='forum'
+        element={
+          <ProtectedRoot>
+            <Forum />
+          </ProtectedRoot>
+        }
+      />
+      {/* Forum */}
+      <Route
+        path='forum/:topicId'
+        element={
+          <ProtectedRoot>
+            <ForumTopic />
+          </ProtectedRoot>
+        }
+      />
+    </Routes>
+  </ErrorBoundary>
+)
 
 const App: FC = (): JSX.Element => {
+  let isPending = false
+
+  if (!isServer) {
+    isPending = useSelector((state: RootState) => state.auth.isPending)
+    const dispatch = useDispatch<AppDispatch>()
+    useEffect(() => {
+      if (localStorage.getItem('token') && !isServer) {
+        dispatch(checkAuth())
+      }
+    }, [])
+
+    isPending = false
+  }
+
   return (
-    <ErrorBoundary>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <BrowserRouter>
-            <Routes>
-              {/* 404 Page */}
-              <Route path='*' element={<NotFound />} />
-
-              {/* Login */}
-              <Route
-                path='/'
-                element={
-                  <PublicRoot>
-                    <Login />
-                  </PublicRoot>
-                }
-              />
-
-              {/* Registration */}
-              <Route
-                path='register'
-                element={
-                  <PublicRoot>
-                    <Registration />
-                  </PublicRoot>
-                }
-              />
-
-              {/* Tables */}
-              <Route
-                path='tables'
-                element={
-                  <ProtectedRoot>
-                    <Tables />
-                  </ProtectedRoot>
-                }
-              />
-
-              {/* Table */}
-              <Route
-                path='tables/:tableId'
-                element={
-                  <ProtectedRoot>
-                    <Table />
-                  </ProtectedRoot>
-                }
-              />
-
-              {/* Account */}
-              <Route
-                path='account'
-                element={
-                  <ProtectedRoot>
-                    <Account />
-                  </ProtectedRoot>
-                }
-              />
-
-              {/* Account edit */}
-              <Route
-                path='account/edit'
-                element={
-                  <ProtectedRoot>
-                    <AccountEdit />
-                  </ProtectedRoot>
-                }
-              />
-            </Routes>
-          </BrowserRouter>
-          <ToastContainer />
-        </PersistGate>
-      </Provider>
-    </ErrorBoundary>
+    <>
+      {isPending ? (
+        <div className='absolute top-1/2 left-1/2'>
+          <Loader />
+        </div>
+      ) : (
+        routes
+      )}
+      <ToastContainer />
+    </>
   )
 }
 

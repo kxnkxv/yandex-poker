@@ -1,13 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import axios from 'utils/axios/axios'
-import errorHandler from 'utils/error-handler/errorHandler'
+import $api from 'utils/axios/axios'
+import { TAuthResponse } from '../login/types'
 
 // Types
 import { TSignUpForm } from './types'
 
-export const registration = createAsyncThunk('@@registration/signup', (request: TSignUpForm) => {
-  return axios.post('auth/signup', request).catch((err) => {
-    errorHandler(err.response.data.reason)
-    // return rejectWithValue(err.response.data)
-  })
-})
+export const registration = createAsyncThunk(
+  '@@auth/registration',
+  (request: TSignUpForm, { rejectWithValue }) => {
+    return $api.post<TAuthResponse>('v1/auth/registration', request).catch((err) => {
+      return rejectWithValue(err.response.data)
+    })
+  },
+)

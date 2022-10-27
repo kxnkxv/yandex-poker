@@ -1,9 +1,15 @@
+import { TUser, TUserInfoData } from '@/types/app'
+
 export type TSignInForm = {
   login: string
   password: string
 }
-
-export type TAuthInitialState = {
+export interface TAuthResponse {
+  accessToken: string
+  user: TUser
+}
+export interface TAuthInitialState {
   isPending: boolean
-  user: any
+  // Todo:Написать типизацию для юзера
+  user: TUserInfoData
 }

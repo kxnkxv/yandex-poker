@@ -1,18 +1,24 @@
 import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
 import Avatars from 'pages/account-edit/Avatars' // Mock data
-import useDocumentTitle  from 'hooks/useDocumentTitle'
+import useDocumentTitle from 'hooks/useDocumentTitle'
 
 // Images
 import Back from 'images/back.svg'
 import Edit from 'images/edit.svg'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { userSelector } from 'core/store/selectors/user'
+import { logout } from 'pages/login/LoginSlice'
+import { AppDispatch } from '@/core/store'
 
 const Account: FC = () => {
   useDocumentTitle('Account')
   const user = useSelector(userSelector)
+  const dispatch = useDispatch<AppDispatch>()
 
+  const onLogout = () => {
+    dispatch(logout())
+  }
   return (
     <div className='main-wrapper pt-28'>
       <div className='container mx-auto max-w-md'>
@@ -26,7 +32,7 @@ const Account: FC = () => {
         </div>
         <div className='w-full text-center'>
           <div className='profile-avatar mx-auto mb-5 inline-block'>
-            <img className='h-28 w-28' src={Avatars[user.display_name].image} alt='Username' />
+            <img className='h-28 w-28' src={Avatars[user.img_link].image} alt='Username' />
           </div>
           <div className='mb-5'>
             <h2>
@@ -49,9 +55,9 @@ const Account: FC = () => {
         </div>
         <div className='inline-grid'>
           <button className='mb-5'>Change password</button>
-          <Link className='text-red' to={'/'}>
+          <a className='text-red cursor-pointer' onClick={onLogout}>
             Sign out
-          </Link>
+          </a>
         </div>
       </div>
     </div>

@@ -4,16 +4,21 @@ import { authReducer } from 'pages/login/LoginSlice'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import { combineReducers } from 'redux'
+import { topicReducer } from '@/pages/forum/TopicSlice'
+import { commentTopicReducer } from '@/pages/forum-topic/commentTopicSlice'
 
 export const rootReducer = combineReducers({
   auth: authReducer,
   table: tableReducer,
+  topic: topicReducer,
+  comment: commentTopicReducer,
 })
 
 const persistConfig = {
   key: 'root',
   storage,
   whitelist: ['auth'],
+  blacklist: ['token'],
 }
 
 export const persistedReducer = persistReducer(persistConfig, rootReducer)

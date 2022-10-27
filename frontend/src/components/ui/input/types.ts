@@ -6,6 +6,7 @@ export type TProps = React.DetailedHTMLProps<
 > & {
   // Дополнительные поля
   label?: string
+  autocomplete?: string
   error?: {
     message?: string
   }

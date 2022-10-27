@@ -1,14 +1,14 @@
+import { TUser } from '@/types/app'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import axios from 'utils/axios/axios'
-// import errorHandler from 'Utils/error-handler/errorHandler'
+import $api from 'utils/axios/axios'
 
 // Types
 import { TAccountEditData } from './types'
 
 export const editUser = createAsyncThunk(
-  '@@account/edit',
+  '@@auth/edit',
   (data: TAccountEditData, { rejectWithValue }) => {
-    return axios.put('user/profile', data).catch((err) => {
+    return $api.put<TUser>('v1/auth/user/profile', data).catch((err) => {
       return rejectWithValue(err.response.data)
     })
   },

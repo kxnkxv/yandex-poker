@@ -1,6 +1,6 @@
 label.profile-avatar:hover {
-    border: 2px solid rgba(255, 255, 255, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.5);
 }
-input[type="radio"]:checked + label.profile-avatar {
-    border: 2px solid #BE2E2E;
+input[type='radio']:checked + label.profile-avatar {
+  border: 2px solid #be2e2e;
 }

@@ -24,10 +24,10 @@ import './AccountEdit.css'
 // Types
 import { TAccountEditData } from './types'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch } from 'core/store'
-import { checkAuth } from 'pages/login/LoginSlice'
+import { AppDispatch, RootState } from 'core/store'
 import callbackHandler from 'utils/callback-handler/callbackHandler'
 import { userSelector } from 'core/store/selectors/user'
+import Button from '@/components/ui/button/Button'
 
 const AccountEdit: FC = () => {
   useDocumentTitle('Edit account')
@@ -37,13 +37,13 @@ const AccountEdit: FC = () => {
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
 
-  const [currentAvatar, setCurrentAvatar] = useState(user.display_name)
+  const [currentAvatar, setCurrentAvatar] = useState(user.img_link)
 
   const { handleSubmit, control, register, setValue } = useForm({
     defaultValues: {
       // Из-за технических ограничений вынуждены прокидывать id аватарки
-      // через поле display_name, добавив строку 'avatar', чтобы бэкенд не ругался
-      display_name: 'avatar' + currentAvatar,
+      // через поле img_link, добавив строку 'avatar', чтобы бэкенд не ругался
+      img_link: Number(currentAvatar),
       first_name: user.first_name,
       second_name: user.second_name,
       email: user.email,
@@ -63,25 +63,24 @@ const AccountEdit: FC = () => {
     setIsModalOpened(false)
   }
 
-  const changeAvatar = (image_id: number) => {
-    setCurrentAvatar(image_id)
-    setValue('display_name', 'avatar' + image_id)
+  const changeAvatar = (img_link_id: number) => {
+    setCurrentAvatar(img_link_id)
+    setValue('img_link', img_link_id)
     closeModal()
   }
+  const { isPending } = useSelector((state: RootState) => state.auth)
 
   const { errors } = useFormState({
     control,
   })
 
   const onSubmit: SubmitHandler<TAccountEditData> = (data: TAccountEditData) => {
-    dispatch(editUser(data))
+    dispatch(editUser({ ...data, img_link: Number(data.img_link) }))
       .unwrap()
-      .then(() => dispatch(checkAuth()))
       .then(() => {
         callbackHandler('Information updated')
         navigate('/account')
       })
-      .catch(() => {})
   }
 
   return (
@@ -108,7 +107,7 @@ const AccountEdit: FC = () => {
               {Avatars.map((avatar) => (
                 <div key={avatar.id}>
                   <input
-                    {...register('display_name')}
+                    {...register('img_link')}
                     type='radio'
                     value={avatar.id}
                     className='hidden'
@@ -202,7 +201,9 @@ const AccountEdit: FC = () => {
             </div>
           </div>
           <div className='text-center'>
-            <button className='btn-red inline-block'>Confirm</button>
+            <Button pending={isPending} className='btn-red'>
+              Confirm
+            </Button>
           </div>
         </form>
       </div>
