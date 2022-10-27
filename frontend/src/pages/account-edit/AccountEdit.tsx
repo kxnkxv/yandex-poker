@@ -14,6 +14,7 @@ import { editUser } from './AccountEditSlice'
 // Components
 import Input from 'components/ui/input/Input'
 import Modal from 'components/ui/modal/Modal'
+import Button from 'components/ui/button/Button'
 
 // Images
 import backArrowIcon from './img/backArrowIcon.svg'
@@ -71,7 +72,7 @@ const AccountEdit: FC = () => {
     closeModal()
   }
 
-  const { errors } = useFormState({
+  const { errors, isSubmitting } = useFormState({
     control,
   })
 
@@ -205,7 +206,7 @@ const AccountEdit: FC = () => {
             </div>
           </div>
           <div className='text-center'>
-            <button className='btn-red inline-block'>Confirm</button>
+            <Button pending={isSubmitting} className='btn-red'>Confirm</Button>
           </div>
         </form>
       </div>

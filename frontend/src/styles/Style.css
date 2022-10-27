@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Gilroy-Black';
-  src: url('fonts/gilroy-black.eot'); /* IE 9 Compatibility Mode */
-  src: url('fonts/gilroy-black.eot?#iefix') format('embedded-opentype'),
-    /* IE < 9 */ url('fonts/gilroy-black.woff2') format('woff2'),
-    /* Super Modern Browsers */ url('fonts/gilroy-black.woff') format('woff'),
-    /* Firefox >= 3.6, any other modern browser */ url('fonts/gilroy-black.ttf') format('truetype'),
-    /* Safari, Android, iOS */ url('fonts/gilroy-black.svg') format('svg'); /* Chrome < 4, Legacy iOS */
+  font-family: "Gilroy-Black";
+  src: url("fonts/gilroy-black.eot"); /* IE 9 Compatibility Mode */
+  src: url("fonts/gilroy-black.eot?#iefix") format("embedded-opentype"),
+    /* IE < 9 */ url("fonts/gilroy-black.woff2") format("woff2"),
+    /* Super Modern Browsers */ url("fonts/gilroy-black.woff") format("woff"),
+    /* Firefox >= 3.6, any other modern browser */ url("fonts/gilroy-black.ttf") format("truetype"),
+    /* Safari, Android, iOS */ url("fonts/gilroy-black.svg") format("svg"); /* Chrome < 4, Legacy iOS */
 }
 :root {
   --color-dark-blue: #232333;
@@ -40,7 +40,7 @@ body::backdrop {
 h1,
 .h1 {
   height: 39px;
-  font-family: 'Gilroy-Black';
+  font-family: "Gilroy-Black";
   font-style: normal;
   font-weight: 800;
   font-size: 32px;
@@ -49,7 +49,7 @@ h1,
 }
 h2,
 .h2 {
-  font-family: 'Gilroy-Black';
+  font-family: "Gilroy-Black";
   font-style: normal;
   font-weight: 800;
   font-size: 24px;
@@ -58,7 +58,7 @@ h2,
 }
 .form-link {
   height: 16px;
-  font-family: 'Roboto Condensed';
+  font-family: "Roboto Condensed";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -146,10 +146,6 @@ h2,
   margin-bottom: 10px;
 }
 
-iframe[title='yandex-hidden-frame'] {
-  display: none;
-}
-
 @layer components {
   .form-control {
     @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue focus:border-blue block w-full p-2.5;
@@ -159,6 +155,10 @@ iframe[title='yandex-hidden-frame'] {
   }
   .btn-red {
     @apply focus:outline-none text-white bg-red hover:bg-crimson focus:ring-4 focus:ring-crimson font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 w-full;
+  }
+  .btn-light-blue {
+    @apply focus:outline-none text-white bg-light-blue hover:bg-light-blue
+    focus:ring-4 focus:ring-light-blue font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 w-full;
   }
   .btn-secondary {
     @apply bg-light-blue rounded text-sm px-3 h-9 inline-flex items-center whitespace-nowrap;

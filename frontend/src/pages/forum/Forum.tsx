@@ -1,13 +1,49 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import useDocumentTitle from 'hooks/useDocumentTitle'
 
 // Components
 import HearderMenu from 'components/header/Header'
 import Arrow from 'images/arrow.svg'
 import { Link } from 'react-router-dom'
+import Modal from 'components/ui/modal/Modal'
+import Input from 'components/ui/input'
+import Button from '@/components/ui/button'
+import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from 'core/store'
+import { createTopic } from './ForumSlice'
 
 const Forum: FC = () => {
   useDocumentTitle('Forum')
+  const dispatch = useDispatch<AppDispatch>()
+  const { handleSubmit, control } = useForm({
+    defaultValues: {
+      name: '',
+      description: '',
+    },
+    mode: 'onBlur',
+  })
+
+  const { errors, isSubmitting } = useFormState({
+    control,
+  })
+
+  const onSubmit: SubmitHandler<{ name: string; description: string }> = (data) => {
+    dispatch(createTopic(data)).then(() => {
+      setIsModalOpened(false)
+    })
+  }
+
+  const [isModalOpened, setIsModalOpened] = useState(false)
+
+  const openModal = () => {
+    setIsModalOpened(true)
+    console.log('hello')
+  }
+
+  const closeModal = () => {
+    setIsModalOpened(false)
+  }
 
   return (
     <div className='p-5 w-full'>
@@ -68,7 +104,72 @@ const Forum: FC = () => {
             </tbody>
           </table>
         </div>
-        <div className='inline-block'>sdsdf</div>
+        <div className='inline-block'>
+          <Button className='btn-red' onClick={openModal}>
+            Create topic
+          </Button>
+        </div>
+
+        <Modal title='Create a new topic' open={isModalOpened} closeHandle={closeModal}>
+            <div className='grid gap-5 mb-5'>
+              <div>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Controller
+                  control={control}
+                  name='name'
+                  rules={{
+                    required: 'The field is required',
+                    validate: (value: string) => {
+                      if (!value.trim()) {
+                        return 'The field must not contain a space'
+                      }
+                    },
+                  }}
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      className='form-control'
+                      label='Topic name'
+                      error={errors.name}
+                    />
+                  )}
+                />
+                <div className='mb-5'>
+                  <Controller
+                    control={control}
+                    name='description'
+                    rules={{
+                      validate: (value: string) => {
+                        if (!value.trim()) {
+                          return 'The field must not contain a space'
+                        }
+                      },
+                    }}
+                    render={({ field }) => (
+                      <>
+                        <label className='form-label'>Description:</label>
+                        <textarea
+                          {...field}
+                          className='form-control'
+                          rows={5}
+                          style={{ resize: 'none' }}
+                          ref={field.ref}
+                        />
+
+                      </>
+                    )}
+                  />
+                </div>
+                <div className='grid grid-cols-2 gap-5'>
+                  <Button className='btn-light-blue' pending={isSubmitting}>
+                    Create
+                  </Button>
+                  <Button className='btn-red' onClick={closeModal}>Cancel</Button>
+                </div>
+              </form>
+              </div>
+            </div>
+        </Modal>
       </div>
     </div>
   )

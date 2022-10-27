@@ -11,23 +11,25 @@ import './ForumTopic.css'
 import Avatar0 from 'images/avatars/0.png'
 import Avatar1 from 'images/avatars/1.png'
 
-import { Controller, useForm, useFormState } from 'react-hook-form'
+import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form'
 import Input from 'components/ui/input'
 import Button from 'components/ui/button'
-import { checkAuth, login } from 'pages/login/LoginSlice'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from 'core/store'
 import Back from 'images/back.svg'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import { createMessage } from 'pages/forum/ForumSlice'
 
 const ForumTopic: FC = () => {
   useDocumentTitle('Forum')
 
+  const { topicId } = useParams()
+
   const dispatch = useDispatch<AppDispatch>()
 
-  const { handleSubmit, control } = useForm({
+  const { handleSubmit, control, reset } = useForm({
     defaultValues: {
-      login: '',
+      text: '',
     },
     mode: 'onBlur',
   })
@@ -36,11 +38,11 @@ const ForumTopic: FC = () => {
     control,
   })
 
-  const onSubmit = (data: any) => {
-    dispatch(login(data))
-      .unwrap()
-      .then(() => dispatch(checkAuth()))
-      .catch(() => {})
+  const onSubmit: SubmitHandler<{ text: string }> = (data) => {
+    if (topicId) {
+      dispatch(createMessage({ ...data, topicId }))
+      reset()
+    }
   }
 
   return (
@@ -79,12 +81,12 @@ const ForumTopic: FC = () => {
                   <div className='col-span-4'>
                     <Controller
                       control={control}
-                      name='login'
+                      name='text'
                       render={({ field }) => (
                         <Input
                           {...field}
                           className='form-control'
-                          error={errors.login}
+                          error={errors.text}
                           placeholder='Your comment'
                           autocomplete='off'
                         />
@@ -92,7 +94,7 @@ const ForumTopic: FC = () => {
                     />
                   </div>
                   <div className='mb-5'>
-                    <Button pending={isSubmitting}>Send</Button>
+                    <Button className='btn-red' pending={isSubmitting}>Send</Button>
                   </div>
                 </div>
               </form>
