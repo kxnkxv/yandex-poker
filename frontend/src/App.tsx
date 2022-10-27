@@ -5,6 +5,7 @@ import { AppDispatch, RootState } from 'core/store'
 import { ToastContainer } from 'react-toastify'
 import PublicRoot from 'components/public-root/PublicRoot'
 import ProtectedRoot from 'components/protected-root/ProtectedRoot'
+import Loader from 'components/loader/Loader'
 
 // Pages
 import NotFound from 'pages/notFound'

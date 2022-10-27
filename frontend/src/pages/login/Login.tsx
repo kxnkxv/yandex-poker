@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm, SubmitHandler, Controller, useFormState } from 'react-hook-form'
 import { loginValidation, passwordValidation } from 'utils/validation/validation'
-import { login } from 'pages/login/LoginSlice'
+import { login, registrationOauth } from 'pages/login/LoginSlice'
 import { Link } from 'react-router-dom'
 import { AppDispatch, RootState } from 'core/store'
 import useDocumentTitle from 'hooks/useDocumentTitle'
@@ -47,8 +47,9 @@ const Login: FC = () => {
       fetch(`https://login.yandex.ru/info?oauth_token=${hashData.access_token}`)
         .then((response) => response.json())
         .then((data) => {
-          console.log('✅ Получены данные пользователя')
-          console.log(data)
+          //console.log('✅ Получены данные пользователя')
+          //console.log(data)
+          dispatch(registrationOauth({ data, systemName: 'yandex' }))
         })
         .catch(() => {
           console.log('Ошибка авторизации. Необходим SSL сертификат')
@@ -56,7 +57,7 @@ const Login: FC = () => {
     }
   }
 
-  const { errors, isSubmitting } = useFormState({
+  const { errors } = useFormState({
     control,
   })
 
