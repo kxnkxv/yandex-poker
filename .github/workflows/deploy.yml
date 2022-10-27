@@ -1,0 +1,104 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - 74-yandex-cloud-deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_KEY }}
+          known_hosts: unnecessary
+
+      - name: Adding Known Hosts
+        run: ssh-keyscan -H ${{ secrets.SSH_HOST }}  >> ~/.ssh/known_hosts
+
+      - name: Restart Node Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            rm -rf Poker
+
+            #Команды ниже нужно выполнить 1 раз после покупки сервера (Установка Docker)
+            #curl -fsSL https://get.docker.com -o get-docker.sh
+            #DRY_RUN=1 sh ./get-docker.sh
+            #sudo sh get-docker.sh
+
+            sudo usermod -a -G docker $USER
+            docker -v
+            git clone https://github.com/AIG-GAMING/Poker.git -b 74-yandex-cloud-deploy
+            cd Poker
+
+            #ДОБАВЛЯЕМ СЕРТИФИКАТ И КЛЮЧ ДЛЯ SSL
+            cd backend
+            cd src
+
+            #Создаем и наполняем key.pem
+            touch key.pem
+            echo "${{ secrets.SSL_PRIVATE_KEY }}" > key.pem
+
+            #Создаем и наполняем cert.pem
+            touch cert.pem
+            echo "${{ secrets.SSL_FULL_CHAIN }}" > cert.pem
+
+            cd ..
+            cd ..
+
+            #КОНФИГУРИРУЕМ FRONTEND
+            cd frontend
+
+            #Удаляем демонстрационный .env файл
+            rm .env
+
+            #Создаем прод .env файл
+            touch .env
+
+            #Наполняем прод .env файл
+            printf '%s\n' \
+            'PORT=${{ secrets.FRONTEND_PORT }}' \
+            'BACKEND_HOST=${{ secrets.BACKEND_URL }}:${{ secrets.BACKEND_PORT }}' \
+            'YANDEX_CLIENT_ID=${{ secrets.YANDEX_CLIENT_ID }}' \
+            >.env
+
+            cd ..
+
+            #КОНФИГУРИРУЕМ BACKEND
+            cd backend
+
+            #Удаляем демонстрационный .env файл
+            rm .env
+
+            #Создаем прод .env файл
+            touch .env
+
+            #Наполняем прод .env файл
+            printf '%s\n' \
+            'DATABASE_URL="postgresql://postgres:postgres@data_base:5432/mydb?schema=public"' \
+            'PORT=${{ secrets.BACKEND_PORT }}' \
+            'JWT_ACCESS_SECRET=jwt-secret-key' \
+            'JWT_REFRESH_SECRET=jwt-refresh-secret-key' \
+            'CLIENT_URL=${{ secrets.FRONTEND_URL }}' \
+            >.env
+
+            cd ..
+
+            #Сбрасываем запущенные контейнеры
+            docker compose down
+
+            #Удаляем старые image, vulumes, containers
+            docker system prune -a
+
+            #Запускаем новую сборку
+            docker compose up --build -d
+

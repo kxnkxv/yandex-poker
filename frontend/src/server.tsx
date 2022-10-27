@@ -6,6 +6,8 @@ import fs from 'fs'
 import path from 'path'
 // import { isServer } from 'utils/is-server/isServer'
 import App from './App'
+import { Provider } from 'react-redux'
+import { store } from 'core/store'
 
 const app = express()
 
@@ -18,7 +20,9 @@ const showPrerenderedPage = (req: Request, res: Response) => {
     if (data) {
       const jsx = (
         <StaticRouter location={req.url}>
-          <App />
+          <Provider store={store}>
+            <App />
+          </Provider>
         </StaticRouter>
       )
       const reactHtml = renderToString(jsx)
@@ -30,6 +34,7 @@ const showPrerenderedPage = (req: Request, res: Response) => {
 
 app.get('/login', showPrerenderedPage)
 app.get('/registration', showPrerenderedPage)
+
 app.get('*', (req: Request, res: Response) => {
   console.log('CSR', req.url)
   res.sendFile(__dirname + '/index.html')

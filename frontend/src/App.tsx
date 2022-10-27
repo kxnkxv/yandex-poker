@@ -21,7 +21,7 @@ import 'styles/Style.css'
 // Images
 // .....
 import { isServer } from 'utils/is-server/isServer'
-import { checkAuth } from './pages/login/LoginSlice'
+import { checkAuth } from 'pages/login/LoginSlice'
 import Forum from 'pages/forum'
 import ForumTopic from 'pages/forum-topic'
 import Loader from 'components/loader/Loader'
@@ -118,20 +118,26 @@ const routes = (
 )
 
 const App: FC = (): JSX.Element => {
-  const { isPending } = useSelector((state: RootState) => state.auth)
-  const dispatch = useDispatch<AppDispatch>()
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      dispatch(checkAuth())
+    let isPending = false
+
+    if (!isServer) {
+        isPending = useSelector((state: RootState) => state.auth.isPending)
+        const dispatch = useDispatch<AppDispatch>()
+        useEffect(() => {
+            if (localStorage.getItem('token') && !isServer) {
+                dispatch(checkAuth())
+            }
+        }, [])
+
+        isPending = false
     }
-  }, [])
-  console.log('isPending', isPending)
-  return (
-    <>
-      {isPending ? (<div className='absolute top-1/2 left-1/2'><Loader/> </div>) : routes}
-      <ToastContainer />
-    </>
-  )
+
+    return (
+        <>
+            {isPending ? (<div className='absolute top-1/2 left-1/2'><Loader/></div>) : routes}
+            <ToastContainer />
+        </>
+    )
 }
 
 export default App
