@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - 74-yandex-cloud-deploy
+      - develop
 
 jobs:
   deploy:
@@ -37,7 +37,7 @@ jobs:
 
             sudo usermod -a -G docker $USER
             docker -v
-            git clone https://github.com/AIG-GAMING/Poker.git -b 74-yandex-cloud-deploy
+            git clone https://github.com/AIG-GAMING/Poker.git -b develop
             cd Poker
 
             #ДОБАВЛЯЕМ СЕРТИФИКАТ И КЛЮЧ ДЛЯ SSL
