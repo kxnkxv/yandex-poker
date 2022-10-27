@@ -17,7 +17,7 @@ model User {
   password    String       @default("")
   first_name  String       @default("")
   second_name String       @default("")
-  phone       String
+  phone       String       @default("")
   img_link    Int?         @default(1)
   balance     Int?         @default(1000)
   Token       Token?

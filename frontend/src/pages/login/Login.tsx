@@ -47,8 +47,8 @@ const Login: FC = () => {
       fetch(`https://login.yandex.ru/info?oauth_token=${hashData.access_token}`)
         .then((response) => response.json())
         .then((data) => {
-          //console.log('✅ Получены данные пользователя')
-          //console.log(data)
+          console.log('✅ Получены данные пользователя')
+          console.log(data)
           dispatch(registrationOauth({ data, systemName: 'yandex' }))
         })
         .catch(() => {

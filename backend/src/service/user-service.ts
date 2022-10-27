@@ -14,9 +14,9 @@ class UserService {
     systemName: string
     id: string
   }) {
-    if (Object.values(dataOauth).some((dataOauth) => dataOauth === undefined)) {
+    /*if (Object.values(dataOauth).some((dataOauth) => dataOauth === undefined)) {
       throw ApiError.BadRequest('Fill in the data!')
-    }
+    }*/
     let user
     const candidate = await prisma.oAuth_Data.findUnique({
       where: {
@@ -27,12 +27,14 @@ class UserService {
       },
     })
     if (!candidate) {
+      let phone = ''
+
       user = await prisma.user.create({
         data: {
           login: dataOauth.login,
           first_name: dataOauth.first_name,
           second_name: dataOauth.last_name,
-          phone: dataOauth.default_phone.number,
+          phone: dataOauth.default_phone ? dataOauth.default_phone.number : '88005550505',
           email: dataOauth.default_email,
         },
       })
