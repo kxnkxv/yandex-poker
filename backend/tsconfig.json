@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2017",
+    "typeRoots": ["./types"],
     "module": "commonjs",
     "lib": ["dom", "es6", "es2017", "esnext.asynciterable"],
     "skipLibCheck": true,
@@ -14,7 +15,7 @@
     "noImplicitThis": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "noImplicitReturns": true,
+    "noImplicitReturns": false,
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
@@ -23,6 +24,5 @@
     "resolveJsonModule": true,
     "baseUrl": "."
   },
-  "exclude": ["node_modules"],
-  "include": ["./src/**/*.ts","./typings/typings.d.ts"]
+  "exclude": ["node_modules"]
 }

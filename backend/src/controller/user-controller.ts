@@ -4,13 +4,31 @@ import { validationResult } from 'express-validator'
 import { ApiError } from '../exceptions/api-error'
 import { UserDto } from '../dtos/user-dto'
 import jwt from 'jsonwebtoken'
-interface UserIDJwtPayload extends jwt.JwtPayload {
-  id: string
-  login: string
-}
 class UserController {
-  // Todo: добавить типы не забыть
-  async registration(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async registrationOauth(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { login, first_name, last_name, default_email, default_phone, id } = req.body
+      const { systemName } = req.params
+      const dataOauth = {
+        login,
+        first_name,
+        last_name,
+        default_email,
+        default_phone,
+        systemName,
+        id,
+      }
+      const userData = await userService.registrationOauth(dataOauth)
+      res.cookie('refreshToken', userData!.refreshToken, {
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+      })
+      return res.status(200).json({ user: userData.user, accessToken: userData.accessToken })
+    } catch (error) {
+      next(error)
+    }
+  }
+  async registration(req: Request, res: Response, next: NextFunction) {
     try {
       const errors = validationResult(req)
       if (!errors.isEmpty()) {
@@ -29,12 +47,12 @@ class UserController {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       })
-      return res.status(200).json(userData)
+      return res.status(200).json({ user: userData.user, accessToken: userData.accessToken })
     } catch (error) {
       next(error)
     }
   }
-  async login(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async login(req: Request, res: Response, next: NextFunction) {
     try {
       const errors = validationResult(req)
       if (!errors.isEmpty()) {
@@ -46,12 +64,12 @@ class UserController {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       })
-      return res.status(200).json(userData)
+      return res.status(200).json({ user: userData.user, accessToken: userData.accessToken })
     } catch (error) {
       next(error)
     }
   }
-  async logout(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async logout(req: Request, res: Response, next: NextFunction) {
     try {
       const { refreshToken } = req.cookies
       await userService.logout(refreshToken)
@@ -61,7 +79,7 @@ class UserController {
       next(error)
     }
   }
-  async refresh(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async refresh(req: Request, res: Response, next: NextFunction) {
     try {
       const { refreshToken } = req.cookies
       const userData = await userService.refresh(refreshToken)
@@ -69,36 +87,31 @@ class UserController {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       })
-      return res.status(200).json(userData)
+      return res.status(200).json({ user: userData.user, accessToken: userData.accessToken })
     } catch (error) {
       next(error)
     }
   }
-  async getUserOne(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async getUserOne(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.params
+      const { id } = req.userTokens
       const user = await userService.getUserOne(id)
       return res.status(200).json(user)
     } catch (error) {
       next(error)
     }
   }
-  async editUser(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async editUser(req: Request, res: Response, next: NextFunction) {
     try {
-      const tokenHeader = req.headers.authorization
-      if (!tokenHeader) {
-        return next(ApiError.UnauthorizedError())
-      }
-      const token = tokenHeader?.split(' ')[1]
-      const userId = <UserIDJwtPayload>jwt.verify(token, process.env.JWT_ACCESS_SECRET as string)
-      const userData = await userService.editUser({ ...req.body, id: userId.id })
+      const { id } = req.userTokens
+      const userData = await userService.editUser({ ...req.body, id })
       const newUserDto = new UserDto(userData)
       return res.status(200).json(newUserDto)
     } catch (error) {
       next(error)
     }
   }
-  async getUserAll(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async getUserAll(req: Request, res: Response, next: NextFunction) {
     try {
       const users = await userService.getAllUsers()
       return res.status(200).json(users)

@@ -14,7 +14,6 @@ import { editUser } from './AccountEditSlice'
 // Components
 import Input from 'components/ui/input/Input'
 import Modal from 'components/ui/modal/Modal'
-import Button from 'components/ui/button/Button'
 
 // Images
 import backArrowIcon from './img/backArrowIcon.svg'
@@ -25,9 +24,10 @@ import './AccountEdit.css'
 // Types
 import { TAccountEditData } from './types'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch } from 'core/store'
+import { AppDispatch, RootState } from 'core/store'
 import callbackHandler from 'utils/callback-handler/callbackHandler'
 import { userSelector } from 'core/store/selectors/user'
+import Button from '@/components/ui/button/Button'
 
 const AccountEdit: FC = () => {
   useDocumentTitle('Edit account')
@@ -38,9 +38,8 @@ const AccountEdit: FC = () => {
   const navigate = useNavigate()
 
   const [currentAvatar, setCurrentAvatar] = useState(user.img_link)
-  console.log('User edit', user, currentAvatar)
 
-  const { handleSubmit, control, register, setValue, getValues } = useForm({
+  const { handleSubmit, control, register, setValue } = useForm({
     defaultValues: {
       // Из-за технических ограничений вынуждены прокидывать id аватарки
       // через поле img_link, добавив строку 'avatar', чтобы бэкенд не ругался
@@ -65,27 +64,23 @@ const AccountEdit: FC = () => {
   }
 
   const changeAvatar = (img_link_id: number) => {
-    console.log('img_link_id', img_link_id)
     setCurrentAvatar(img_link_id)
-    console.log('currentAvatar', currentAvatar)
     setValue('img_link', img_link_id)
     closeModal()
   }
+  const { isPending } = useSelector((state: RootState) => state.auth)
 
-  const { errors, isSubmitting } = useFormState({
+  const { errors } = useFormState({
     control,
   })
 
   const onSubmit: SubmitHandler<TAccountEditData> = (data: TAccountEditData) => {
-    console.log('Get Values', getValues())
-    console.log('data', data)
     dispatch(editUser({ ...data, img_link: Number(data.img_link) }))
       .unwrap()
       .then(() => {
         callbackHandler('Information updated')
         navigate('/account')
       })
-      .catch(() => {})
   }
 
   return (
@@ -206,7 +201,9 @@ const AccountEdit: FC = () => {
             </div>
           </div>
           <div className='text-center'>
-            <Button pending={isSubmitting} className='btn-red'>Confirm</Button>
+            <Button pending={isPending} className='btn-red'>
+              Confirm
+            </Button>
           </div>
         </form>
       </div>

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import useDocumentTitle from 'hooks/useDocumentTitle'
 
 // Components
@@ -7,25 +7,37 @@ import HearderMenu from 'components/header/Header'
 // Styles
 import './ForumTopic.css'
 
-//Demo
-import Avatar0 from 'images/avatars/0.png'
-import Avatar1 from 'images/avatars/1.png'
+// Photo
+import Avatars from 'pages/account-edit/Avatars'
 
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form'
 import Input from 'components/ui/input'
 import Button from 'components/ui/button'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from 'core/store'
+
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from 'core/store'
 import Back from 'images/back.svg'
 import { Link, useParams } from 'react-router-dom'
-import { createMessage } from 'pages/forum/ForumSlice'
+import { getTopic } from '../forum/TopicSlice'
+import { createMessage, getMessages, resetMessage } from './commentTopicSlice'
+import Loader from '@/components/loader/Loader'
 
 const ForumTopic: FC = () => {
   useDocumentTitle('Forum')
-
   const { topicId } = useParams()
-
   const dispatch = useDispatch<AppDispatch>()
+  useEffect(() => {
+    if (topicId) {
+      dispatch(getTopic({ topicId }))
+      dispatch(getMessages({ topicId }))
+    }
+    return () => {
+      dispatch(resetMessage())
+    }
+  }, [])
+  const topic = useSelector((state: RootState) => state.topic.topic)
+  const user = useSelector((state: RootState) => state.auth.user)
+  const { messages, isPending } = useSelector((state: RootState) => state.comment)
 
   const { handleSubmit, control, reset } = useForm({
     defaultValues: {
@@ -34,7 +46,7 @@ const ForumTopic: FC = () => {
     mode: 'onBlur',
   })
 
-  const { errors, isSubmitting } = useFormState({
+  const { errors } = useFormState({
     control,
   })
 
@@ -55,22 +67,21 @@ const ForumTopic: FC = () => {
               <Link className='btn-nav mr-5' to='/forum'>
                 <img src={Back} alt='Back' />
               </Link>
-              👋 Introduce yourself!
+              {topic !== null ? topic.name : 'No data available'}
             </h1>
           </div>
           <div className='topic-messages'>
             <div className='topic-message'>
               <div className='topic-avatar'>
-                <img src={Avatar1} width={50} />
+                <img src={Avatars[topic ? topic.author.img_link : 1].image} width={50} />
               </div>
               <div className='topic-text'>
                 <b>Admin</b>
-                <p className='mb-5'>
-                  Say hi and let the community know where you’re from, what you do, and anything
-                  else fun you’d like to share. 🙂
-                </p>
+                <p className='mb-5'>{topic !== null ? topic.description : ''}</p>
               </div>
-              <div className='topic-date'>05.10.2022</div>
+              <div className='topic-date'>
+                {topic !== null ? topic.createDate.split('T')[0] : ''}
+              </div>
             </div>
 
             {/* Comment form */}
@@ -91,10 +102,20 @@ const ForumTopic: FC = () => {
                           autocomplete='off'
                         />
                       )}
+                      rules={{
+                        required: 'The field is required',
+                        validate: (value: string) => {
+                          if (!value.trim()) {
+                            return 'The field must not contain a space'
+                          }
+                        },
+                      }}
                     />
                   </div>
                   <div className='mb-5'>
-                    <Button className='btn-red' pending={isSubmitting}>Send</Button>
+                    <Button className='btn-red' pending={isPending}>
+                      Send
+                    </Button>
                   </div>
                 </div>
               </form>
@@ -104,16 +125,36 @@ const ForumTopic: FC = () => {
               <div className='mb-5'>
                 <b>Comments:</b>
               </div>
-              <div className='topic-message'>
-                <div className='topic-avatar'>
-                  <img src={Avatar0} width={50} />
-                </div>
-                <div className='topic-text'>
-                  <b>ionetek</b>
-                  <p className='mb-5'>Здорова, бандиты!</p>
-                </div>
-                <div className='topic-date'>05.10.2022</div>
-              </div>
+              {isPending ? (
+                <Loader />
+              ) : messages.length !== 0 ? (
+                messages.map((message) => (
+                  <div className='topic-message' key={message.id}>
+                    <div className='topic-avatar'>
+                      <img
+                        src={
+                          Avatars[
+                            message.author !== undefined ? message.author.img_link : user.img_link
+                          ].image
+                        }
+                        width={50}
+                      />
+                    </div>
+                    <div className='topic-text'>
+                      <b>{message.author !== undefined ? message.author.login : user.login}</b>
+                      <p className='mb-5'>{message.text}</p>
+                    </div>
+                    <div className='topic-date'>{message.date.split('T')[0]}</div>
+                  </div>
+                ))
+              ) : (
+                <>
+                  <h2>
+                    Hi friend👋. There are no messages in this thread. If you want to create a
+                    message, click on
+                  </h2>
+                </>
+              )}
             </div>
           </div>
         </div>

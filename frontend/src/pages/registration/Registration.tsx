@@ -10,7 +10,7 @@ import {
 import useDocumentTitle from 'hooks/useDocumentTitle'
 import { Link } from 'react-router-dom'
 import { registration } from 'pages/registration/RegistrationSlice'
-import { AppDispatch } from 'core/store'
+import { AppDispatch, RootState } from 'core/store'
 
 // Components
 import Input from 'components/ui/input/Input'
@@ -18,7 +18,7 @@ import Button from 'components/ui/button/Button'
 
 // Types
 import { TSignUpForm } from './types'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Registration: FC = () => {
   useDocumentTitle('Registration')
@@ -37,9 +37,11 @@ const Registration: FC = () => {
     mode: 'onBlur',
   })
 
-  const { errors, isSubmitting } = useFormState({
+  const { errors } = useFormState({
     control,
   })
+
+  const { isPending } = useSelector((state: RootState) => state.auth)
 
   const onSubmit: SubmitHandler<TSignUpForm> = (data) => {
     dispatch(registration(data))
@@ -141,7 +143,7 @@ const Registration: FC = () => {
               )}
             />
           </div>
-          <Button className='btn-red' pending={isSubmitting}>Register</Button>
+          <Button className='btn-red' pending={isPending}>Register</Button>
           <div className='text-center mb-5'>
             <Link to='/' className='text-white underline'>
               I have an account

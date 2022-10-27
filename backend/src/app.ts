@@ -34,8 +34,7 @@ app.get('/', (req, res) => {
   res.json({ success: true, message: 'Pocker Game Start' })
 })
 
-
-const startServer = (server : any) => {
+const startServer = (server: any) => {
   const io = new socketio.Server(server, {
     cors: {
       origin: process.env.CLIENT_URL,
@@ -43,7 +42,7 @@ const startServer = (server : any) => {
     },
   })
 
-//------------------------------WebSocket Play Game--------------------------------------------
+  //------------------------------WebSocket Play Game--------------------------------------------
 
   const players: Record<string, Player> = {}
   const tables: Table[] = []
@@ -58,26 +57,26 @@ const startServer = (server : any) => {
    */
   function htmlEntities(str: string) {
     return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
   }
 
-//Создаем столы
+  //Создаем столы
   tables[0] = new Table(0, 'Sample 10-handed Table', eventEmitter(0), 10, 2, 1, 200, 40, false)
   tables[1] = new Table(1, 'Sample 4-handed Table', eventEmitter(1), 4, 4, 2, 400, 80, false)
   tables[2] = new Table(2, 'Sample 2-handed Table', eventEmitter(2), 2, 8, 4, 800, 160, false)
   tables[3] = new Table(
-      3,
-      'Sample 6-handed Private Table',
-      eventEmitter(3),
-      6,
-      20,
-      10,
-      2000,
-      400,
-      true,
+    3,
+    'Sample 6-handed Private Table',
+    eventEmitter(3),
+    6,
+    20,
+    10,
+    2000,
+    400,
+    true,
   )
 
   io.on('connection', (socket) => {
@@ -136,9 +135,9 @@ const startServer = (server : any) => {
      */
     socket.on('leaveRoom', function () {
       if (
-          typeof players[socket.id] !== 'undefined' &&
-          players[socket.id].room !== null &&
-          players[socket.id].sittingOnTable === false
+        typeof players[socket.id] !== 'undefined' &&
+        players[socket.id].room !== null &&
+        players[socket.id].sittingOnTable === false
       ) {
         // Удилать игрока из соединения
         socket.leave('table-' + players[socket.id].room)
@@ -152,41 +151,41 @@ const startServer = (server : any) => {
      */
     socket.on('sitOnTheTable', function (data, callback) {
       if (
-          // A seat has been specified
-          typeof data.seat !== 'undefined' &&
-          // A table id is specified
-          typeof data.tableId !== 'undefined' &&
-          // The table exists
-          typeof tables[data.tableId] !== 'undefined' &&
-          // The seat number is an integer and less than the total number of seats
-          typeof data.seat === 'number' &&
-          data.seat >= 0 &&
-          data.seat < tables[data.tableId].public.seatsCount &&
-          typeof players[socket.id] !== 'undefined' &&
-          // The seat is empty
-          tables[data.tableId].seats[data.seat] == null &&
-          // The player isn't sitting on any other tables
-          players[socket.id].sittingOnTable === false &&
-          // The player had joined the room of the table
-          players[socket.id].room === data.tableId &&
-          // The chips number chosen is a number
-          typeof data.chips !== 'undefined' &&
-          !isNaN(parseInt(data.chips)) &&
-          isFinite(data.chips) &&
-          // The chips number is an integer
-          data.chips % 1 === 0
+        // A seat has been specified
+        typeof data.seat !== 'undefined' &&
+        // A table id is specified
+        typeof data.tableId !== 'undefined' &&
+        // The table exists
+        typeof tables[data.tableId] !== 'undefined' &&
+        // The seat number is an integer and less than the total number of seats
+        typeof data.seat === 'number' &&
+        data.seat >= 0 &&
+        data.seat < tables[data.tableId].public.seatsCount &&
+        typeof players[socket.id] !== 'undefined' &&
+        // The seat is empty
+        tables[data.tableId].seats[data.seat] == null &&
+        // The player isn't sitting on any other tables
+        players[socket.id].sittingOnTable === false &&
+        // The player had joined the room of the table
+        players[socket.id].room === data.tableId &&
+        // The chips number chosen is a number
+        typeof data.chips !== 'undefined' &&
+        !isNaN(parseInt(data.chips)) &&
+        isFinite(data.chips) &&
+        // The chips number is an integer
+        data.chips % 1 === 0
       ) {
         // The chips the player chose are less than the total chips the player has
         if (data.chips > players[socket.id].chips)
           callback({ success: false, error: "You don't have that many chips" })
         else if (
-            data.chips > tables[data.tableId].public.maxBuyIn ||
-            data.chips < tables[data.tableId].public.minBuyIn
+          data.chips > tables[data.tableId].public.maxBuyIn ||
+          data.chips < tables[data.tableId].public.minBuyIn
         )
           callback({
             success: false,
             error:
-                'The amount of chips should be between the maximum and the minimum amount of allowed buy in',
+              'The amount of chips should be between the maximum and the minimum amount of allowed buy in',
           })
         else {
           // Give the response to the user
@@ -228,8 +227,8 @@ const startServer = (server : any) => {
       if (typeof players[socket.id] !== 'undefined') {
         // If the player was sitting on a table
         if (
-            players[socket.id].sittingOnTable !== false &&
-            typeof tables[sittingOnTable] !== 'undefined'
+          players[socket.id].sittingOnTable !== false &&
+          typeof tables[sittingOnTable] !== 'undefined'
         ) {
           // The seat on which the player was sitting
           let seat = players[socket.id].seat as number
@@ -253,9 +252,9 @@ const startServer = (server : any) => {
      */
     socket.on('sitIn', function (callback) {
       if (
-          players[socket.id].sittingOnTable !== false &&
-          players[socket.id].seat !== null &&
-          !players[socket.id].public.sittingIn
+        players[socket.id].sittingOnTable !== false &&
+        players[socket.id].seat !== null &&
+        !players[socket.id].public.sittingIn
       ) {
         // Getting the table id from the player object
         let tableId = players[socket.id].sittingOnTable as number
@@ -277,11 +276,11 @@ const startServer = (server : any) => {
         if (activeSeat === null) return
 
         if (
-            tables[tableId] &&
-            typeof tables[tableId].seats[activeSeat]!.public !== 'undefined' &&
-            tables[tableId].seats[activeSeat]!.socket.id === socket.id &&
-            (tables[tableId].public.phase === 'smallBlind' ||
-                tables[tableId].public.phase === 'bigBlind')
+          tables[tableId] &&
+          typeof tables[tableId].seats[activeSeat]!.public !== 'undefined' &&
+          tables[tableId].seats[activeSeat]!.socket.id === socket.id &&
+          (tables[tableId].public.phase === 'smallBlind' ||
+            tables[tableId].public.phase === 'bigBlind')
         ) {
           if (postedBlind) {
             callback({ success: true })
@@ -309,12 +308,13 @@ const startServer = (server : any) => {
         let activeSeat = tables[tableId].public.activeSeat as number
 
         if (
-            (tables[tableId] &&
-                tables[tableId].seats[activeSeat]!.socket.id === socket.id &&
-                !tables[tableId].public.biggestBet) ||
-            (tables[tableId].public.phase === 'preflop' &&
-                tables[tableId].public.biggestBet === players[socket.id].public.bet &&
-                ['preflop', 'flop', 'turn', 'river'].indexOf(tables[tableId].public.phase as string) > -1)
+          (tables[tableId] &&
+            tables[tableId].seats[activeSeat]!.socket.id === socket.id &&
+            !tables[tableId].public.biggestBet) ||
+          (tables[tableId].public.phase === 'preflop' &&
+            tables[tableId].public.biggestBet === players[socket.id].public.bet &&
+            ['preflop', 'flop', 'turn', 'river'].indexOf(tables[tableId].public.phase as string) >
+              -1)
         ) {
           // Sending the callback first, because the next functions may need to send data to the same player, that shouldn't be overwritten
           callback({ success: true })
@@ -333,9 +333,9 @@ const startServer = (server : any) => {
         let activeSeat = tables[tableId].public.activeSeat as number
 
         if (
-            tables[tableId] &&
-            tables[tableId].seats[activeSeat]!.socket.id === socket.id &&
-            ['preflop', 'flop', 'turn', 'river'].indexOf(tables[tableId].public.phase as string) > -1
+          tables[tableId] &&
+          tables[tableId].seats[activeSeat]!.socket.id === socket.id &&
+          ['preflop', 'flop', 'turn', 'river'].indexOf(tables[tableId].public.phase as string) > -1
         ) {
           // Sending the callback first, because the next functions may need to send data to the same player, that shouldn't be overwritten
           callback({ success: true })
@@ -354,10 +354,10 @@ const startServer = (server : any) => {
         let activeSeat = tables[tableId].public.activeSeat as number
 
         if (
-            tables[tableId] &&
-            tables[tableId].seats[activeSeat]!.socket.id === socket.id &&
-            tables[tableId].public.biggestBet &&
-            ['preflop', 'flop', 'turn', 'river'].indexOf(tables[tableId].public.phase as string) > -1
+          tables[tableId] &&
+          tables[tableId].seats[activeSeat]!.socket.id === socket.id &&
+          tables[tableId].public.biggestBet &&
+          ['preflop', 'flop', 'turn', 'river'].indexOf(tables[tableId].public.phase as string) > -1
         ) {
           // Sending the callback first, because the next functions may need to send data to the same player, that shouldn't be overwritten
           callback({ success: true })
@@ -377,17 +377,17 @@ const startServer = (server : any) => {
         let activeSeat = tables[tableId].public.activeSeat as number
 
         if (
-            tables[tableId] &&
-            tables[tableId].seats[activeSeat]!.socket.id === socket.id &&
-            !tables[tableId].public.biggestBet &&
-            ['preflop', 'flop', 'turn', 'river'].indexOf(tables[tableId].public.phase as string) > -1
+          tables[tableId] &&
+          tables[tableId].seats[activeSeat]!.socket.id === socket.id &&
+          !tables[tableId].public.biggestBet &&
+          ['preflop', 'flop', 'turn', 'river'].indexOf(tables[tableId].public.phase as string) > -1
         ) {
           // Validating the bet amount
           amount = parseInt(amount)
           if (
-              amount &&
-              isFinite(amount) &&
-              amount <= tables[tableId].seats[activeSeat]!.public.chipsInPlay
+            amount &&
+            isFinite(amount) &&
+            amount <= tables[tableId].seats[activeSeat]!.public.chipsInPlay
           ) {
             // Sending the callback first, because the next functions may need to send data to the same player, that shouldn't be overwritten
             callback({ success: true })
@@ -407,16 +407,17 @@ const startServer = (server : any) => {
         let activeSeat = tables[tableId].public.activeSeat as number
 
         if (
-            // The table exists
-            typeof tables[tableId] !== 'undefined' &&
-            // The player who should act is the player who raised
-            tables[tableId].seats[activeSeat]!.socket.id === socket.id &&
-            // The pot was betted
-            tables[tableId].public.biggestBet &&
-            // It's not a round of blinds
-            ['preflop', 'flop', 'turn', 'river'].indexOf(tables[tableId].public.phase as string) > -1 &&
-            // Not every other player is all in (in which case the only move is "call")
-            !tables[tableId].otherPlayersAreAllIn()
+          // The table exists
+          typeof tables[tableId] !== 'undefined' &&
+          // The player who should act is the player who raised
+          tables[tableId].seats[activeSeat]!.socket.id === socket.id &&
+          // The pot was betted
+          tables[tableId].public.biggestBet &&
+          // It's not a round of blinds
+          ['preflop', 'flop', 'turn', 'river'].indexOf(tables[tableId].public.phase as string) >
+            -1 &&
+          // Not every other player is all in (in which case the only move is "call")
+          !tables[tableId].otherPlayersAreAllIn()
         ) {
           amount = parseInt(amount)
           if (amount && isFinite(amount)) {
@@ -454,33 +455,28 @@ const startServer = (server : any) => {
   }
 }
 
-let server;
+let server
 
 try {
   //Проверяем существование ключей шифрования для SSL
   if (fs.existsSync(__dirname + '/cert.pem') && fs.existsSync(__dirname + '/key.pem')) {
-
     //Конфигурируем HTTPS сервер
-    console.log('🔒 Конфигурируем HTTPS сервер');
-    server = https.createServer({
-      cert: fs.readFileSync(__dirname + '/cert.pem'),
-      key: fs.readFileSync(__dirname + '/key.pem')
-    }, app)
+    console.log('🔒 Конфигурируем HTTPS сервер')
+    server = https.createServer(
+      {
+        cert: fs.readFileSync(__dirname + '/cert.pem'),
+        key: fs.readFileSync(__dirname + '/key.pem'),
+      },
+      app,
+    )
 
-    startServer(server);
-
+    startServer(server)
   } else {
     //Конфигурируем HTTP сервер
-    console.log('🔓 Конфигурируем HTTP сервер');
-    server = http.createServer(app);
-    startServer(server);
+    console.log('🔓 Конфигурируем HTTP сервер')
+    server = http.createServer(app)
+    startServer(server)
   }
-} catch(err) {
-  console.log('Ошибка при чтении сертификатов');
+} catch (err) {
+  console.log('Ошибка при чтении сертификатов')
 }
-
-
-
-
-
-

@@ -24,7 +24,6 @@ import { isServer } from 'utils/is-server/isServer'
 import { checkAuth } from 'pages/login/LoginSlice'
 import Forum from 'pages/forum'
 import ForumTopic from 'pages/forum-topic'
-import Loader from 'components/loader/Loader'
 
 const routes = (
   <ErrorBoundary>
@@ -106,7 +105,7 @@ const routes = (
       />
       {/* Forum */}
       <Route
-        path='forum/:id'
+        path='forum/:topicId'
         element={
           <ProtectedRoot>
             <ForumTopic />
@@ -118,26 +117,32 @@ const routes = (
 )
 
 const App: FC = (): JSX.Element => {
-    let isPending = false
+  let isPending = false
 
-    if (!isServer) {
-        isPending = useSelector((state: RootState) => state.auth.isPending)
-        const dispatch = useDispatch<AppDispatch>()
-        useEffect(() => {
-            if (localStorage.getItem('token') && !isServer) {
-                dispatch(checkAuth())
-            }
-        }, [])
+  if (!isServer) {
+    isPending = useSelector((state: RootState) => state.auth.isPending)
+    const dispatch = useDispatch<AppDispatch>()
+    useEffect(() => {
+      if (localStorage.getItem('token') && !isServer) {
+        dispatch(checkAuth())
+      }
+    }, [])
 
-        isPending = false
-    }
+    isPending = false
+  }
 
-    return (
-        <>
-            {isPending ? (<div className='absolute top-1/2 left-1/2'><Loader/></div>) : routes}
-            <ToastContainer />
-        </>
-    )
+  return (
+    <>
+      {isPending ? (
+        <div className='absolute top-1/2 left-1/2'>
+          <Loader />
+        </div>
+      ) : (
+        routes
+      )}
+      <ToastContainer />
+    </>
+  )
 }
 
 export default App

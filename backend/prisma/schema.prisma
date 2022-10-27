@@ -9,17 +9,21 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model User {
-  id       String  @id @default(uuid())
-  login String  @unique
-  email    String  @unique
-  password String
-  first_name String
-  second_name String
-  phone String
-  img_link Int?  @default(1)
-  balance Int? @default(1000)
-  Token    Token?
+  id          String       @id @default(uuid())
+  login       String       @unique
+  email       String       @unique
+  password    String       @default("")
+  first_name  String       @default("")
+  second_name String       @default("")
+  phone       String
+  img_link    Int?         @default(1)
+  balance     Int?         @default(1000)
+  Token       Token?
+  Topic       Topic[]
+  Comment     Comment[]
+  OAuth_Date  OAuth_Data[]
 }
 
 model Token {
@@ -27,4 +31,34 @@ model Token {
   user         User   @relation(fields: [userId], references: [id])
   userId       String @unique
   refreshToken String @unique
+}
+
+model Topic {
+  id          String    @id @default(uuid())
+  author      User      @relation(fields: [authorId], references: [id])
+  authorId    String
+  name        String
+  description String?
+  createDate  DateTime  @default(now())
+  comment     Comment[]
+}
+
+model Comment {
+  id       String   @id @default(uuid())
+  Topic    Topic    @relation(fields: [topicId], references: [id])
+  topicId  String
+  text     String
+  date     DateTime @default(now())
+  author   User     @relation(fields: [authorId], references: [id])
+  authorId String
+}
+
+model OAuth_Data {
+  id            Int    @id @default(autoincrement())
+  user          User   @relation(fields: [userId], references: [id])
+  userId        String
+  serviceName   String
+  userServiceId String
+
+  @@unique([serviceName, userServiceId])
 }

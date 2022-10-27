@@ -3,6 +3,7 @@ import React from 'react'
 // Types
 import { TProps } from './types'
 
+// eslint-disable-next-line react/display-name
 const Input = React.forwardRef<HTMLInputElement, TProps>((props, ref) => {
   return (
     <>

@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { userController } from '../controller/user-controller'
 import { body } from 'express-validator'
 import authMiddleware from '../middleware/auth-middleware'
+import { forumController } from '../controller/forum-controller'
 export const router = Router()
 
 router.post(
@@ -36,7 +37,19 @@ router.post(
 )
 router.post('/logout', userController.logout)
 router.get('/refresh', userController.refresh)
+router.post('/registration/oauth/:systemName', userController.registrationOauth)
 router.put('/user/profile', authMiddleware, userController.editUser)
-router.get('/user/:id', authMiddleware, userController.getUserOne)
-router.get('/users',authMiddleware,userController.getUserAll)
-
+router.get('/user', authMiddleware, userController.getUserOne)
+router.get('/users', authMiddleware, userController.getUserAll)
+router.post(
+  '/topic',
+  body('name').trim(),
+  body('description').trim(),
+  authMiddleware,
+  forumController.createTopic,
+)
+router.get('/topics', authMiddleware, forumController.getTopics)
+router.get('/topic/:topicId', authMiddleware, forumController.getTopic)
+router.post('/topic/:topicId/message', body('text'), authMiddleware, forumController.createMessage)
+router.get('/topic/:topicId/messages', authMiddleware, forumController.getMessages)
+router.delete('/message/:messageId', authMiddleware, forumController.deleteMessage)

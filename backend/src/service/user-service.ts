@@ -5,6 +5,50 @@ import { tokenService } from './token-service'
 import { ApiError } from '../exceptions/api-error'
 const prisma = new PrismaClient()
 class UserService {
+  async registrationOauth(dataOauth: {
+    login: string
+    first_name: string
+    last_name: string
+    default_email: string
+    default_phone: { id: number; number: 'string' }
+    systemName: string
+    id: string
+  }) {
+    if (Object.values(dataOauth).some((dataOauth) => dataOauth === undefined)) {
+      throw ApiError.BadRequest('Fill in the data!')
+    }
+    let user
+    const candidate = await prisma.oAuth_Data.findUnique({
+      where: {
+        serviceName_userServiceId: {
+          serviceName: dataOauth.systemName,
+          userServiceId: dataOauth.id,
+        },
+      },
+    })
+    if (!candidate) {
+      user = await prisma.user.create({
+        data: {
+          login: dataOauth.login,
+          first_name: dataOauth.first_name,
+          second_name: dataOauth.last_name,
+          phone: dataOauth.default_phone.number,
+          email: dataOauth.default_email,
+        },
+      })
+      await this.oauthUserSave(dataOauth.systemName, user.id, dataOauth.id)
+    } else {
+      user = await prisma.user.findUnique({
+        where: {
+          id: candidate.userId,
+        },
+      })
+    }
+    const userDto = new UserDto(user!)
+    const tokens = await tokenService.generateTokens({ id: userDto.id, login: userDto.login })
+    await tokenService.saveToken(userDto.id, tokens.refreshToken)
+    return { ...tokens, user: userDto }
+  }
   async registration(
     login: string,
     password: string,
@@ -37,6 +81,16 @@ class UserService {
     await tokenService.saveToken(userDto.id, tokens.refreshToken)
 
     return { ...tokens, user: userDto }
+  }
+  async oauthUserSave(serviceName: string, userId: string, userServiceId: string) {
+    const userOauth = await prisma.oAuth_Data.create({
+      data: {
+        serviceName,
+        userId,
+        userServiceId,
+      },
+    })
+    return userOauth
   }
   async login(login: string, password: string) {
     if (!login || !password) {
@@ -130,7 +184,7 @@ class UserService {
         second_name: true,
         phone: true,
         img_link: true,
-        balance:true
+        balance: true,
       },
     })
     return users
