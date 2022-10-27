@@ -8,6 +8,7 @@ const path = require('path')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
+const Dotenv = require('dotenv-webpack')
 const VERSION = require('../package.json').version
 
 const devConfig = {
@@ -31,7 +32,7 @@ const devConfig = {
     historyApiFallback: true,
     compress: true,
     open: true,
-    port: 3000,
+    port: 80,
   },
   module: {
     rules: [
@@ -77,6 +78,9 @@ const devConfig = {
     new ReactRefreshPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new WebpackBar(),
+    new Dotenv({
+      path: path.resolve(__dirname, '../.env'),
+    }),
   ],
 }
 module.exports = merge(common, devConfig)

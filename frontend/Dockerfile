@@ -1,4 +1,4 @@
-FROM node:15-alpine
+FROM node:16-alpine
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -7,7 +7,6 @@ COPY package*.json ./
 
 RUN npm install
 COPY . .
-EXPOSE 8443
+EXPOSE 80
 
-RUN npx prisma generate
 CMD [ "npm", "run", "start" ]

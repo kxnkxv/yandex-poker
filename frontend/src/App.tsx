@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from 'core/store'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from 'core/store'
 import { ToastContainer } from 'react-toastify'
 import PublicRoot from 'components/public-root/PublicRoot'
 import ProtectedRoot from 'components/protected-root/ProtectedRoot'
@@ -21,7 +21,7 @@ import 'styles/Style.css'
 // Images
 // .....
 import { isServer } from 'utils/is-server/isServer'
-import { checkAuth } from './pages/login/LoginSlice'
+import { checkAuth } from 'pages/login/LoginSlice'
 import Forum from 'pages/forum'
 import ForumTopic from 'pages/forum-topic'
 
@@ -117,15 +117,29 @@ const routes = (
 )
 
 const App: FC = (): JSX.Element => {
-  const dispatch = useDispatch<AppDispatch>()
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      dispatch(checkAuth())
-    }
-  }, [])
+  let isPending = false
+
+  if (!isServer) {
+    isPending = useSelector((state: RootState) => state.auth.isPending)
+    const dispatch = useDispatch<AppDispatch>()
+    useEffect(() => {
+      if (localStorage.getItem('token') && !isServer) {
+        dispatch(checkAuth())
+      }
+    }, [])
+
+    isPending = false
+  }
+
   return (
     <>
-      {routes}
+      {isPending ? (
+        <div className='absolute top-1/2 left-1/2'>
+          <Loader />
+        </div>
+      ) : (
+        routes
+      )}
       <ToastContainer />
     </>
   )

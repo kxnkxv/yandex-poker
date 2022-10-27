@@ -5,6 +5,7 @@ const { IS_DEV, DIST_DIR, SRC_DIR } = require('./env.js')
 const fileLoader = require('./loaders/file')
 const cssLoader = require('./loaders/css')
 const jsLoader = require('./loaders/js')
+const Dotenv = require('dotenv-webpack')
 
 const config = {
   name: 'server',
@@ -35,7 +36,6 @@ const config = {
       utils: path.resolve(__dirname, '../src/utils'),
       '@': path.resolve(__dirname, '../src'),
     },
-    //plugins: [new TsconfigPathsPlugin({ configFile: '../tsconfig.json' })],
   },
 
   devtool: 'source-map',
@@ -47,6 +47,12 @@ const config = {
   externals: [nodeExternals({ allowlist: [/\.(?!(?:tsx?|json)$).{1,5}$/i] })],
 
   optimization: { nodeEnv: false },
+
+  plugins: [
+    new Dotenv({
+      path: path.resolve(__dirname, '../.env'),
+    }),
+  ],
 }
 
 module.exports = config

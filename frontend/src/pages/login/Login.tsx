@@ -14,6 +14,12 @@ import Button from 'components/ui/button/Button'
 // Types
 import { TSignInForm } from './types'
 
+// Images
+import YandexLogo from 'images/yandexLogo.svg'
+import { isServer } from 'utils/is-server/isServer'
+
+const clientID = process.env.YANDEX_CLIENT_ID
+
 const Login: FC = () => {
   useDocumentTitle('Login')
 
@@ -27,7 +33,30 @@ const Login: FC = () => {
     mode: 'onBlur',
   })
 
-  const { errors } = useFormState({
+  // OAuth
+  if (!isServer) {
+    const hash = window.location.hash.substr(1)
+
+    if (hash) {
+      const hashData = hash.split('&').reduce(function (res: any, item) {
+        const parts = item.split('=')
+        res[parts[0]] = parts[1]
+        return res
+      }, {})
+
+      fetch(`https://login.yandex.ru/info?oauth_token=${hashData.access_token}`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('✅ Получены данные пользователя')
+          console.log(data)
+        })
+        .catch(() => {
+          console.log('Ошибка авторизации. Необходим SSL сертификат')
+        })
+    }
+  }
+
+  const { errors, isSubmitting } = useFormState({
     control,
   })
 
@@ -76,6 +105,12 @@ const Login: FC = () => {
             <Button className='btn-red' pending={isPending}>
               Login
             </Button>
+          </div>
+          <div className='text-center'>
+            Login with
+            <a href={`https://oauth.yandex.ru/authorize?response_type=token&client_id=${clientID}`}>
+              <img src={YandexLogo} className='m-auto mb-5' />
+            </a>
           </div>
           <div className='text-center mb-5'>
             <Link to='/register' className='text-white underline'>
