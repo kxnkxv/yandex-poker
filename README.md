@@ -4,6 +4,11 @@ Online Poker app for Yandex.Practicum
 
 ![img.png](https://oviland.ru/storage/ya-poker.png)
 
+Autors: 
+https://github.com/safari026
+https://github.com/ionetek
+https://github.com/Gulnazmd
+
 Setup
 -----
 Clone the repo:
